@@ -1,0 +1,70 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  // Top level = PRODUCTION. env.preview = isolated preview Worker (docs/DECISIONS.md D-008).
+  // Production changes only through CI (.github/workflows/deploy.yml).
+  "name": "factory-template",
+  "main": "src/index.ts",
+  // Not later than the workerd bundled with the pinned wrangler (4.141.0 -> 2026-09-25)
+  "compatibility_date": "2026-09-25",
+  // AsyncLocalStorage for @sentry/cloudflare (per-request scopes). docs/DECISIONS.md D-025.
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "preview_urls": true,
+  "observability": { "enabled": true },
+  "assets": {
+    "directory": "../app/dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api", "/api/*"]
+  },
+  // Non-inheritable keys below must be repeated in env.preview.
+  "vars": {
+    "APP_ENV": "production",
+    "COMMIT_SHA": "dev",
+    "AUTH_HOSTS": "factory-template.erdiprtm.workers.dev",
+    // Sandbox until the human explicitly switches this product to production (Operating rule 7).
+    "DUITKU_MODE": "sandbox",
+    "DOKU_MODE": "sandbox"
+  },
+  // Expire stale pending payments + renewal reminders. Preview runs none (see env.preview).
+  "triggers": { "crons": ["*/30 * * * *"] },
+  // Abuse protection (src/core/rate-limit.ts). namespace_id is per account; keys carry the slug.
+  "ratelimits": [
+    { "name": "CHECKOUT_LIMITER", "namespace_id": "1001", "simple": { "limit": 10, "period": 60 } },
+    { "name": "WEBHOOK_LIMITER", "namespace_id": "1002", "simple": { "limit": 120, "period": 60 } }
+  ],
+  "version_metadata": { "binding": "CF_VERSION_METADATA" },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "factory-template-prod",
+      "database_id": "a30e51f0-7037-459d-a34b-9fe25aa30e43",
+      "migrations_dir": "../../packages/db/migrations"
+    }
+  ],
+  "env": {
+    "preview": {
+      "vars": {
+        "APP_ENV": "preview",
+        "COMMIT_SHA": "dev",
+        "AUTH_HOSTS": "factory-template-preview.erdiprtm.workers.dev,*-factory-template-preview.erdiprtm.workers.dev",
+        "DUITKU_MODE": "sandbox",
+        "DOKU_MODE": "sandbox"
+      },
+      "triggers": { "crons": [] },
+      "ratelimits": [
+        { "name": "CHECKOUT_LIMITER", "namespace_id": "1003", "simple": { "limit": 10, "period": 60 } },
+        { "name": "WEBHOOK_LIMITER", "namespace_id": "1004", "simple": { "limit": 120, "period": 60 } }
+      ],
+      "version_metadata": { "binding": "CF_VERSION_METADATA" },
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "factory-template-preview",
+          "database_id": "c7642715-9126-4634-abcf-b230eb7089aa",
+          "migrations_dir": "../../packages/db/migrations"
+        }
+      ]
+    }
+  }
+}

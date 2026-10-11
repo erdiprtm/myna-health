@@ -1,0 +1,50 @@
+{
+  "name": "@factory/app",
+  "version": "0.0.0",
+  "private": true,
+  "main": "expo-router/entry",
+  "scripts": {
+    "dev": "EXPO_PUBLIC_API_URL=http://localhost:8787 expo start --web --port 8081",
+    "start": "expo start",
+    "build": "expo export --platform web --output-dir dist",
+    "typecheck": "tsc --noEmit -p .",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@expo/metro-runtime": "57.0.16",
+    "@factory/config": "workspace:*",
+    "@factory/core": "workspace:*",
+    "@factory/ui": "workspace:*",
+    "@openpanel/web": "catalog:",
+    "@rn-primitives/portal": "1.5.3",
+    "@sentry/browser": "catalog:",
+    "@tanstack/react-query": "5.104.0",
+    "better-auth": "catalog:",
+    "expo": "57.0.25",
+    "expo-constants": "57.0.19",
+    "expo-linking": "57.0.11",
+    "expo-router": "57.0.23",
+    "expo-status-bar": "57.0.1",
+    "hono": "catalog:",
+    "nativewind": "4.2.7",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-native": "0.86.3",
+    "react-native-css-interop": "0.2.7",
+    "react-native-reanimated": "4.5.1",
+    "react-native-safe-area-context": "5.7.0",
+    "react-native-screens": "4.26.2",
+    "react-native-svg": "15.15.4",
+    "react-native-web": "0.21.3",
+    "react-native-worklets": "0.10.1"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-react-jsx": "7.29.7",
+    "@factory/api": "workspace:*",
+    "@types/react": "19.2.18",
+    "tailwindcss": "3.4.19",
+    "tailwindcss-animate": "1.0.7",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

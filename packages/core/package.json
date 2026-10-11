@@ -1,0 +1,30 @@
+{
+  "name": "@factory/core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./entitlements": "./src/entitlements/index.ts",
+    "./consents": "./src/consents/index.ts",
+    "./email": "./src/email/index.ts",
+    "./email/templates": "./src/email/templates.ts",
+    "./billing": "./src/billing/index.ts",
+    "./account": "./src/account/index.ts",
+    "./analytics": "./src/analytics/index.ts",
+    "./admin": "./src/admin/index.ts",
+    "./monitoring": "./src/monitoring/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@factory/db": "workspace:*",
+    "drizzle-orm": "catalog:"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "@types/node": "catalog:"
+  }
+}
