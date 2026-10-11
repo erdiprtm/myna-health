@@ -644,7 +644,7 @@ Numbered P-xxx so they never collide with template decisions pulled by `/sync-te
 ## P-008: Corporate voice and elegant motion (Erdi, 2026-10-11)
 
 - **Feedback on P-007:** it read like an app ad and was too casual. The home page now speaks as the company: calm, confident, warm, "Anda", no slang. Products are the portfolio; the casual Gen Z voice is kept for future product pages. Manifesto and FAQ removed from home (FAQ moved to /kontak/).
-- **Structure:** hero ("Membangun kebiasaan sehat untuk Indonesia.") → honest facts (founded 2026, 2 products, Depok) → about → portfolio → statement → principles (sticky heading, numbered list) → privacy → company identity → closing CTA.
+- **Structure:** hero ("Membangun kebiasaan sehat untuk Indonesia.") → about → portfolio → statement → principles (sticky heading, numbered list) → privacy → company identity → closing CTA.
 - **Motion (CSS-first, no libraries, CSP unchanged):** word-by-word headline rise with blur, clip-path photo reveal, slow gradient orbs, drawn rules on facts, scroll-revealed sections, hero parallax and a statement that fills word by word while scrolling (small rAF script), shine and underline hovers. Everything is visible without JS and under `prefers-reduced-motion`.
 - **Founders are not shown** (Erdi wants stealth). Founded year 2026 is shown.
 - Legal pages switched from "kamu" to "Anda".
