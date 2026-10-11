@@ -593,7 +593,6 @@ Numbered P-xxx so they never collide with template decisions pulled by `/sync-te
 
 - **Scope.** v1 is `apps/site` only (specs/myna-health.md). It presents Myna Fit (links out to https://fit.mynahealth.id, which stays on Lovable) and Myna Food ("Segera hadir"), prices, company identity and the legal pages for Duitku merchant KYC.
 - **apps/app** is untouched template code, deployed by CI as usual but not linked from the site.
-- **Pricing CTAs** go to Myna Fit: there is no sign-in or checkout on mynahealth.id yet.
 - **Trial** stays `enabled` in `product.config.ts` only because template API tests assume it; the site never mentions a trial.
 - **No medical content anywhere** is enforced by `apps/site/test/build.test.ts` (a banned-terms scan over every built HTML/XML/TXT file).
 
@@ -615,4 +614,12 @@ Numbered P-xxx so they never collide with template decisions pulled by `/sync-te
 ## P-004: Dependencies (2026-10-11)
 
 - `@fontsource/outfit` **5.3.0** (picked with `scripts/pick-versions.mjs`), replacing `@fontsource/inter` on the site and in OG images.
+
+## P-005: Showcase only, no prices, no refunds, legal reviewed (Erdi, 2026-10-11)
+
+- **Myna Health is the holding brand** for several products. The site showcases them and sells nothing: no prices, no pricing section, no pricing page, no Product/Offer JSON-LD. A test fails on any `Rp<digit>` in the build.
+- `/harga/` stays as a redirect to `/` (static meta refresh, noindex, out of the sitemap) only because the template's site smoke test checks it.
+- **No refunds:** all payments for Myna products are final (`legal.refundPolicy`, `/refund/`, `/syarat/`).
+- **`legal.reviewed: true`** (Erdi): removes the TEMPLATE banner on production. Previews still show it by template design.
+- **Home meta description** changed from the one with the price to: "Myna Health menghadirkan aplikasi gaya hidup sehat: Myna Fit untuk pelacak kebugaran dan Myna Food untuk panduan makan sehat."
 

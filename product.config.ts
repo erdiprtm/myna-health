@@ -75,10 +75,12 @@ export default defineProduct({
     companyName: "PT Myna Bio Teknologi",
     contactEmail: "erdi@mynahealth.id",
     sensitiveDataConsent: false,
+    // Erdi confirmed the legal pages (2026-10-11): removes the TEMPLATE banner on production.
+    reviewed: true,
     productDataDescription:
       "Data yang kamu catat sendiri di aplikasi Myna, misalnya riwayat latihan, catatan makanan, dan perkiraan kalori. Pesan yang kamu kirim lewat formulir kontak (nama, email, isi pesan) diteruskan ke email kami dan tidak disimpan di basis data situs.",
     refundPolicy:
-      "Pengembalian dana dapat diajukan dalam 7 hari setelah pembayaran jika terjadi tagihan ganda, kesalahan nominal, atau layanan tidak dapat dipakai karena kesalahan kami. Rincian dan cara pengajuan ada di halaman Kebijakan Refund.",
+      "Semua pembayaran untuk produk Myna bersifat final dan tidak dapat dikembalikan (tidak ada refund). Rincian ada di halaman Kebijakan Refund.",
   },
   admin: { emails: [] },
   // Unset until Myna Health gets its own OpenPanel project.

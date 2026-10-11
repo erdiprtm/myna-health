@@ -28,7 +28,11 @@ export default defineConfig({
       ],
     },
   },
-  integrations: [sitemap({ filter: (page) => !page.includes("/og/") && !/\/kontak\/(terkirim|gagal)\//.test(page) })],
+  // No pricing on the brand site (showcase only). The template smoke test still checks /harga/.
+  redirects: { "/harga/": "/" },
+  integrations: [
+    sitemap({ filter: (page) => !page.includes("/og/") && !/\/(kontak\/(terkirim|gagal)|harga)\//.test(page) }),
+  ],
   // Never inline scripts into HTML: the CSP allows script files from self only.
   vite: { plugins: [tailwindcss()], build: { assetsInlineLimit: 0 } },
 });

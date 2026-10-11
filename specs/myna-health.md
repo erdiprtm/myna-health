@@ -8,16 +8,15 @@ Orang dewasa di Indonesia yang ingin hidup lebih sehat (rutin olahraga, makan le
 
 ## Core features (v1 — max 3)
 1. Brand landing page (apps/site) that introduces Myna Health and its products: **Myna Fit** (gym tracker + calorie log, button to https://fit.mynahealth.id) and **Myna Food** (food guidance by goal: diet, high-protein, etc.; label "Segera hadir").
-2. Pricing and company identity clearly visible for Duitku KYC: 6 bulan Rp149.000, 12 bulan Rp249.000; pages Tentang Kami, Kontak, Syarat & Ketentuan, Kebijakan Privasi, Kebijakan Refund; footer on every page with PT Myna Bio Teknologi, full address and erdi@mynahealth.id.
+2. Company identity clearly visible for Duitku KYC (showcase only: no prices, nothing sold on this site); pages Tentang Kami, Kontak, Syarat & Ketentuan, Kebijakan Privasi, Kebijakan Refund; footer on every page with PT Myna Bio Teknologi, full address and erdi@mynahealth.id.
 3. Contact form on /kontak/ that sends the message by email to erdi@mynahealth.id (no phone number shown).
 
 ## Paid vs free
-- Free / trial: the landing site is free to read. No trial is offered on the site.
-- Paid (6 or 12 months): one-time prepaid Myna Health subscription (no auto-renewal), used by the Myna apps.
+- Free / trial: the landing site is free to read. Myna Health is the holding brand: it showcases products and sells nothing.
+- Paid (6 or 12 months): none on this site. Any paid features live inside the products; all payments are final (no refunds).
 
 ## Plans & prices
-- 6 bulan: Rp149.000
-- 12 bulan: Rp249.000
+- None shown on mynahealth.id (showcase only). `product.config.ts` keeps the schema-required plans, unused by the site.
 
 ## Data the product stores
 - The site stores nothing. Contact form messages (name, email, message) are emailed to erdi@mynahealth.id and are not saved in a database.

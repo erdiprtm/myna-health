@@ -24,7 +24,6 @@ const fonts = Promise.all([
 export const getStaticPaths = (async () => {
   const fixed = [
     { slug: "home", title: product.tagline },
-    { slug: "harga", title: "Harga" },
     { slug: "kontak", title: "Kontak" },
     { slug: "tentang", title: "Tentang Kami" },
   ];

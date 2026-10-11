@@ -4,15 +4,13 @@ description: Bagaimana {{name}} mengumpulkan, memakai, dan melindungi data priba
 version: "2026-10-11"
 ---
 
-> Dokumen ini adalah **template**. Wajib ditinjau oleh konsultan hukum sebelum produk diluncurkan.
-
 Kebijakan ini menjelaskan bagaimana **{{companyName}}** ("kami") memproses data pribadi pengunjung situs mynahealth.id dan pengguna aplikasi **{{name}}** (Myna Fit, dan Myna Food saat tersedia) sesuai Undang-Undang Nomor 27 Tahun 2022 tentang Pelindungan Data Pribadi (UU PDP).
 
 ## 1. Data yang kami kumpulkan
 
 - **Data akun:** alamat email, nama, dan waktu pendaftaran.
 - **Data formulir kontak:** nama, email, dan isi pesan yang kamu kirim lewat halaman Kontak. Pesan diteruskan ke email kami untuk dibalas.
-- **Data langganan dan pembayaran:** paket yang dipilih, jumlah, status, dan waktu pembayaran. Data kartu atau rekening **tidak** kami simpan. Pembayaran diproses oleh penyedia pembayaran.
+- **Data pembayaran (jika kamu membeli fitur berbayar di produk Myna):** paket yang dipilih, jumlah, status, dan waktu pembayaran. Data kartu atau rekening **tidak** kami simpan. Pembayaran diproses oleh penyedia pembayaran.
 - **Data teknis:** alamat IP dan jenis perangkat/browser, untuk keamanan (misalnya mencegah penyalahgunaan login) dan pencatatan sesi.
 - **Data penggunaan:** kejadian anonim seperti halaman yang dibuka, tanpa data pribadi, untuk memperbaiki layanan.
 - **Data yang kamu masukkan ke layanan:** {{productDataDescription}}

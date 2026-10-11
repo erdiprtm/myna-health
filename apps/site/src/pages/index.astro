@@ -1,9 +1,8 @@
 ---
 import Faq from "../components/Faq.astro";
 import Icon from "../components/Icon.astro";
-import Pricing from "../components/Pricing.astro";
 import Base from "../layouts/Base.astro";
-import { faqLd, organizationLd, productLd } from "../lib/jsonld";
+import { faqLd, organizationLd } from "../lib/jsonld";
 import { company, disclaimer, mynaFitUrl } from "../lib/site";
 
 const site = Astro.site as URL;
@@ -14,7 +13,7 @@ const trust = [
   { icon: "utensils", label: "Panduan makan sesuai tujuan" },
   { icon: "smartphone", label: "Bisa dipakai di HP dan laptop" },
   { icon: "lock", label: "Privasi data terjaga" },
-  { icon: "wallet", label: "Bayar sekali, tanpa perpanjangan otomatis" },
+  { icon: "sparkles", label: "Berbahasa Indonesia" },
 ] as const;
 const fitFeatures = [
   "Catat latihan gym: gerakan, set, repetisi, dan beban",
@@ -52,16 +51,16 @@ const benefits = [
   { emoji: "📱", bg: "bg-[#eff3ff]", title: "Mudah dipakai", body: "Tampilan sederhana, cukup beberapa ketukan untuk mencatat." },
   { emoji: "🇮🇩", bg: "bg-[#f0fdf4]", title: "Berbahasa Indonesia", body: "Bahasa sehari-hari dan pilihan makanan yang akrab untukmu." },
   { emoji: "🔒", bg: "bg-[#fef3c7]", title: "Privasi terjaga", body: "Data kamu tidak dijual. Kamu bisa meminta salinan atau penghapusan data." },
-  { emoji: "💳", bg: "bg-[#eff3ff]", title: "Bayar sekali", body: "Paket 6 atau 12 bulan, tanpa tagihan atau perpanjangan otomatis." },
+  { emoji: "🌱", bg: "bg-[#eff3ff]", title: "Terus bertumbuh", body: "Produk baru akan hadir untuk melengkapi gaya hidup sehatmu." },
 ];
 ---
 
 <Base
   title="Myna Health"
   fullTitle="Myna Health — Aplikasi Gaya Hidup Sehat"
-  description="Panduan makan sehat dan pelacak kebugaran untuk gaya hidup yang lebih baik. Langganan mulai Rp149.000 untuk 6 bulan."
+  description="Myna Health menghadirkan aplikasi gaya hidup sehat: Myna Fit untuk pelacak kebugaran dan Myna Food untuk panduan makan sehat."
   heroNav
-  jsonLd={[organizationLd(site), productLd(site), faqLd()]}
+  jsonLd={[organizationLd(site), faqLd()]}
 >
   <!-- Hero: navy band behind the headline, two product cards overlapping it, beige marquee. -->
   <section class="relative" aria-labelledby="hero-title">
@@ -71,7 +70,7 @@ const benefits = [
         Hidup sehat,<br class="md:hidden" /><span class="hidden md:inline">{" "}</span><span class="text-myna-cyan">mulai dari kebiasaan kecil.</span>
       </h1>
       <p class="mx-auto max-w-[600px] text-base leading-relaxed text-white/75">
-        Myna Health menghadirkan aplikasi yang membantu kamu bergerak lebih aktif dan makan lebih teratur. Sederhana, berbahasa Indonesia, dan bisa dipakai setiap hari.
+        Myna Health adalah rumah bagi aplikasi gaya hidup sehat yang membantu kamu bergerak lebih aktif dan makan lebih teratur. Sederhana, berbahasa Indonesia, dan bisa dipakai setiap hari.
       </p>
       <div id="produk" class="mx-auto mt-6 flex w-full max-w-sm scroll-mt-24 flex-col justify-center gap-4 sm:max-w-2xl sm:flex-row lg:max-w-[55%]">
         <a href={mynaFitUrl} class="group relative flex w-full flex-col overflow-hidden rounded-2xl border border-border/60 bg-card text-left text-card-foreground shadow-lg transition-all duration-200 hover:scale-[1.02] hover:shadow-xl">
@@ -165,7 +164,6 @@ const benefits = [
               <a href={mynaFitUrl} class="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-myna-navy px-8 text-[15px] font-semibold tracking-[0.05em] text-white uppercase shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl">
                 Buka Myna Fit <Icon name="arrow-right" class="ml-1 h-4 w-4" />
               </a>
-              <a href="/harga/" class="text-[15px] font-semibold text-myna-navy underline underline-offset-4 transition-opacity hover:opacity-70 dark:text-myna-soft">Lihat harga</a>
             </div>
           </div>
         </div>
@@ -263,18 +261,6 @@ const benefits = [
           ))
         }
       </div>
-    </div>
-  </section>
-
-  <!-- Pricing. -->
-  <section id="harga" class="section-padding scroll-mt-20" aria-labelledby="pricing-title">
-    <div class="container-myna max-w-5xl">
-      <div class="mb-12 text-center">
-        <p class="section-label mb-3">Harga</p>
-        <h2 id="pricing-title" class="section-headline mb-4">Langganan <span class="text-myna-blue dark:text-primary">Myna Health</span></h2>
-        <p class="section-desc mx-auto">Bayar sekali di muka untuk 6 atau 12 bulan. Tanpa tagihan dan perpanjangan otomatis.</p>
-      </div>
-      <Pricing />
     </div>
   </section>
 

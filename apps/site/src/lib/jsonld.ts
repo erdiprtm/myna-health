@@ -19,24 +19,6 @@ export function organizationLd(site: URL) {
   };
 }
 
-export function productLd(site: URL) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: product.name,
-    description: product.tagline,
-    brand: { "@type": "Brand", name: product.name },
-    offers: product.plans.map((p) => ({
-      "@type": "Offer",
-      name: p.label,
-      price: String(p.priceIdr),
-      priceCurrency: "IDR",
-      availability: "https://schema.org/InStock",
-      url: new URL("/harga/", site).href,
-    })),
-  };
-}
-
 export function faqLd(items: { q: string; a: string }[] = faqs) {
   return {
     "@context": "https://schema.org",

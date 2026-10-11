@@ -5,10 +5,8 @@ import product from "../../../product.config";
 // Checks the built site (dist/), produced by `astro build` before this runs (turbo test → build).
 const dist = new URL("../dist/", import.meta.url);
 const page = (path: string) => readFileSync(new URL(path, dist), "utf8");
-const idr = (n: number) => `Rp${n.toLocaleString("id-ID")}`;
 const PAGES = [
   "index.html",
-  "harga/index.html",
   "tentang/index.html",
   "kontak/index.html",
   "syarat/index.html",
@@ -24,14 +22,6 @@ const allText = (dir = dist): { path: string; text: string }[] =>
   });
 
 describe("built site", () => {
-  it("prices come from product.config.ts (no code edits needed)", () => {
-    const html = page("harga/index.html");
-    for (const plan of product.plans) {
-      expect(html).toContain(plan.label);
-      expect(html).toContain(idr(plan.priceIdr));
-    }
-  });
-
   it("every page has a title, description, canonical, OG image and lang", () => {
     for (const path of PAGES) {
       const html = page(path);
@@ -54,14 +44,13 @@ describe("built site", () => {
 
   it("ships structured data, sitemap, robots and OG images", () => {
     expect(page("index.html")).toContain('"@type":"FAQPage"');
-    expect(page("index.html")).toContain('"priceCurrency":"IDR"');
     expect(existsSync(new URL("sitemap-index.xml", dist))).toBe(true);
     expect(page("robots.txt")).toMatch(/User-agent: \*/);
     expect(readFileSync(new URL("og/home.png", dist)).subarray(1, 4).toString()).toBe("PNG");
   });
 
   it("CSP meta forbids inline scripts, none are needed, and _headers ships", () => {
-    for (const path of ["index.html", "harga/index.html", "privasi/index.html", "404.html"]) {
+    for (const path of ["index.html", "tentang/index.html", "privasi/index.html", "404.html"]) {
       const html = page(path);
       const csp = html.match(/<meta http-equiv="content-security-policy" content="([^"]+)"/)?.[1];
       expect(csp, path).toContain("default-src 'self'");
@@ -92,7 +81,7 @@ describe("built site", () => {
     const html = page("index.html");
     expect(html).toContain("<title>Myna Health — Aplikasi Gaya Hidup Sehat</title>");
     expect(html).toContain(
-      '<meta name="description" content="Panduan makan sehat dan pelacak kebugaran untuk gaya hidup yang lebih baik. Langganan mulai Rp149.000 untuk 6 bulan.">',
+      '<meta name="description" content="Myna Health menghadirkan aplikasi gaya hidup sehat: Myna Fit untuk pelacak kebugaran dan Myna Food untuk panduan makan sehat.">',
     );
   });
 
@@ -106,7 +95,7 @@ describe("built site", () => {
       expect(html, path).toContain(
         "Myna Health menyediakan informasi gaya hidup sehat dan bukan pengganti layanan medis atau tenaga kesehatan profesional.",
       );
-      for (const link of ["/tentang/", "/kontak/", "/syarat/", "/privasi/", "/refund/", "/harga/"])
+      for (const link of ["/tentang/", "/kontak/", "/syarat/", "/privasi/", "/refund/"])
         expect(html, `${path} → ${link}`).toContain(`href="${link}"`);
     }
   });
@@ -116,7 +105,19 @@ describe("built site", () => {
     expect(html).toContain('href="https://fit.mynahealth.id"');
     expect(html).toContain("Myna Food");
     expect(html).toContain("Segera hadir");
-    for (const plan of product.plans) expect(html).toContain(idr(plan.priceIdr));
+  });
+
+  // Erdi, 2026-10-11: Myna Health is a showcase for the products; nothing is sold here.
+  it("shows no prices and no pricing page", () => {
+    for (const { path, text } of allText()) {
+      expect(text, path).not.toMatch(/Rp\s?\d/);
+      if (path.endsWith(".html")) expect(text, path).not.toContain('href="/harga/"');
+    }
+  });
+
+  it("refund policy says there are no refunds", () => {
+    expect(page("refund/index.html")).toContain("tidak dapat dikembalikan");
+    expect(page("syarat/index.html")).toContain("tidak ada refund");
   });
 
   it("contact page has the address, email and a form to the API, and no phone number", () => {

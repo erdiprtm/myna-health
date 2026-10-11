@@ -3,7 +3,6 @@ import product from "../../../../product.config";
 export { product };
 
 const idr = (n: number) => `Rp${n.toLocaleString("id-ID")}`;
-export const formatIdr = idr;
 
 /** Where "Masuk" / "Mulai" buttons go. CI sets PUBLIC_APP_URL; falls back to the configured domain. */
 export const appUrl: string =
@@ -58,19 +57,15 @@ export const contactEndpoint = `${appUrl}/api/contact`;
 export const faqs = [
   {
     q: "Apa itu Myna Health?",
-    a: "Myna Health adalah merek aplikasi gaya hidup sehat dari PT Myna Bio Teknologi. Saat ini tersedia Myna Fit (pelacak latihan gym dan catatan kalori). Myna Food (panduan makan sesuai tujuan) segera hadir.",
+    a: "Myna Health adalah rumah bagi aplikasi gaya hidup sehat dari PT Myna Bio Teknologi. Saat ini tersedia Myna Fit (pelacak latihan gym dan catatan kalori). Myna Food (panduan makan sesuai tujuan) segera hadir.",
   },
   {
-    q: "Apakah langganan diperpanjang otomatis?",
-    a: "Tidak. Kamu membayar sekali di muka untuk 6 atau 12 bulan. Perpanjangan adalah pembelian baru, jadi tidak ada tagihan otomatis.",
+    q: "Di mana saya bisa memakai Myna Fit?",
+    a: "Myna Fit bisa langsung dibuka di browser HP atau laptop, di fit.mynahealth.id.",
   },
   {
-    q: "Bisa bayar pakai apa?",
-    a: "QRIS, e-wallet (seperti DANA, ShopeePay, OVO), dan virtual account bank.",
-  },
-  {
-    q: "Bagaimana jika saya ingin pengembalian dana?",
-    a: "Pengajuan dapat dilakukan dalam 7 hari setelah pembayaran untuk tagihan ganda, kesalahan nominal, atau layanan yang tidak dapat dipakai karena kesalahan kami. Lihat halaman Kebijakan Refund untuk caranya.",
+    q: "Kapan Myna Food tersedia?",
+    a: "Myna Food sedang kami siapkan. Kirim pesan lewat halaman Kontak jika ingin dikabari saat sudah rilis.",
   },
   {
     q: "Apakah Myna Health layanan medis?",
