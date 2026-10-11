@@ -1,6 +1,6 @@
 ---
 title: Kebijakan Privasi
-description: Bagaimana {{name}} mengumpulkan, memakai, dan melindungi data pribadi kamu sesuai UU Perlindungan Data Pribadi.
+description: Bagaimana {{name}} mengumpulkan, memakai, dan melindungi data pribadi Anda sesuai UU Perlindungan Data Pribadi.
 version: "2026-10-11"
 ---
 
@@ -9,11 +9,11 @@ Kebijakan ini menjelaskan bagaimana **{{companyName}}** ("kami") memproses data 
 ## 1. Data yang kami kumpulkan
 
 - **Data akun:** alamat email, nama, dan waktu pendaftaran.
-- **Data formulir kontak:** nama, email, dan isi pesan yang kamu kirim lewat halaman Kontak. Pesan diteruskan ke email kami untuk dibalas.
-- **Data pembayaran (jika kamu membeli fitur berbayar di produk Myna):** paket yang dipilih, jumlah, status, dan waktu pembayaran. Data kartu atau rekening **tidak** kami simpan. Pembayaran diproses oleh penyedia pembayaran.
+- **Data formulir kontak:** nama, email, dan isi pesan yang Anda kirim lewat halaman Kontak. Pesan diteruskan ke email kami untuk dibalas.
+- **Data pembayaran (jika Anda membeli fitur berbayar di produk Myna):** paket yang dipilih, jumlah, status, dan waktu pembayaran. Data kartu atau rekening **tidak** kami simpan. Pembayaran diproses oleh penyedia pembayaran.
 - **Data teknis:** alamat IP dan jenis perangkat/browser, untuk keamanan (misalnya mencegah penyalahgunaan login) dan pencatatan sesi.
 - **Data penggunaan:** kejadian anonim seperti halaman yang dibuka, tanpa data pribadi, untuk memperbaiki layanan.
-- **Data yang kamu masukkan ke layanan:** {{productDataDescription}}
+- **Data yang Anda masukkan ke layanan:** {{productDataDescription}}
 
 ## 2. Tujuan dan dasar pemrosesan
 
@@ -37,15 +37,15 @@ Kami memakai penyedia layanan berikut sebagai pemroses data. Sebagian dari merek
 - **Google Workspace:** kotak masuk email kami.
 - **Layanan analitik dan pemantauan error:** tanpa data pribadi.
 
-Kami **tidak menjual** data pribadi kamu.
+Kami **tidak menjual** data pribadi Anda.
 
 ## 4. Penyimpanan
 
 Data akun disimpan selama akun aktif. Setelah akun dihapus, data pribadi dihapus. Pesan dari formulir kontak disimpan di kotak masuk email kami selama diperlukan untuk menanggapi pertanyaanmu. Catatan transaksi disimpan **tanpa identitas** selama diwajibkan peraturan perpajakan dan keuangan.
 
-## 5. Hak kamu
+## 5. Hak Anda
 
-Sesuai UU PDP, kamu berhak:
+Sesuai UU PDP, Anda berhak:
 
 - **Mengakses dan mendapatkan salinan** data.
 - **Memperbaiki** data yang tidak akurat.
@@ -57,7 +57,7 @@ Untuk menggunakan hak-hak ini atau bertanya, hubungi **{{contactEmail}}**. Kami 
 
 ## 6. Keamanan
 
-Kami memakai enkripsi saat data dikirim (HTTPS) dan pembatasan akses. Jika terjadi kegagalan pelindungan data, kami memberi tahu kamu dan otoritas sesuai UU PDP.
+Kami memakai enkripsi saat data dikirim (HTTPS) dan pembatasan akses. Jika terjadi kegagalan pelindungan data, kami memberi tahu Anda dan otoritas sesuai UU PDP.
 
 ## 7. Anak-anak
 

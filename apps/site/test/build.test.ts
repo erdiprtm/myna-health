@@ -43,7 +43,8 @@ describe("built site", () => {
   });
 
   it("ships structured data, sitemap, robots and OG images", () => {
-    expect(page("index.html")).toContain('"@type":"FAQPage"');
+    expect(page("kontak/index.html")).toContain('"@type":"FAQPage"');
+    expect(page("index.html")).toContain('"@type":"Organization"');
     expect(existsSync(new URL("sitemap-index.xml", dist))).toBe(true);
     expect(page("robots.txt")).toMatch(/User-agent: \*/);
     expect(readFileSync(new URL("og/home.png", dist)).subarray(1, 4).toString()).toBe("PNG");

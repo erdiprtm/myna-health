@@ -27,9 +27,10 @@ const fullTitle = Astro.props.fullTitle ?? (title === product.name ? title : `${
 const year = new Date().getFullYear();
 
 const links = [
-  { href: "/#produk", label: "Produk" },
-  { href: "/#perusahaan", label: "Perusahaan" },
   { href: "/tentang/", label: "Tentang Kami" },
+  { href: "/#produk", label: "Produk" },
+  { href: "/#prinsip", label: "Prinsip" },
+  { href: "/#perusahaan", label: "Perusahaan" },
 ];
 ---
 
@@ -97,7 +98,7 @@ const links = [
         <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <img src="/logo.png" alt={product.name} width="480" height="197" loading="lazy" class="h-12 w-auto" />
-            <p class="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">Aplikasi wellness dan lifestyle untuk keseharian kamu. Pelan-pelan, yang penting jalan.</p>
+            <p class="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">Produk digital wellness dan lifestyle, dibangun di Indonesia sejak 2026.</p>
             <div class="mt-5"><SocialLinks /></div>
           </div>
           <div>
@@ -195,6 +196,35 @@ const links = [
           "scroll",
           () => {
             frame ||= requestAnimationFrame(update);
+          },
+          { passive: true },
+        );
+      }
+
+      // Scroll-linked motion (P-008): hero parallax and the statement that fills in word by word.
+      const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const parallax = document.querySelector<HTMLElement>("[data-parallax]");
+      const fillWords = [...document.querySelectorAll<HTMLElement>("[data-fill] .fill-word")];
+      const fillBox = document.querySelector<HTMLElement>("[data-fill]");
+      if (!still && (parallax || fillBox)) {
+        let ticking = 0;
+        const onFrame = () => {
+          ticking = 0;
+          if (parallax) parallax.style.transform = `translate3d(0, ${Math.min(window.scrollY, 900) * -0.06}px, 0)`;
+          if (fillBox) {
+            const r = fillBox.getBoundingClientRect();
+            const progress = (window.innerHeight * 0.85 - r.top) / (r.height + window.innerHeight * 0.35);
+            const lit = Math.max(0, Math.min(1, progress)) * fillWords.length;
+            fillWords.forEach((w, i) => {
+              w.style.opacity = String(0.15 + 0.85 * Math.max(0, Math.min(1, lit - i)));
+            });
+          }
+        };
+        onFrame();
+        window.addEventListener(
+          "scroll",
+          () => {
+            ticking ||= requestAnimationFrame(onFrame);
           },
           { passive: true },
         );

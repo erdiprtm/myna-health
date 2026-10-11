@@ -4,42 +4,42 @@ import Icon from "../components/Icon.astro";
 import PageHeader from "../components/PageHeader.astro";
 import Base from "../layouts/Base.astro";
 import { organizationLd } from "../lib/jsonld";
-import { company, disclaimer, mynaFitUrl, values } from "../lib/site";
+import { company, disclaimer, foundedYear, mynaFitUrl, values } from "../lib/site";
 
 const site = Astro.site as URL;
 const missions = [
-  "Bikin aplikasi yang simpel dan enak dipakai tiap hari.",
-  "Kasih info gaya hidup yang jelas dan jujur, tanpa klaim medis.",
-  "Jaga data pengguna sesuai UU Pelindungan Data Pribadi.",
-  "Nambah produk hanya kalau memang dibutuhkan.",
+  "Mengembangkan produk digital yang sederhana dan nyaman digunakan setiap hari.",
+  "Menyajikan informasi gaya hidup yang jelas dan bertanggung jawab, tanpa klaim medis.",
+  "Melindungi data pengguna sesuai UU Pelindungan Data Pribadi.",
+  "Mengembangkan portofolio produk sesuai kebutuhan pengguna di Indonesia.",
 ];
 const products = [
-  { name: "Myna Fit", status: "Tersedia", body: "Gym tracker dan catatan kalori dalam satu aplikasi.", href: mynaFitUrl, cta: "fit.mynahealth.id" },
-  { name: "Myna Food", status: "Segera hadir", body: "Bantu pilih menu sesuai goal: diet, high-protein, atau makan seimbang.", href: "/#myna-food", cta: "Lihat detail" },
+  { name: "Myna Fit", status: "Tersedia", body: "Pelacak latihan gym dan catatan kalori dalam satu aplikasi.", href: mynaFitUrl, cta: "fit.mynahealth.id" },
+  { name: "Myna Food", status: "Segera hadir", body: "Panduan makan sesuai tujuan: diet, tinggi protein, atau pola makan seimbang.", href: "/#myna-food", cta: "Lihat detail" },
 ];
 const h2 = "text-[28px] leading-[1.2] font-bold text-foreground md:text-[36px]";
 ---
 
-<Base title="Tentang Kami" description={`Kenalan dengan Myna Health, merek wellness dan lifestyle milik ${company.name}: visi, misi, produk (Myna Fit, Myna Food), dan identitas perusahaan.`} og="tentang" jsonLd={[organizationLd(site)]}>
-  <PageHeader label="Tentang Kami" title="Kenalan dulu." description={`Myna Health adalah merek milik ${company.name}, perusahaan teknologi wellness dan lifestyle dari Depok.`} />
+<Base title="Tentang Kami" description={`Profil ${company.name}, perusahaan di balik Myna Health: visi, misi, prinsip, portofolio produk (Myna Fit, Myna Food), dan identitas perusahaan.`} og="tentang" jsonLd={[organizationLd(site)]}>
+  <PageHeader label="Tentang Kami" title="Profil perusahaan" description={`Myna Health adalah merek milik ${company.name}, perusahaan teknologi wellness dan lifestyle yang didirikan pada ${foundedYear} di Depok.`} />
 
   <section class="section-padding">
     <div class="container-myna grid max-w-6xl gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
       <div class="space-y-5 text-[17px] leading-relaxed text-foreground/80">
         <p class="section-label">Siapa kami</p>
-        <h2 class={h2}>Kami bikin sehat jadi kebiasaan, <span class="text-primary">bukan proyek.</span></h2>
-        <p>Mau rajin olahraga dan makan lebih teratur itu gampang diucapin. Jalaninnya yang susah, apalagi kalau caranya ribet atau bikin merasa bersalah.</p>
+        <h2 class={h2}>Membuat kebiasaan sehat <span class="text-primary">lebih mudah dijalani.</span></h2>
+        <p>Banyak orang ingin lebih aktif dan makan lebih teratur, tetapi sulit menjaganya secara konsisten. Kami percaya kuncinya ada pada alat yang sederhana dan relevan dengan keseharian.</p>
         <p>
-          Karena itu kami bikin aplikasi kecil yang fokus ke satu kebiasaan. <strong class="text-foreground">Myna Fit</strong> untuk catat latihan dan kalori.
-          <strong class="text-foreground">Myna Food</strong>, yang segera hadir, untuk bantu pilih menu sesuai goal kamu.
+          Karena itu setiap produk kami berfokus pada satu kebiasaan. <strong class="text-foreground">Myna Fit</strong> membantu mencatat latihan dan kalori harian.
+          <strong class="text-foreground">Myna Food</strong>, yang segera hadir, membantu memilih menu sesuai tujuan.
         </p>
-        <p>Semua produk Myna dikembangkan dan dikelola oleh {company.name} di Kota Depok, Jawa Barat.</p>
+        <p>Seluruh produk Myna dikembangkan dan dikelola oleh {company.name}, yang didirikan pada {foundedYear} dan berkantor di Kota Depok, Jawa Barat.</p>
         <p class="rounded-2xl border border-border bg-card p-5 text-sm text-muted-foreground">{disclaimer}</p>
       </div>
       <aside class="space-y-4">
         <div class="rounded-3xl bg-accent p-7">
           <p class="mb-2 text-xs font-semibold tracking-[0.15em] text-accent-foreground/70 uppercase">Visi</p>
-          <p class="text-xl leading-snug font-semibold text-foreground">Jadi teman sehari-hari orang Indonesia buat hidup lebih sehat, dengan cara yang realistis.</p>
+          <p class="text-xl leading-snug font-semibold text-foreground">Menjadi pendamping sehari-hari masyarakat Indonesia untuk menjalani hidup yang lebih sehat.</p>
         </div>
         <div class="rounded-3xl border border-border bg-card p-7">
           <p class="mb-3 text-xs font-semibold tracking-[0.15em] text-muted-foreground uppercase">Misi</p>
@@ -65,7 +65,7 @@ const h2 = "text-[28px] leading-[1.2] font-bold text-foreground md:text-[36px]";
   <section class="section-padding pt-0 md:pt-0" aria-labelledby="portfolio-title">
     <div class="container-myna max-w-6xl">
       <p class="section-label mb-3">Produk</p>
-      <h2 id="portfolio-title" class:list={[h2, "mb-8"]}>Yang sudah dan akan hadir</h2>
+      <h2 id="portfolio-title" class:list={[h2, "mb-8"]}>Portofolio produk</h2>
       <div class="grid gap-6 md:grid-cols-2">
         {products.map((p) => (
           <a href={p.href} class="group flex flex-col rounded-2xl border border-border bg-card p-6 transition-all duration-200 hover:scale-[1.01] hover:shadow-lg">
@@ -83,8 +83,8 @@ const h2 = "text-[28px] leading-[1.2] font-bold text-foreground md:text-[36px]";
 
   <section class="section-padding pt-0 md:pt-0" aria-labelledby="values-title">
     <div class="container-myna max-w-6xl">
-      <p class="section-label mb-3">Yang kami pegang</p>
-      <h2 id="values-title" class:list={[h2, "mb-8"]}>Empat hal yang nggak bisa ditawar</h2>
+      <p class="section-label mb-3">Prinsip kami</p>
+      <h2 id="values-title" class:list={[h2, "mb-8"]}>Cara kami membangun produk</h2>
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {values.map((v) => (
           <div class="rounded-2xl border border-border bg-card p-6">

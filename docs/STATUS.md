@@ -11,7 +11,8 @@ Progress log, newest entry on top.
 - **Site** (`apps/site`): Lovable design rebuilt (P-002); pages `/`, `/harga/`, `/tentang/`, `/kontak/` (+ `terkirim`, `gagal`), `/syarat/`, `/privasi/`, `/refund/`, 404. Footer with PT Myna Bio Teknologi, address, email and the disclaimer on every page. No medical content (tested).
 - **API:** `POST /api/contact` emails erdi@mynahealth.id (P-003).
 - **Preview review (Erdi):** showcase only, no prices, no refunds, legal reviewed (P-005); corporate landing for entity KYC (P-006). Applied.
-- **Homepage v2 (P-007):** research-based structure, new copy voice, light only, Pexels photos, social marks, NIB row.
+- **Homepage v2 (P-007):** research-based structure, light only, Pexels photos, social marks, NIB row.
+- **Homepage v3 (P-008):** corporate voice ("Anda"), elegant motion, founded 2026, founders not shown.
 - **Human next:** NIB number (placeholder `xxx`), social handles, `RESEND_API_KEY` for the contact form (with the domain step).
 - **Not done yet:** domain switch (waits for approval of the preview).
 

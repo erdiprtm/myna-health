@@ -1,5 +1,7 @@
 ---
 import ContactInfo from "../../components/ContactInfo.astro";
+import Faq from "../../components/Faq.astro";
+import { faqLd } from "../../lib/jsonld";
 import PageHeader from "../../components/PageHeader.astro";
 import Base from "../../layouts/Base.astro";
 import { company, contactEndpoint, product } from "../../lib/site";
@@ -8,18 +10,18 @@ const field =
   "mt-1.5 block w-full rounded-lg border border-input bg-background px-3.5 py-2.5 text-[15px] text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-ring/30 focus:outline-none";
 ---
 
-<Base title="Kontak" description={`Hubungi ${company.name}, pengelola ${product.name}, untuk pertanyaan produk, kerja sama, atau data pribadi. Email ${company.email}.`} og="kontak">
-  <PageHeader label="Kontak" title="Hubungi kami" description="Ada pertanyaan tentang produk, kerja sama, atau data pribadi? Kirim pesan dan kami akan membalas lewat email." />
+<Base title="Kontak" description={`Hubungi ${company.name}, pengelola ${product.name}, untuk pertanyaan produk, kerja sama, atau data pribadi. Email ${company.email}.`} og="kontak" jsonLd={[faqLd()]}>
+  <PageHeader label="Kontak" title="Hubungi kami" description="Untuk pertanyaan produk, kemitraan, atau data pribadi, silakan kirim pesan. Kami akan membalas melalui email." />
   <section class="section-padding">
     <div class="container-myna grid max-w-5xl gap-8 lg:grid-cols-[2fr_3fr]">
       <ContactInfo />
       <form method="post" action={contactEndpoint} class="rounded-2xl border border-border bg-card p-6 md:p-8" aria-labelledby="form-title">
         <h2 id="form-title" class="card-title mb-1">Kirim pesan</h2>
-        <p class="mb-6 text-sm text-muted-foreground">Pesan kamu dikirim ke {company.email}.</p>
+        <p class="mb-6 text-sm text-muted-foreground">Pesan Anda akan diteruskan ke {company.email}.</p>
         <div class="space-y-5">
           <label class="block text-sm font-medium text-foreground">
             Nama
-            <input class={field} type="text" name="name" required maxlength="100" autocomplete="name" placeholder="Nama kamu" />
+            <input class={field} type="text" name="name" required maxlength="100" autocomplete="name" placeholder="Nama lengkap" />
           </label>
           <label class="block text-sm font-medium text-foreground">
             Email
@@ -27,20 +29,26 @@ const field =
           </label>
           <label class="block text-sm font-medium text-foreground">
             Pesan
-            <textarea class={field} name="message" required minlength="10" maxlength="5000" rows="6" placeholder="Tulis pertanyaan atau pesanmu"></textarea>
+            <textarea class={field} name="message" required minlength="10" maxlength="5000" rows="6" placeholder="Tulis pesan Anda"></textarea>
           </label>
           <!-- Spam trap: hidden from people, bots fill it in. -->
           <div class="hidden" aria-hidden="true">
             <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
           </div>
           <p class="text-xs text-muted-foreground">
-            Dengan mengirim pesan, kamu setuju data di atas dipakai untuk membalas pesanmu sesuai <a href="/privasi/" class="text-primary underline underline-offset-4">Kebijakan Privasi</a>.
+            Dengan mengirim pesan, Anda menyetujui penggunaan data di atas untuk membalas pesan Anda sesuai <a href="/privasi/" class="text-primary underline underline-offset-4">Kebijakan Privasi</a>.
           </p>
           <button type="submit" class="inline-flex h-12 w-full items-center justify-center rounded-full bg-myna-blue px-8 text-[15px] font-semibold text-white shadow-lg transition-all duration-200 hover:scale-[1.02] hover:bg-myna-blue-hover hover:shadow-xl sm:w-auto">
             Kirim pesan
           </button>
         </div>
       </form>
+    </div>
+  </section>
+  <section class="section-padding pt-0 md:pt-0" aria-labelledby="faq-title">
+    <div class="container-myna max-w-3xl">
+      <h2 id="faq-title" class="mb-8 text-center text-[28px] leading-[1.2] font-bold text-foreground md:text-[36px]">Pertanyaan umum</h2>
+      <Faq />
     </div>
   </section>
 </Base>

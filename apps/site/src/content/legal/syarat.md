@@ -4,7 +4,7 @@ description: Syarat penggunaan situs {{name}} dan aplikasi gaya hidup sehat dari
 version: "2026-10-11"
 ---
 
-Syarat & Ketentuan ini berlaku untuk situs mynahealth.id dan aplikasi di bawah merek **{{name}}** (saat ini **Myna Fit**, dan **Myna Food** saat tersedia), yang dikelola oleh **{{companyName}}** ("kami"). Dengan memakai situs atau aplikasi kami, kamu menyetujui syarat berikut.
+Syarat & Ketentuan ini berlaku untuk situs mynahealth.id dan aplikasi di bawah merek **{{name}}** (saat ini **Myna Fit**, dan **Myna Food** saat tersedia), yang dikelola oleh **{{companyName}}** ("kami"). Dengan memakai situs atau aplikasi kami, Anda menyetujui syarat berikut.
 
 ## 1. Tentang situs dan produk
 
@@ -15,25 +15,25 @@ Syarat & Ketentuan ini berlaku untuk situs mynahealth.id dan aplikasi di bawah m
 
 ## 2. Bukan layanan medis
 
-Myna Health menyediakan informasi gaya hidup sehat dan **bukan pengganti layanan medis atau tenaga kesehatan profesional**. Informasi di situs dan aplikasi kami bersifat **umum** dan tidak ditujukan untuk kondisi pribadi tertentu. Jika kamu memiliki kondisi kesehatan khusus, mintalah saran dari tenaga kesehatan profesional sebelum mengubah pola latihan atau pola makan.
+Myna Health menyediakan informasi gaya hidup sehat dan **bukan pengganti layanan medis atau tenaga kesehatan profesional**. Informasi di situs dan aplikasi kami bersifat **umum** dan tidak ditujukan untuk kondisi pribadi tertentu. Jika Anda memiliki kondisi kesehatan khusus, mintalah saran dari tenaga kesehatan profesional sebelum mengubah pola latihan atau pola makan.
 
 ## 3. Akun di produk Myna
 
-- Kamu bertanggung jawab menjaga keamanan akses ke akun dan email kamu.
-- Satu akun untuk satu orang. Data yang kamu berikan harus benar.
-- Kamu harus berusia minimal 18 tahun, atau memakai layanan dengan persetujuan orang tua atau wali.
+- Anda bertanggung jawab menjaga keamanan akses ke akun dan email Anda.
+- Satu akun untuk satu orang. Data yang Anda berikan harus benar.
+- Anda harus berusia minimal 18 tahun, atau memakai layanan dengan persetujuan orang tua atau wali.
 
 ## 4. Pembayaran di produk Myna
 
-Jika suatu produk Myna menawarkan fitur berbayar, harga dan cara pembayarannya ditampilkan di produk tersebut sebelum kamu membayar. {{refundPolicy}}
+Jika suatu produk Myna menawarkan fitur berbayar, harga dan cara pembayarannya ditampilkan di produk tersebut sebelum Anda membayar. {{refundPolicy}}
 
 ## 5. Penggunaan yang dilarang
 
-Kamu tidak boleh menyalahgunakan situs atau aplikasi kami, termasuk mencoba membobol keamanan, mengganggu layanan, menjual ulang akses, atau memakai layanan untuk tindakan yang melanggar hukum.
+Anda tidak boleh menyalahgunakan situs atau aplikasi kami, termasuk mencoba membobol keamanan, mengganggu layanan, menjual ulang akses, atau memakai layanan untuk tindakan yang melanggar hukum.
 
 ## 6. Hak kekayaan intelektual
 
-Nama, logo, desain, dan konten {{name}} adalah milik {{companyName}}. Kamu tidak boleh memakainya tanpa izin tertulis dari kami.
+Nama, logo, desain, dan konten {{name}} adalah milik {{companyName}}. Anda tidak boleh memakainya tanpa izin tertulis dari kami.
 
 ## 7. Ketersediaan layanan
 

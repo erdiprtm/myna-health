@@ -12,7 +12,7 @@ Semua pembayaran untuk produk Myna bersifat **final** dan **tidak dapat dikembal
 
 ## 2. Sebelum membayar
 
-Harga, isi layanan, dan masa berlakunya selalu ditampilkan di produk terkait sebelum kamu membayar. Pastikan kamu sudah membacanya sebelum melakukan pembayaran.
+Harga, isi layanan, dan masa berlakunya selalu ditampilkan di produk terkait sebelum Anda membayar. Pastikan Anda sudah membacanya sebelum melakukan pembayaran.
 
 ## 3. Situs mynahealth.id
 

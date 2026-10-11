@@ -55,6 +55,9 @@ export const socials = [
   { name: "YouTube", url: null },
 ] as const satisfies readonly { name: string; url: string | null }[];
 
+/** Year PT Myna Bio Teknologi was founded. */
+export const foundedYear = 2026;
+
 /** NIB (Nomor Induk Berusaha). Placeholder until Erdi confirms the number. */
 export const nib = "xxx";
 
@@ -64,49 +67,45 @@ export const mynaFitUrl = "https://fit.mynahealth.id";
 /** Where the contact form posts (API Worker; it emails erdi@… and redirects back here). */
 export const contactEndpoint = `${appUrl}/api/contact`;
 
-/** "Yang kami pegang": shown on the home page and Tentang Kami. */
+/** Company principles: shown on the home page and Tentang Kami. */
 export const values = [
   {
-    icon: "lock",
-    title: "Privasi itu hak kamu",
-    body: "Data kamu nggak kami jual. Mau minta salinan atau hapus? Tinggal bilang.",
-  },
-  {
     icon: "sparkles",
-    title: "Nggak ada body shaming",
-    body: "Kami nggak akan bikin kamu malu sama badan sendiri, apalagi sama isi piring.",
-  },
-  {
-    icon: "clock",
-    title: "Kecil, tapi rutin",
-    body: "Lima belas menit hari ini lebih berguna daripada rencana sempurna buat minggu depan.",
+    title: "Sederhana",
+    body: "Setiap produk dirancang agar mudah dipahami dan nyaman digunakan setiap hari.",
   },
   {
     icon: "info",
-    title: "Jujur soal batas",
-    body: "Kami kasih info gaya hidup, bukan nasihat medis. Untuk kondisi khusus, tanya ahlinya.",
+    title: "Bertanggung jawab",
+    body: "Informasi gaya hidup yang kami sajikan bersifat umum dan jelas, tanpa klaim medis.",
+  },
+  {
+    icon: "lock",
+    title: "Menjaga privasi",
+    body: "Data pengguna dilindungi sesuai UU Pelindungan Data Pribadi dan tidak pernah diperjualbelikan.",
+  },
+  {
+    icon: "map-pin",
+    title: "Relevan untuk Indonesia",
+    body: "Bahasa, kebiasaan, dan pilihan makanan disesuaikan dengan keseharian di Indonesia.",
   },
 ] as const;
 
 export const faqs = [
   {
     q: "Siapa yang mengelola Myna Health?",
-    a: "PT Myna Bio Teknologi, perusahaan teknologi yang berkantor di Kota Depok, Jawa Barat. Detail lengkapnya ada di bagian Identitas perusahaan.",
+    a: "Myna Health adalah merek milik PT Myna Bio Teknologi, perusahaan yang didirikan pada 2026 dan berkantor di Kota Depok, Jawa Barat.",
   },
   {
-    q: "Myna Health itu layanan medis?",
+    q: "Apakah Myna Health layanan medis?",
     a: `Bukan. ${disclaimer}`,
   },
   {
-    q: "Myna Fit bisa dipakai di mana?",
-    a: "Langsung dari browser HP atau laptop di fit.mynahealth.id. Nggak perlu unduh aplikasi.",
+    q: "Di mana Myna Fit dapat digunakan?",
+    a: "Myna Fit dapat diakses langsung melalui browser di fit.mynahealth.id, tanpa perlu mengunduh aplikasi.",
   },
   {
-    q: "Kapan Myna Food rilis?",
-    a: "Lagi kami siapin. Kirim pesan lewat halaman Kontak kalau mau dikabari duluan.",
-  },
-  {
-    q: "Mau tanya atau ajak kerja sama, ke mana?",
-    a: "Isi formulir di halaman Kontak atau email ke erdi@mynahealth.id. Kami balas di hari kerja.",
+    q: "Kapan Myna Food tersedia?",
+    a: "Myna Food sedang dalam pengembangan. Silakan hubungi kami untuk mendapatkan informasi peluncurannya.",
   },
 ];
