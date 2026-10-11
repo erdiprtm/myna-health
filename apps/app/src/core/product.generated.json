@@ -1,7 +1,7 @@
 {
-  "slug": "factory-template",
-  "name": "Factory Template",
-  "tagline": "Template untuk membangun produk web dengan cepat.",
+  "slug": "myna-health",
+  "name": "Myna Health",
+  "tagline": "Aplikasi gaya hidup sehat: panduan makan sehat dan pelacak kebugaran untuk gaya hidup yang lebih baik.",
   "locale": {
     "default": "id",
     "supported": [
@@ -108,9 +108,9 @@
     "emails": []
   },
   "analytics": {
-    "openpanelClientId": "30b591cb-a810-42a6-a9cc-97f12a263446"
+    "openpanelClientId": null
   },
   "monitoring": {
-    "sentryDsn": "https://b5f9d8f1ce9efa50576995836b63637d@o4512236547801088.ingest.us.sentry.io/4512236556124160"
+    "sentryDsn": null
   }
 }

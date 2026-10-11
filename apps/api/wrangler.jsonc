@@ -2,7 +2,7 @@
   "$schema": "./node_modules/wrangler/config-schema.json",
   // Top level = PRODUCTION. env.preview = isolated preview Worker (docs/DECISIONS.md D-008).
   // Production changes only through CI (.github/workflows/deploy.yml).
-  "name": "factory-template",
+  "name": "myna-health",
   "main": "src/index.ts",
   // Not later than the workerd bundled with the pinned wrangler (4.141.0 -> 2026-09-25)
   "compatibility_date": "2026-09-25",
@@ -21,7 +21,7 @@
   "vars": {
     "APP_ENV": "production",
     "COMMIT_SHA": "dev",
-    "AUTH_HOSTS": "factory-template.erdiprtm.workers.dev",
+    "AUTH_HOSTS": "myna-health.erdiprtm.workers.dev",
     // Sandbox until the human explicitly switches this product to production (Operating rule 7).
     "DUITKU_MODE": "sandbox",
     "DOKU_MODE": "sandbox"
@@ -37,8 +37,8 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "factory-template-prod",
-      "database_id": "a30e51f0-7037-459d-a34b-9fe25aa30e43",
+      "database_name": "myna-health-prod",
+      "database_id": "627f6293-6e2d-4e33-a340-82eba62530c0",
       "migrations_dir": "../../packages/db/migrations"
     }
   ],
@@ -47,7 +47,7 @@
       "vars": {
         "APP_ENV": "preview",
         "COMMIT_SHA": "dev",
-        "AUTH_HOSTS": "factory-template-preview.erdiprtm.workers.dev,*-factory-template-preview.erdiprtm.workers.dev",
+        "AUTH_HOSTS": "myna-health-preview.erdiprtm.workers.dev,*-myna-health-preview.erdiprtm.workers.dev",
         "DUITKU_MODE": "sandbox",
         "DOKU_MODE": "sandbox"
       },
@@ -60,8 +60,8 @@
       "d1_databases": [
         {
           "binding": "DB",
-          "database_name": "factory-template-preview",
-          "database_id": "c7642715-9126-4634-abcf-b230eb7089aa",
+          "database_name": "myna-health-preview",
+          "database_id": "05211193-a50e-4bb8-a067-791a4127bbf3",
           "migrations_dir": "../../packages/db/migrations"
         }
       ]

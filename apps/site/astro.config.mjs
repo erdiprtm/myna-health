@@ -5,7 +5,7 @@ import { defineConfig } from "astro/config";
 
 // SITE_URL is set by CI per environment (production / preview). Canonical URLs, the sitemap and
 // OG image URLs are built from it. product.config.ts `domain.site` replaces it once a domain exists.
-const site = process.env.SITE_URL ?? "https://factory-template-site.erdiprtm.workers.dev";
+const site = process.env.SITE_URL ?? "https://myna-health-site.erdiprtm.workers.dev";
 
 export default defineConfig({
   site,

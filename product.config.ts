@@ -3,9 +3,9 @@ import { defineProduct } from "@factory/config";
 // THE file a new product edits first. Everything that differs between products and
 // isn't feature code lives here. Validated by packages/config on every build.
 export default defineProduct({
-  slug: "factory-template",
-  name: "Factory Template",
-  tagline: "Template untuk membangun produk web dengan cepat.",
+  slug: "myna-health",
+  name: "Myna Health",
+  tagline: "Aplikasi gaya hidup sehat: panduan makan sehat dan pelacak kebugaran untuk gaya hidup yang lebih baik.",
   locale: { default: "id", supported: ["id", "en"] },
   domain: { app: null, site: null },
   brand: {
@@ -72,9 +72,9 @@ export default defineProduct({
   legal: { companyName: "PT Contoh Studio", contactEmail: "halo@example.com", sensitiveDataConsent: false },
   admin: { emails: [] },
   // Template's own OpenPanel project. /new-product clears it: each product gets its own project.
-  analytics: { openpanelClientId: "30b591cb-a810-42a6-a9cc-97f12a263446" },
+  analytics: { openpanelClientId: null },
   // Template's own Sentry project. /new-product clears it, like the OpenPanel client ID.
   monitoring: {
-    sentryDsn: "https://b5f9d8f1ce9efa50576995836b63637d@o4512236547801088.ingest.us.sentry.io/4512236556124160",
+    sentryDsn: null,
   },
 });
