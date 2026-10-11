@@ -1,5 +1,10 @@
 @import "tailwindcss";
 @import "./tokens.css";
+@import "@fontsource/outfit/400.css";
+@import "@fontsource/outfit/500.css";
+@import "@fontsource/outfit/600.css";
+@import "@fontsource/outfit/700.css";
+@import "@fontsource/outfit/800.css";
 
 /* Dark mode via the `dark` class on <html> (set before paint in Base.astro). */
 @custom-variant dark (&:where(.dark, .dark *));
@@ -29,12 +34,98 @@
   --radius-md: calc(var(--radius) - 2px);
 }
 
+/* Myna brand palette (Lovable design, archive/telehealth-v1). Same in light and dark: these
+   colour the navy bands and the two product accents, which stay navy/orange in both themes. */
+@theme {
+  --color-myna-navy: #032b84;
+  --color-myna-deep: #003087;
+  --color-myna-blue: #2b3fe0;
+  --color-myna-blue-hover: #1e30c8;
+  --color-myna-cyan: #24dde2;
+  --color-myna-soft: #dae7fc;
+  --color-myna-band: #f0ede8;
+  --color-myna-chip: #f5f1e8;
+  --color-food: #c46126;
+  --color-food-deep: #5d350e;
+  --color-food-soft: #f9f2ea;
+  --font-sans: Outfit, "DM Sans", system-ui, sans-serif;
+  --animate-marquee: marquee 30s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-33.333%);
+  }
+}
+
+@utility container-myna {
+  @apply mx-auto w-full max-w-7xl px-4 md:px-8;
+}
+@utility section-padding {
+  @apply py-16 md:py-24;
+}
+@utility section-label {
+  @apply text-xs font-semibold tracking-[0.15em] text-muted-foreground uppercase;
+}
+@utility section-headline {
+  @apply text-[32px] leading-[1.2] font-bold text-foreground md:text-[48px];
+}
+@utility section-desc {
+  @apply max-w-[560px] text-lg font-normal text-muted-foreground;
+}
+@utility card-title {
+  @apply text-xl font-semibold text-foreground;
+}
+@utility card-desc {
+  @apply text-[15px] leading-relaxed font-normal text-muted-foreground;
+}
+
 @layer base {
   html {
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-family: Outfit, "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    scroll-behavior: smooth;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-semibold tracking-tight;
+  }
+  /* Scroll reveal (Base.astro script adds .is-visible). Without JS, everything is visible. */
+  .js [data-reveal] {
+    @apply translate-y-5 opacity-0 transition-all duration-[600ms] ease-out;
+  }
+  .js [data-reveal].is-visible {
+    @apply translate-y-0 opacity-100;
+  }
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    .js [data-reveal] {
+      @apply translate-y-0 opacity-100 transition-none;
+    }
+  }
+  details > summary {
+    list-style: none;
+  }
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
+  details[open] .faq-chevron {
+    @apply rotate-180;
   }
   body {
     @apply bg-background text-foreground antialiased;
+  }
+  .prose-legal h3 {
+    @apply mt-6 mb-2 text-lg font-semibold;
   }
   .prose-legal h2 {
     @apply mt-8 mb-3 text-xl font-semibold;
@@ -61,5 +152,46 @@
   }
   .prose-legal a {
     @apply text-primary underline;
+  }
+}
+
+/* Navbar: logo per theme; transparent over the home hero until scrolled (needs JS, else solid).
+   Unlayered on purpose: it must override the utility classes on the header. */
+.logo-on-dark {
+  @apply hidden;
+}
+.dark .logo-on-light {
+  @apply hidden;
+}
+.dark .logo-on-dark {
+  @apply block;
+}
+.mobile-menu .menu-close,
+.mobile-menu[open] .menu-open {
+  @apply hidden;
+}
+.mobile-menu[open] .menu-close {
+  @apply block;
+}
+.js .site-nav[data-hero]:not([data-scrolled]):not(:has(.mobile-menu[open])) {
+  @apply border-transparent bg-transparent shadow-none backdrop-blur-none;
+  .logo-on-light {
+    @apply hidden;
+  }
+  .logo-on-dark {
+    @apply block;
+  }
+  .nav-link {
+    @apply text-white/80 hover:text-white;
+  }
+  .nav-cta {
+    @apply bg-white text-myna-blue hover:bg-white/90;
+  }
+}
+
+/* Unlayered so it beats the animate-marquee utility. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
   }
 }

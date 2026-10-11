@@ -2,10 +2,11 @@
 import { getEntry } from "astro:content";
 import { marked } from "marked";
 import Base from "../layouts/Base.astro";
+import PageHeader from "./PageHeader.astro";
 import { fillPlaceholders, showLegalBanner } from "../lib/site";
 
 interface Props {
-  id: "privasi" | "syarat";
+  id: "privasi" | "syarat" | "refund";
 }
 const entry = await getEntry("legal", Astro.props.id);
 if (!entry) throw new Error(`missing legal page ${Astro.props.id}`);
@@ -23,9 +24,8 @@ const description = fillPlaceholders(entry.data.description);
       </div>
     )
   }
-  <article class="prose-legal mx-auto w-full max-w-3xl px-5 py-14">
-    <h1 class="mb-2 text-4xl font-extrabold tracking-tight">{title}</h1>
-    <p class="mb-8 text-sm text-muted-foreground">Versi {entry.data.version}</p>
+  <PageHeader label="Legal" title={title} description={`Versi ${entry.data.version}`} />
+  <article class="prose-legal mx-auto w-full max-w-3xl px-4 py-14 md:px-8">
     <Fragment set:html={html} />
   </article>
 </Base>

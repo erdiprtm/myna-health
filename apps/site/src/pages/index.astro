@@ -1,54 +1,317 @@
 ---
 import Faq from "../components/Faq.astro";
+import Icon from "../components/Icon.astro";
 import Pricing from "../components/Pricing.astro";
 import Base from "../layouts/Base.astro";
 import { faqLd, organizationLd, productLd } from "../lib/jsonld";
-import { appUrl, faqs, product } from "../lib/site";
+import { company, disclaimer, mynaFitUrl } from "../lib/site";
 
 const site = Astro.site as URL;
-const description = `${product.tagline} Coba gratis ${product.trial.days} hari, lalu pilih paket 6 atau 12 bulan. Bayar dengan QRIS, e-wallet, atau virtual account.`;
-// PRODUCT-OWNED copy: replace the feature list and hero text per product (from the spec).
-const features = [
-  { title: "Mulai dalam hitungan detik", body: "Masuk dengan email atau Google. Tanpa kata sandi." },
-  { title: "Bayar sekali, tanpa ribet", body: "QRIS, e-wallet, atau virtual account. Tidak ada tagihan otomatis." },
-  { title: "Datamu milikmu", body: "Unduh atau hapus data kapan saja, sesuai UU Pelindungan Data Pribadi." },
+// PRODUCT-OWNED copy (specs/myna-health.md). No medical content anywhere on this site.
+const trust = [
+  { icon: "dumbbell", label: "Pelacak latihan gym" },
+  { icon: "flame", label: "Catatan kalori harian" },
+  { icon: "utensils", label: "Panduan makan sesuai tujuan" },
+  { icon: "smartphone", label: "Bisa dipakai di HP dan laptop" },
+  { icon: "lock", label: "Privasi data terjaga" },
+  { icon: "wallet", label: "Bayar sekali, tanpa perpanjangan otomatis" },
+] as const;
+const fitFeatures = [
+  "Catat latihan gym: gerakan, set, repetisi, dan beban",
+  "Catat makanan dan perkiraan kalori harian",
+  "Rencana latihan sesuai tujuan dan pengalamanmu",
+  "Lihat riwayat dan progres dari minggu ke minggu",
+  "Langsung dipakai dari browser, tanpa unduh aplikasi",
+];
+const foodGoals = [
+  { title: "Diet", body: "Pilihan menu dengan porsi dan kalori yang lebih terkontrol." },
+  { title: "Tinggi protein", body: "Ide makanan kaya protein untuk mendukung latihanmu." },
+  { title: "Makan seimbang", body: "Panduan isi piring yang sederhana untuk sehari-hari." },
+];
+const steps = [
+  {
+    kicker: "Langkah 1",
+    title: "Pilih aplikasi",
+    img: { src: "/images/pasangan-tersenyum.webp", alt: "Pasangan tersenyum bersama", w: 1031, h: 1280 },
+    body: "Mulai dengan Myna Fit untuk mencatat latihan dan kalori. Myna Food menyusul untuk panduan makan sesuai tujuan.",
+  },
+  {
+    kicker: "Langkah 2",
+    title: "Catat setiap hari",
+    img: { src: "/images/food-memasak.webp", alt: "Pasangan memasak makanan sehat di rumah", w: 1920, h: 1920 },
+    body: "Cukup beberapa detik setelah latihan atau makan. Kebiasaan kecil yang konsisten lebih berarti daripada perubahan besar sesaat.",
+  },
+  {
+    kicker: "Langkah 3",
+    title: "Lihat progresmu",
+    img: { src: "/images/fit-progres.webp", alt: "Grafik progres latihan di aplikasi Myna", w: 1920, h: 1920 },
+    body: "Riwayat dan grafik membantu kamu melihat perubahan dan tetap semangat menjalani gaya hidup sehat.",
+  },
+];
+const benefits = [
+  { emoji: "📱", bg: "bg-[#eff3ff]", title: "Mudah dipakai", body: "Tampilan sederhana, cukup beberapa ketukan untuk mencatat." },
+  { emoji: "🇮🇩", bg: "bg-[#f0fdf4]", title: "Berbahasa Indonesia", body: "Bahasa sehari-hari dan pilihan makanan yang akrab untukmu." },
+  { emoji: "🔒", bg: "bg-[#fef3c7]", title: "Privasi terjaga", body: "Data kamu tidak dijual. Kamu bisa meminta salinan atau penghapusan data." },
+  { emoji: "💳", bg: "bg-[#eff3ff]", title: "Bayar sekali", body: "Paket 6 atau 12 bulan, tanpa tagihan atau perpanjangan otomatis." },
 ];
 ---
 
-<Base title={product.name} description={description} jsonLd={[organizationLd(site), productLd(site), faqLd()]}>
-  <section class="mx-auto flex w-full max-w-5xl flex-col items-start gap-6 px-5 py-16 sm:py-24">
-    <h1 class="max-w-3xl text-4xl font-extrabold tracking-tight sm:text-5xl">{product.tagline}</h1>
-    <p class="max-w-2xl text-lg text-muted-foreground">
-      {product.name} membantu kamu lebih cepat. Coba gratis {product.trial.days} hari, lalu pilih paket 6 atau 12 bulan.
-    </p>
-    <div class="flex flex-wrap gap-3">
-      <a href={`${appUrl}/sign-in`} data-event="signup_started" class="rounded-lg bg-primary px-6 py-3 font-semibold text-primary-foreground hover:opacity-90">
-        Coba gratis {product.trial.days} hari
-      </a>
-      <a href="/harga/" class="rounded-lg border border-input px-6 py-3 font-semibold hover:bg-accent">Lihat harga</a>
-    </div>
-  </section>
-
-  <section class="border-y border-border bg-muted/40">
-    <div class="mx-auto grid w-full max-w-5xl gap-6 px-5 py-14 sm:grid-cols-3">
-      {
-        features.map((f) => (
-          <div class="flex flex-col gap-2">
-            <h2 class="text-lg font-semibold">{f.title}</h2>
-            <p class="text-muted-foreground">{f.body}</p>
+<Base
+  title="Myna Health"
+  fullTitle="Myna Health — Aplikasi Gaya Hidup Sehat"
+  description="Panduan makan sehat dan pelacak kebugaran untuk gaya hidup yang lebih baik. Langganan mulai Rp149.000 untuk 6 bulan."
+  heroNav
+  jsonLd={[organizationLd(site), productLd(site), faqLd()]}
+>
+  <!-- Hero: navy band behind the headline, two product cards overlapping it, beige marquee. -->
+  <section class="relative" aria-labelledby="hero-title">
+    <div class="absolute inset-x-0 top-0 z-0 h-[380px] bg-myna-navy"></div>
+    <div class="container-myna relative z-10 pt-28 text-center md:pt-32">
+      <h1 id="hero-title" class="mb-3 text-3xl leading-[1.1] font-extrabold text-white md:text-5xl">
+        Hidup sehat,<br class="md:hidden" /><span class="hidden md:inline">{" "}</span><span class="text-myna-cyan">mulai dari kebiasaan kecil.</span>
+      </h1>
+      <p class="mx-auto max-w-[600px] text-base leading-relaxed text-white/75">
+        Myna Health menghadirkan aplikasi yang membantu kamu bergerak lebih aktif dan makan lebih teratur. Sederhana, berbahasa Indonesia, dan bisa dipakai setiap hari.
+      </p>
+      <div id="produk" class="mx-auto mt-6 flex w-full max-w-sm scroll-mt-24 flex-col justify-center gap-4 sm:max-w-2xl sm:flex-row lg:max-w-[55%]">
+        <a href={mynaFitUrl} class="group relative flex w-full flex-col overflow-hidden rounded-2xl border border-border/60 bg-card text-left text-card-foreground shadow-lg transition-all duration-200 hover:scale-[1.02] hover:shadow-xl">
+          <div class="aspect-square overflow-hidden">
+            <img src="/images/fit-pria-handuk.webp" alt="Pria tersenyum memakai kaus olahraga dengan handuk di bahu" width="1031" height="1280" class="h-full w-full object-cover object-top" fetchpriority="high" />
           </div>
-        ))
-      }
+          <div class="flex items-center justify-between gap-2 bg-card p-4">
+            <span>
+              <span class="block text-sm font-semibold text-foreground transition-colors group-hover:text-primary">Myna Fit</span>
+              <span class="block text-xs text-muted-foreground">Pelacak gym + catatan kalori</span>
+            </span>
+            <span class="text-foreground transition-colors group-hover:text-primary" aria-hidden="true">→</span>
+          </div>
+        </a>
+        <a href="#myna-food" class="group relative flex w-full flex-col overflow-hidden rounded-2xl border border-border/60 bg-card text-left text-card-foreground shadow-lg transition-all duration-200 hover:scale-[1.02] hover:shadow-xl">
+          <span class="absolute top-3 left-3 z-10 rounded-full bg-food px-3 py-1 text-xs font-semibold text-white shadow-sm">Segera hadir</span>
+          <div class="aspect-square overflow-hidden">
+            <img src="/images/food-memasak.webp" alt="Pasangan memasak sayuran segar bersama di dapur" width="1920" height="1920" class="h-full w-full object-cover" fetchpriority="high" />
+          </div>
+          <div class="flex items-center justify-between gap-2 bg-card p-4">
+            <span>
+              <span class="block text-sm font-semibold text-foreground transition-colors group-hover:text-food">Myna Food</span>
+              <span class="block text-xs text-muted-foreground">Panduan makan sesuai tujuan</span>
+            </span>
+            <span class="text-foreground transition-colors group-hover:text-food" aria-hidden="true">→</span>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="relative z-10 mt-8 w-full overflow-hidden bg-myna-band py-5 dark:bg-secondary">
+      <ul class="marquee-track flex w-max animate-marquee gap-12 will-change-transform">
+        {
+          [0, 1, 2].map((copy) =>
+            trust.map((t) => (
+              <li class="inline-flex items-center gap-2 text-[14px] whitespace-nowrap text-foreground/60" aria-hidden={copy > 0 ? "true" : undefined}>
+                <Icon name={t.icon} />
+                {t.label}
+              </li>
+            )),
+          )
+        }
+      </ul>
     </div>
   </section>
 
-  <section class="mx-auto w-full max-w-5xl px-5 py-14" aria-labelledby="harga">
-    <h2 id="harga" class="mb-6 text-3xl font-bold">Harga</h2>
-    <Pricing />
+  <!-- Myna Fit: two-column program block (Lovable layout), blue/navy accent. -->
+  <section id="myna-fit" class="section-padding scroll-mt-20" aria-labelledby="fit-title">
+    <div class="container-myna">
+      <div class="grid gap-10 lg:grid-cols-2 lg:gap-16">
+        <div class="order-2 space-y-8 lg:order-1">
+          <div class="aspect-square max-w-md overflow-hidden rounded-3xl">
+            <img src="/images/fit-progres.webp" alt="Tampilan grafik progres latihan delapan minggu di aplikasi Myna" width="1920" height="1920" loading="lazy" class="h-full w-full object-cover" />
+          </div>
+          <div>
+            <h3 class="card-title mb-4">Yang bisa kamu lakukan di Myna Fit</h3>
+            <ul class="space-y-3">
+              {
+                fitFeatures.map((f) => (
+                  <li class="flex items-start gap-3">
+                    <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/15">
+                      <Icon name="check" class="h-3.5 w-3.5 text-primary" />
+                    </span>
+                    <span class="text-[15px] leading-snug text-foreground/80">{f}</span>
+                  </li>
+                ))
+              }
+            </ul>
+            <p class="mt-6 max-w-md text-xs leading-relaxed text-muted-foreground italic">{disclaimer}</p>
+          </div>
+        </div>
+        <div class="order-1 space-y-8 lg:order-2">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="aspect-[3/4] overflow-hidden rounded-2xl">
+              <img src="/images/fit-wanita-olahraga.webp" alt="Perempuan berhijab memakai pakaian olahraga dan tersenyum" width="1031" height="1280" loading="lazy" class="h-full w-full object-cover" />
+            </div>
+            <div class="aspect-[4/5] self-end overflow-hidden rounded-2xl">
+              <img src="/images/pasangan-tersenyum.webp" alt="Pasangan tersenyum bersama dengan latar biru muda" width="1031" height="1280" loading="lazy" class="h-full w-full object-cover" />
+            </div>
+          </div>
+          <div>
+            <p class="section-label mb-3">Myna Fit · Tersedia sekarang</p>
+            <h2 id="fit-title" class="section-headline mb-4">Latihan tercatat,<br /><span class="text-primary">progres terlihat.</span></h2>
+            <p class="section-desc mb-6 leading-relaxed">
+              Myna Fit adalah pelacak latihan gym sekaligus catatan kalori. Semua latihan dan makananmu tersimpan di satu tempat, jadi kamu tahu apa yang sudah dicapai dan apa langkah berikutnya.
+            </p>
+            <div class="mb-8">
+              <p class="text-[32px] leading-tight font-bold text-myna-navy dark:text-myna-soft">fit.mynahealth.id</p>
+              <p class="mt-1 text-[13px] leading-relaxed text-muted-foreground">Buka langsung di browser HP atau laptop.</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-4">
+              <a href={mynaFitUrl} class="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-myna-navy px-8 text-[15px] font-semibold tracking-[0.05em] text-white uppercase shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl">
+                Buka Myna Fit <Icon name="arrow-right" class="ml-1 h-4 w-4" />
+              </a>
+              <a href="/harga/" class="text-[15px] font-semibold text-myna-navy underline underline-offset-4 transition-opacity hover:opacity-70 dark:text-myna-soft">Lihat harga</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section id="faq" class="mx-auto w-full max-w-3xl px-5 py-14" aria-labelledby="faq-title">
-    <h2 id="faq-title" class="mb-6 text-3xl font-bold">Pertanyaan umum</h2>
-    <Faq items={faqs} />
+  <!-- Myna Food: same block, orange accent (the Lovable second-program palette). -->
+  <section id="myna-food" class="section-padding scroll-mt-20" aria-labelledby="food-title">
+    <div class="container-myna">
+      <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+        <div>
+          <p class="section-label mb-3">
+            Myna Food · <span class="ml-1 rounded-full bg-food px-2.5 py-0.5 text-[11px] font-semibold tracking-normal text-white normal-case">Segera hadir</span>
+          </p>
+          <h2 id="food-title" class="section-headline mb-4">Makan sesuai tujuan,<br /><span class="text-food">tanpa bingung.</span></h2>
+          <p class="section-desc mb-8 leading-relaxed">
+            Myna Food akan memberi panduan makan sehari-hari sesuai tujuanmu, dengan pilihan menu yang mudah ditemukan di Indonesia.
+          </p>
+          <div class="mb-8 grid gap-4 sm:grid-cols-3">
+            {
+              foodGoals.map((g) => (
+                <div class="rounded-2xl border border-border bg-card p-5">
+                  <h3 class="mb-1 text-base font-semibold text-foreground">{g.title}</h3>
+                  <p class="text-sm leading-relaxed text-muted-foreground">{g.body}</p>
+                </div>
+              ))
+            }
+          </div>
+          <div class="flex flex-wrap items-center gap-4">
+            <span class="inline-flex h-12 cursor-not-allowed items-center justify-center rounded-full bg-food/85 px-8 text-[15px] font-semibold tracking-[0.05em] text-white uppercase" aria-disabled="true">
+              Segera hadir
+            </span>
+            <a href="/kontak/" class="text-[15px] font-semibold text-food-deep underline underline-offset-4 transition-opacity hover:opacity-70 dark:text-food">Kabari saya saat rilis</a>
+          </div>
+        </div>
+        <div class="mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-3xl">
+          <img src="/images/food-pasangan.webp" alt="Pasangan berdiri bersama dan tersenyum dengan latar krem" width="1031" height="1280" loading="lazy" class="h-full w-full object-cover" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works: vertical timeline that fills while scrolling. -->
+  <section id="cara-kerja" class="section-padding" aria-labelledby="steps-title">
+    <div class="container-myna">
+      <div class="mx-auto mb-10 max-w-2xl text-center md:mb-20">
+        <p class="section-label mb-3">Cara kerja</p>
+        <h2 id="steps-title" class="section-headline mb-4">Bagaimana <span class="text-myna-blue dark:text-primary">Myna Health</span> membantu</h2>
+        <p class="section-desc mx-auto max-w-md">Tiga langkah sederhana untuk membangun kebiasaan sehat.</p>
+      </div>
+      <div class="relative" data-timeline>
+        <div class="pointer-events-none absolute top-0 bottom-0 left-[13px] w-0.5 bg-[#e5e7eb] md:left-1/2 md:-translate-x-px dark:bg-border"></div>
+        <div class="pointer-events-none absolute top-0 left-[13px] h-0 w-0.5 bg-myna-blue transition-[height] duration-100 md:left-1/2 md:-translate-x-px" data-timeline-fill></div>
+        {
+          steps.map((s, i) => (
+            <div class="relative z-[1] mb-14 grid grid-cols-[28px_1fr] gap-3.5 md:mb-20 md:grid-cols-[1fr_28px_1fr] md:gap-8" data-reveal>
+              <div class:list={["col-start-2 md:col-start-auto", i % 2 === 1 ? "md:order-3" : "md:order-1"]}>
+                <div class:list={["aspect-[4/3] max-w-md overflow-hidden rounded-2xl", i % 2 === 0 && "md:ml-auto"]}>
+                  <img src={s.img.src} alt={s.img.alt} width={s.img.w} height={s.img.h} loading="lazy" class="h-full w-full object-cover" />
+                </div>
+              </div>
+              <div class="row-start-1 flex justify-center self-start pt-1 md:row-start-auto md:order-2">
+                <span class="relative z-10 bg-myna-chip px-1 py-0.5 font-mono text-[14px] font-semibold text-[#0a1628]">0{i + 1}</span>
+              </div>
+              <div class:list={["col-start-2 row-start-1 self-center md:col-start-auto md:row-start-auto", i % 2 === 1 ? "md:order-1 md:text-right" : "md:order-3"]}>
+                <p class="mb-3 font-mono text-[12px] font-medium tracking-[0.1em] text-muted-foreground uppercase">{s.kicker}</p>
+                <h3 class="mb-3 text-2xl leading-[1.1] font-medium tracking-tight text-foreground md:text-[28px]">{s.title}</h3>
+                <p class="text-[14px] leading-relaxed text-muted-foreground">{s.body}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits: 4-up cards with emoji tiles. -->
+  <section id="keunggulan" class="section-padding" aria-labelledby="benefits-title">
+    <div class="container-myna">
+      <div class="mb-14 text-center">
+        <h2 id="benefits-title" class="section-headline mb-4">Dibuat untuk <span class="text-myna-blue dark:text-primary">keseharianmu</span></h2>
+        <p class="mx-auto max-w-xl text-base text-muted-foreground">Aplikasi Myna dirancang agar hidup sehat terasa ringan dan realistis.</p>
+      </div>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          benefits.map((b) => (
+            <div class="group rounded-2xl border border-border bg-card p-6 transition-shadow duration-300 hover:shadow-lg">
+              <div class:list={["mb-3.5 flex h-14 w-14 items-center justify-center rounded-[14px]", b.bg]}>
+                <span class="text-[28px] leading-none" aria-hidden="true">{b.emoji}</span>
+              </div>
+              <h3 class="card-title mb-2">{b.title}</h3>
+              <p class="card-desc">{b.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing. -->
+  <section id="harga" class="section-padding scroll-mt-20" aria-labelledby="pricing-title">
+    <div class="container-myna max-w-5xl">
+      <div class="mb-12 text-center">
+        <p class="section-label mb-3">Harga</p>
+        <h2 id="pricing-title" class="section-headline mb-4">Langganan <span class="text-myna-blue dark:text-primary">Myna Health</span></h2>
+        <p class="section-desc mx-auto">Bayar sekali di muka untuk 6 atau 12 bulan. Tanpa tagihan dan perpanjangan otomatis.</p>
+      </div>
+      <Pricing />
+    </div>
+  </section>
+
+  <!-- FAQ. -->
+  <section id="faq" class="section-padding" aria-labelledby="faq-title">
+    <div class="container-myna max-w-3xl">
+      <div class="mb-14 text-center">
+        <p class="section-label mb-3">FAQ</p>
+        <h2 id="faq-title" class="section-headline">Pertanyaan umum</h2>
+      </div>
+      <Faq />
+    </div>
+  </section>
+
+  <!-- Final CTA: rounded navy panel with a photo. -->
+  <section class="section-padding pt-0 md:pt-0" aria-labelledby="cta-title">
+    <div class="container-myna">
+      <div class="relative flex min-h-[400px] flex-col overflow-hidden rounded-3xl md:flex-row">
+        <div class="relative h-[280px] w-full md:hidden">
+          <img src="/images/cta-pasangan.webp" alt="" width="1920" height="1920" loading="lazy" class="h-full w-full object-cover object-center" />
+          <div class="absolute inset-0 bg-gradient-to-b from-transparent to-myna-deep"></div>
+        </div>
+        <div class="relative z-10 flex flex-col justify-center bg-myna-deep px-8 py-10 md:w-[55%] md:px-14 md:py-16 lg:w-1/2 lg:px-20">
+          <h2 id="cta-title" class="mb-4 text-3xl leading-tight font-extrabold text-white md:text-4xl lg:text-[42px]">Mulai kebiasaan sehatmu hari ini.</h2>
+          <p class="mb-8 max-w-md text-base leading-relaxed text-white/70 md:text-lg">Buka Myna Fit dan catat latihan pertamamu. Langkah kecil hari ini, kebiasaan baik esok hari.</p>
+          <a href={mynaFitUrl} class="inline-flex h-14 w-fit items-center justify-center gap-2 rounded-full bg-white px-10 text-base font-semibold text-myna-deep shadow-lg transition-all duration-200 hover:scale-[1.02] hover:bg-white/90 hover:shadow-xl">
+            Buka Myna Fit <Icon name="arrow-right" class="ml-1 h-5 w-5" />
+          </a>
+          <a href="/kontak/" class="mt-5 inline-flex w-fit items-center gap-2 text-sm text-white/60 transition-colors hover:text-white/80">
+            <Icon name="mail" /> Ada pertanyaan? {company.email} →
+          </a>
+        </div>
+        <div class="absolute top-0 right-0 bottom-0 hidden w-1/2 md:block lg:w-[55%]">
+          <img src="/images/cta-pasangan.webp" alt="" width="1920" height="1920" loading="lazy" class="h-full w-full object-cover object-center" />
+          <div class="absolute inset-0 bg-gradient-to-r from-myna-deep to-transparent"></div>
+        </div>
+      </div>
+    </div>
   </section>
 </Base>

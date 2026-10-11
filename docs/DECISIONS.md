@@ -582,3 +582,37 @@ Building "Catatan Harian" from its spec in a real product repo showed places whe
   - API tests use a test-only route `PAID = "/api/__test/paid"` (`test/helpers.ts`) behind the real `sessionMiddleware` + `requireAccess`.
   - `/build-from-spec` now tells products to replace the home screen and delete the example once a real paid feature exists.
 - **Trade-off:** the Paywall UI is no longer driven by a template E2E. It is a small core component, and products' own E2E cover their paywalled screens (as the dummy's notes E2E did).
+
+---
+
+# Product decisions (myna-health)
+
+Numbered P-xxx so they never collide with template decisions pulled by `/sync-template`.
+
+## P-001: mynahealth.id is a brand landing site; the app stays the template minimum (2026-10-11)
+
+- **Scope.** v1 is `apps/site` only (specs/myna-health.md). It presents Myna Fit (links out to https://fit.mynahealth.id, which stays on Lovable) and Myna Food ("Segera hadir"), prices, company identity and the legal pages for Duitku merchant KYC.
+- **apps/app** is untouched template code, deployed by CI as usual but not linked from the site.
+- **Pricing CTAs** go to Myna Fit: there is no sign-in or checkout on mynahealth.id yet.
+- **Trial** stays `enabled` in `product.config.ts` only because template API tests assume it; the site never mentions a trial.
+- **No medical content anywhere** is enforced by `apps/site/test/build.test.ts` (a banned-terms scan over every built HTML/XML/TXT file).
+
+## P-002: Design rebuilt from the Lovable project (2026-10-11)
+
+- **Source:** github.com/erdiprtm/mynahealth, archived as tag `archive/telehealth-v1` (read-only; nothing else was changed there).
+- **Kept:** warm off-white background `#f7f5f3`, brand blue `#113bfe` / landing blue `#2b3fe0`, navy bands `#032b84` / `#003087`, cyan accent `#24dde2`, orange second-product accent `#c46126`; Outfit font; `rounded-2xl` cards, `rounded-full` CTAs, `hover:scale-[1.02]` + shadow lift; navbar transparent over the navy hero, solid with blur on scroll; hero product cards overlapping the band; trust marquee; two-column product blocks; scroll-filled "cara kerja" timeline; emoji benefit tiles; navy final-CTA panel with photo; white 4-column footer.
+- **Brand tokens** are in `product.config.ts`; the extra Myna palette lives in `apps/site/src/styles/global.css` (`@theme`, e.g. `bg-myna-navy`, `text-food`).
+- **Assets copied:** the Myna Health wordmark (black/white PNG) and only neutral lifestyle photos, renamed. Product shots (pill bottle, injection pen) and app mockups that show medical UI were **not** copied.
+- **Icons:** inline Lucide SVGs (`Icon.astro`), no runtime JS, CSP stays `self`.
+
+## P-003: Contact form = plain HTML POST to the API Worker, emailed via Resend (2026-10-11)
+
+- `apps/api/src/features/contact.ts`: `POST /api/contact` (form-urlencoded) → email to `legal.contactEmail` → `303` back to `/kontak/terkirim/` or `/kontak/gagal/` on the posting site. Nothing is stored.
+- No JS and no CORS: the site's CSP allows the API origin in `form-action` (astro.config.mjs).
+- Guards: `Origin` must be an allowed site host (`SITE_HOSTS` var, wildcard like `AUTH_HOSTS`), Zod validation, hidden spam-trap field, `CONTACT_LIMITER` 5/min per IP (namespaces 1005 prod, 1006 preview).
+- **Needs** `RESEND_API_KEY` (and `MAIL_FROM` on a verified sending domain) on the Worker; without it the form lands on `/kontak/gagal/`, which shows the email address.
+
+## P-004: Dependencies (2026-10-11)
+
+- `@fontsource/outfit` **5.3.0** (picked with `scripts/pick-versions.mjs`), replacing `@fontsource/inter` on the site and in OG images.
+

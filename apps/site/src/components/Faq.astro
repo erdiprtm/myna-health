@@ -1,23 +1,22 @@
 ---
+import { faqs } from "../lib/site";
+import Icon from "./Icon.astro";
+
 interface Props {
-  items: { q: string; a: string }[];
+  items?: { q: string; a: string }[];
 }
-const { items } = Astro.props;
+const { items = faqs } = Astro.props;
 ---
 
-<div class="divide-y divide-border rounded-lg border border-border">
+<div class="space-y-2">
   {
     items.map((item) => (
-      <details class="group p-5">
-        <summary class="cursor-pointer list-none font-semibold marker:hidden">
-          <span class="flex items-center justify-between gap-4">
-            {item.q}
-            <span aria-hidden="true" class="text-muted-foreground transition group-open:rotate-45">
-              +
-            </span>
-          </span>
+      <details class="rounded-xl border border-border/60 bg-card px-5">
+        <summary class="flex cursor-pointer items-center justify-between gap-3 py-5 text-left text-base font-medium text-foreground">
+          {item.q}
+          <Icon name="chevron-down" class="faq-chevron h-4 w-4 text-muted-foreground transition-transform duration-200" />
         </summary>
-        <p class="mt-3 leading-7 text-muted-foreground">{item.a}</p>
+        <p class="pb-5 leading-relaxed text-muted-foreground">{item.a}</p>
       </details>
     ))
   }

@@ -4,6 +4,15 @@ Progress log, newest entry on top.
 
 ---
 
+## 2026-10-11: myna-health created; brand site v1 built (branch `feat/brand-site`)
+
+- **Original Lovable repo archived:** tag `archive/telehealth-v1` on `erdiprtm/mynahealth` `main` (502e6c1). Nothing else touched there.
+- **Repo** `erdiprtm/myna-health` from the factory (`/new-product`, public). Spec: `specs/myna-health.md`.
+- **Site** (`apps/site`): Lovable design rebuilt (P-002); pages `/`, `/harga/`, `/tentang/`, `/kontak/` (+ `terkirim`, `gagal`), `/syarat/`, `/privasi/`, `/refund/`, 404. Footer with PT Myna Bio Teknologi, address, email and the disclaimer on every page. No medical content (tested).
+- **API:** `POST /api/contact` emails erdi@mynahealth.id (P-003).
+- **Human next:** `CLOUDFLARE_API_TOKEN` secret (previews), `RESEND_API_KEY` for the contact form, lawyer review of the legal pages (`legal.reviewed`), review of the refund terms (7-day window, written by the agent).
+- **Not done yet:** domain switch (waits for approval of the preview).
+
 ## 2026-10-11: Phase 8 accepted ✅ (dummy built, tested end to end, deleted)
 
 - **Built** `erdiprtm/catatan-harian` from `specs/catatan-harian.md`:

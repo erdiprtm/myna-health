@@ -1,0 +1,29 @@
+---
+import { company } from "../lib/site";
+import Icon from "./Icon.astro";
+---
+
+<div class="rounded-2xl border border-border bg-card p-6" data-testid="contact-info">
+  <h2 class="card-title mb-4">Informasi perusahaan</h2>
+  <dl class="space-y-4 text-[15px]">
+    <div class="flex gap-3">
+      <Icon name="building" class="mt-1 h-4 w-4 text-primary" />
+      <div><dt class="text-xs font-semibold tracking-[0.1em] text-muted-foreground uppercase">Perusahaan</dt><dd class="font-semibold text-foreground">{company.name}</dd></div>
+    </div>
+    <div class="flex gap-3">
+      <Icon name="map-pin" class="mt-1 h-4 w-4 text-primary" />
+      <div>
+        <dt class="text-xs font-semibold tracking-[0.1em] text-muted-foreground uppercase">Alamat</dt>
+        <dd class="text-foreground/80"><address class="not-italic">{company.addressLines.map((line) => <>{line}<br /></>)}</address></dd>
+      </div>
+    </div>
+    <div class="flex gap-3">
+      <Icon name="mail" class="mt-1 h-4 w-4 text-primary" />
+      <div><dt class="text-xs font-semibold tracking-[0.1em] text-muted-foreground uppercase">Email</dt><dd><a href={`mailto:${company.email}`} class="font-semibold text-primary underline underline-offset-4">{company.email}</a></dd></div>
+    </div>
+    <div class="flex gap-3">
+      <Icon name="clock" class="mt-1 h-4 w-4 text-primary" />
+      <div><dt class="text-xs font-semibold tracking-[0.1em] text-muted-foreground uppercase">Waktu balasan</dt><dd class="text-foreground/80">Hari kerja, biasanya dalam 1–2 hari kerja.</dd></div>
+    </div>
+  </dl>
+</div>

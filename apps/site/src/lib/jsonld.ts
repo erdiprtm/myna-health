@@ -1,4 +1,4 @@
-import { faqs, product } from "./site";
+import { company, faqs, product } from "./site";
 
 export function organizationLd(site: URL) {
   return {
@@ -7,6 +7,15 @@ export function organizationLd(site: URL) {
     name: product.legal.companyName,
     url: site.href,
     email: product.legal.contactEmail,
+    brand: { "@type": "Brand", name: product.name },
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: company.addressLines[0],
+      addressLocality: "Kota Depok",
+      addressRegion: "Jawa Barat",
+      postalCode: "16417",
+      addressCountry: "ID",
+    },
   };
 }
 

@@ -1,29 +1,46 @@
 ---
 import Faq from "../components/Faq.astro";
+import PageHeader from "../components/PageHeader.astro";
 import Pricing from "../components/Pricing.astro";
 import Base from "../layouts/Base.astro";
 import { faqLd, productLd } from "../lib/jsonld";
-import { faqs, product } from "../lib/site";
+import { company, formatIdr, product } from "../lib/site";
 
 const site = Astro.site as URL;
+const [first] = product.plans;
 ---
 
 <Base
   title="Harga"
-  description={`Harga langganan ${product.name}: paket 6 dan 12 bulan, bayar sekali tanpa perpanjangan otomatis. Coba gratis ${product.trial.days} hari.`}
+  description={`Harga langganan ${product.name}: ${product.plans.map((p) => `${p.label} ${formatIdr(p.priceIdr)}`).join(", ")}. Bayar sekali, tanpa perpanjangan otomatis.`}
   og="harga"
   event="pricing_view"
   jsonLd={[productLd(site), faqLd()]}
 >
-  <section class="mx-auto w-full max-w-5xl px-5 py-14">
-    <h1 class="mb-3 text-4xl font-extrabold tracking-tight">Harga</h1>
-    <p class="mb-8 max-w-2xl text-lg text-muted-foreground">
-      Bayar sekali di muka. Tidak ada tagihan otomatis. Memperpanjang lebih awal tidak menghanguskan sisa hari.
-    </p>
-    <Pricing />
+  <PageHeader label="Harga" title="Langganan Myna Health" description={`Mulai ${formatIdr(first?.priceIdr ?? 0)} untuk ${first?.label}. Bayar sekali di muka, tanpa tagihan otomatis.`} />
+  <section class="section-padding">
+    <div class="container-myna max-w-5xl">
+      <Pricing />
+      <div class="mt-12 grid gap-6 md:grid-cols-3">
+        <div class="rounded-2xl border border-border bg-card p-6">
+          <h2 class="card-title mb-2">Tanpa perpanjangan otomatis</h2>
+          <p class="card-desc">Perpanjangan adalah pembelian baru. Memperpanjang lebih awal tidak menghanguskan sisa hari.</p>
+        </div>
+        <div class="rounded-2xl border border-border bg-card p-6">
+          <h2 class="card-title mb-2">Pembayaran aman</h2>
+          <p class="card-desc">QRIS, e-wallet, atau virtual account, diproses oleh mitra pembayaran resmi. Kami tidak menyimpan data kartu atau rekening.</p>
+        </div>
+        <div class="rounded-2xl border border-border bg-card p-6">
+          <h2 class="card-title mb-2">Penjual</h2>
+          <p class="card-desc">{company.name}. Pertanyaan tagihan: <a href={`mailto:${company.email}`} class="text-primary underline underline-offset-4">{company.email}</a>.</p>
+        </div>
+      </div>
+    </div>
   </section>
-  <section class="mx-auto w-full max-w-3xl px-5 pb-16">
-    <h2 class="mb-6 text-2xl font-bold">Pertanyaan umum</h2>
-    <Faq items={faqs} />
+  <section class="section-padding pt-0 md:pt-0">
+    <div class="container-myna max-w-3xl">
+      <h2 class="section-headline mb-8 text-center">Pertanyaan umum</h2>
+      <Faq />
+    </div>
   </section>
 </Base>

@@ -24,6 +24,24 @@
     "contentType": "text/html"
   },
   {
+    "name": "refund policy",
+    "path": "/refund/",
+    "status": [200],
+    "contentType": "text/html"
+  },
+  {
+    "name": "about",
+    "path": "/tentang/",
+    "status": [200],
+    "contentType": "text/html"
+  },
+  {
+    "name": "contact",
+    "path": "/kontak/",
+    "status": [200],
+    "contentType": "text/html"
+  },
+  {
     "name": "sitemap",
     "path": "/sitemap-index.xml",
     "status": [200]

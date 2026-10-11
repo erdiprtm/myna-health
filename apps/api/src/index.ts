@@ -22,6 +22,7 @@ import { captureError, withMonitoring } from "./core/monitoring";
 import { configuredProvider, fakeProvider, type PaymentEnv } from "./core/payments";
 import { clientIp, type RateLimitEnv, rateLimit } from "./core/rate-limit";
 import { requireSession, type SessionVariables, sessionMiddleware } from "./core/session";
+import { type ContactEnv, contactFeature } from "./features/contact";
 import { exampleFeature } from "./features/example";
 import { deleteProductData, exportProductData } from "./features/user-data";
 
@@ -30,7 +31,8 @@ import { deleteProductData, exportProductData } from "./features/user-data";
 export type Bindings = AuthEnv &
   PaymentEnv &
   AnalyticsEnv &
-  RateLimitEnv & {
+  RateLimitEnv &
+  ContactEnv & {
     COMMIT_SHA: string;
     /** Extra admins on top of product.config.ts admin.emails (comma-separated). */
     ADMIN_EMAILS?: string;
@@ -277,7 +279,8 @@ const routes = app
   })
   .route("/admin", adminRoutes)
   // PRODUCT-OWNED features mount below. The example shows the requireAccess pattern.
-  .route("/example", exampleFeature);
+  .route("/example", exampleFeature)
+  .route("/contact", contactFeature);
 
 export type AppType = typeof routes;
 

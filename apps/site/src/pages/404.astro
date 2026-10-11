@@ -1,11 +1,11 @@
 ---
+import PageHeader from "../components/PageHeader.astro";
 import Base from "../layouts/Base.astro";
 ---
 
-<Base title="Halaman tidak ditemukan" description="Halaman yang kamu cari tidak ada atau sudah dipindahkan. Kembali ke beranda untuk melanjutkan.">
-  <section class="mx-auto flex w-full max-w-3xl flex-col items-start gap-5 px-5 py-24">
-    <h1 class="text-4xl font-extrabold tracking-tight">Halaman tidak ditemukan</h1>
-    <p class="text-lg text-muted-foreground">Halaman yang kamu cari tidak ada atau sudah dipindahkan.</p>
-    <a href="/" class="rounded-lg bg-primary px-6 py-3 font-semibold text-primary-foreground hover:opacity-90">Ke beranda</a>
+<Base title="Halaman tidak ditemukan" description="Halaman yang kamu cari tidak ada atau sudah dipindahkan. Kembali ke beranda Myna Health untuk melanjutkan." noindex>
+  <PageHeader title="Halaman tidak ditemukan" description="Halaman yang kamu cari tidak ada atau sudah dipindahkan." />
+  <section class="section-padding text-center">
+    <a href="/" class="inline-flex h-12 items-center rounded-full bg-myna-blue px-8 text-[15px] font-semibold text-white shadow-lg transition-all hover:scale-[1.02] hover:bg-myna-blue-hover">Ke beranda</a>
   </section>
 </Base>

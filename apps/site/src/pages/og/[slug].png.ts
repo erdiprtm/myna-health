@@ -14,11 +14,11 @@ const initResvg = () => {
   wasmReady ??= readFile(require.resolve("@resvg/resvg-wasm/index_bg.wasm")).then((buf) => initWasm(buf));
   return wasmReady;
 };
-// @fontsource/inter only exports CSS; its .woff files sit next to index.css (satori can't read woff2).
-const fontDir = join(dirname(require.resolve("@fontsource/inter")), "files");
+// @fontsource/outfit only exports CSS; its .woff files sit next to index.css (satori can't read woff2).
+const fontDir = join(dirname(require.resolve("@fontsource/outfit")), "files");
 const fonts = Promise.all([
-  readFile(join(fontDir, "inter-latin-700-normal.woff")),
-  readFile(join(fontDir, "inter-latin-400-normal.woff")),
+  readFile(join(fontDir, "outfit-latin-700-normal.woff")),
+  readFile(join(fontDir, "outfit-latin-400-normal.woff")),
 ]);
 
 export const getStaticPaths = (async () => {
@@ -26,6 +26,7 @@ export const getStaticPaths = (async () => {
     { slug: "home", title: product.tagline },
     { slug: "harga", title: "Harga" },
     { slug: "kontak", title: "Kontak" },
+    { slug: "tentang", title: "Tentang Kami" },
   ];
   const legal = (await getCollection("legal")).map((e) => ({ slug: e.id, title: fillPlaceholders(e.data.title) }));
   const seo = (await getCollection("seo")).map((e) => ({ slug: e.id, title: e.data.title }));
@@ -35,7 +36,8 @@ export const getStaticPaths = (async () => {
 export const GET: APIRoute = async ({ props }) => {
   await initResvg();
   const [bold, regular] = await fonts;
-  const { primary, primaryForeground } = product.brand.tokens.colors.light;
+  // Myna navy band with white text, like the site's hero.
+  const [primary, primaryForeground] = ["#032b84", "#ffffff"];
   const svg = await satori(
     {
       type: "div",
@@ -50,7 +52,7 @@ export const GET: APIRoute = async ({ props }) => {
           padding: 80,
           background: primary,
           color: primaryForeground,
-          fontFamily: "Inter",
+          fontFamily: "Outfit",
         },
         children: [
           {
@@ -73,8 +75,8 @@ export const GET: APIRoute = async ({ props }) => {
       width: 1200,
       height: 630,
       fonts: [
-        { name: "Inter", data: bold, weight: 700, style: "normal" },
-        { name: "Inter", data: regular, weight: 400, style: "normal" },
+        { name: "Outfit", data: bold, weight: 700, style: "normal" },
+        { name: "Outfit", data: regular, weight: 400, style: "normal" },
       ],
     },
   );
