@@ -40,6 +40,8 @@
   --color-myna-navy: #032b84;
   --color-myna-deep: #003087;
   --color-myna-blue: #2b3fe0;
+  /* Text blue: deeper than the button blue, easier on the eyes on light backgrounds. */
+  --color-myna-ink: #1f35a6;
   --color-myna-blue-hover: #1e30c8;
   --color-myna-cyan: #24dde2;
   --color-myna-soft: #dae7fc;
@@ -151,7 +153,7 @@
     @apply my-4 rounded-lg border border-border bg-muted p-4 text-muted-foreground;
   }
   .prose-legal a {
-    @apply text-primary underline;
+    @apply text-myna-ink underline;
   }
 }
 
@@ -308,6 +310,17 @@
   }
   .js .fact.is-visible .fact-rule {
     transform: scaleX(1);
+  }
+
+  /* Navy gradient surface (statement, inner-page headers, closing CTA). */
+  .navy-gradient {
+    background:
+      radial-gradient(60% 90% at 0% 0%, rgb(17 59 254 / 0.75), transparent 70%),
+      radial-gradient(55% 80% at 100% 100%, rgb(36 221 226 / 0.35), transparent 70%), #032b84;
+  }
+  .js .navy-gradient [data-fill] .fill-word,
+  .js [data-fill].text-white .fill-word {
+    opacity: 0.25;
   }
 
   .product-card {

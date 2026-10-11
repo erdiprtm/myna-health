@@ -129,7 +129,7 @@ const links = [
           <address class="not-italic" data-testid="company">
             <span class="font-semibold text-foreground">© {year} {company.name}</span><br />
             {company.addressLines.join(", ")}<br />
-            <a href={`mailto:${company.email}`} class="underline underline-offset-4 hover:text-primary">{company.email}</a>
+            <a href={`mailto:${company.email}`} class="underline underline-offset-4 hover:text-myna-ink">{company.email}</a>
           </address>
           <p class="max-w-md md:text-right" data-testid="disclaimer">{disclaimer}</p>
         </div>
@@ -216,7 +216,7 @@ const links = [
             const progress = (window.innerHeight * 0.85 - r.top) / (r.height + window.innerHeight * 0.35);
             const lit = Math.max(0, Math.min(1, progress)) * fillWords.length;
             fillWords.forEach((w, i) => {
-              w.style.opacity = String(0.15 + 0.85 * Math.max(0, Math.min(1, lit - i)));
+              w.style.opacity = String(0.25 + 0.75 * Math.max(0, Math.min(1, lit - i)));
             });
           }
         };

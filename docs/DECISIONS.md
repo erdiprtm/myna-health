@@ -648,4 +648,5 @@ Numbered P-xxx so they never collide with template decisions pulled by `/sync-te
 - **Motion (CSS-first, no libraries, CSP unchanged):** word-by-word headline rise with blur, clip-path photo reveal, slow gradient orbs, drawn rules on facts, scroll-revealed sections, hero parallax and a statement that fills word by word while scrolling (small rAF script), shine and underline hovers. Everything is visible without JS and under `prefers-reduced-motion`.
 - **Founders are not shown** (Erdi wants stealth). Founded year 2026 is shown.
 - Legal pages switched from "kamu" to "Anda".
+- **Follow-up (Erdi):** the navy gradient (`.navy-gradient`: navy base, blue top-left glow, cyan bottom-right glow, drifting orbs) is used on the statement, inner-page headers and the closing CTA. Text blue is the deeper `myna-ink` #1f35a6 (the button blue #113bfe was too bright for text). Photos are consistently people: hero = couple running by a lake (Pexels 19847550), Myna Food = couple preparing fresh food (Pexels 7488999).
 

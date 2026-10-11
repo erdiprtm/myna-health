@@ -18,7 +18,7 @@ const cls = "flex h-9 w-9 items-center justify-center rounded-full border border
     socials.map((s) => (
       <li>
         {s.url ? (
-          <a href={s.url} class:list={[cls, "hover:border-primary hover:text-primary"]} aria-label={s.name} rel="noopener">
+          <a href={s.url} class:list={[cls, "hover:border-primary hover:text-myna-ink"]} aria-label={s.name} rel="noopener">
             <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d={marks[s.name]} /></svg>
           </a>
         ) : (

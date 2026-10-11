@@ -26,7 +26,7 @@ export default defineProduct({
           muted: "#f2f0ed",
           mutedForeground: "#5f6676",
           accent: "#eff3ff",
-          accentForeground: "#2b3fe0",
+          accentForeground: "#1f35a6",
           destructive: "#ef4343",
           destructiveForeground: "#ffffff",
           border: "#e5e2dc",
