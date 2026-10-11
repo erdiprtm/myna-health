@@ -160,12 +160,6 @@
 .logo-on-dark {
   @apply hidden;
 }
-.dark .logo-on-light {
-  @apply hidden;
-}
-.dark .logo-on-dark {
-  @apply block;
-}
 .mobile-menu .menu-close,
 .mobile-menu[open] .menu-open {
   @apply hidden;

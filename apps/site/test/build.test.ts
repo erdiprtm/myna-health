@@ -81,7 +81,7 @@ describe("built site", () => {
     const html = page("index.html");
     expect(html).toContain("<title>Myna Health — Aplikasi Gaya Hidup Sehat</title>");
     expect(html).toContain(
-      '<meta name="description" content="Myna Health (PT Myna Bio Teknologi) membangun aplikasi gaya hidup sehat: Myna Fit untuk pelacak kebugaran dan Myna Food untuk panduan makan sehat.">',
+      '<meta name="description" content="Myna Health (PT Myna Bio Teknologi) membangun aplikasi wellness dan lifestyle: Myna Fit untuk pelacak kebugaran dan Myna Food untuk panduan makan sehat.">',
     );
   });
 

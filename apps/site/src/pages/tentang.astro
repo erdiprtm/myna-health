@@ -4,49 +4,42 @@ import Icon from "../components/Icon.astro";
 import PageHeader from "../components/PageHeader.astro";
 import Base from "../layouts/Base.astro";
 import { organizationLd } from "../lib/jsonld";
-import { company, disclaimer, mynaFitUrl } from "../lib/site";
+import { company, disclaimer, mynaFitUrl, values } from "../lib/site";
 
 const site = Astro.site as URL;
 const missions = [
-  "Membangun aplikasi gaya hidup sehat yang sederhana dan mudah dipakai setiap hari.",
-  "Menyajikan informasi yang bersifat umum, jelas, dan bertanggung jawab, tanpa klaim medis.",
-  "Melindungi data pribadi pengguna sesuai Undang-Undang Pelindungan Data Pribadi.",
-  "Terus mengembangkan portofolio produk untuk kebutuhan gaya hidup sehat di Indonesia.",
+  "Bikin aplikasi yang simpel dan enak dipakai tiap hari.",
+  "Kasih info gaya hidup yang jelas dan jujur, tanpa klaim medis.",
+  "Jaga data pengguna sesuai UU Pelindungan Data Pribadi.",
+  "Nambah produk hanya kalau memang dibutuhkan.",
 ];
 const products = [
-  { name: "Myna Fit", status: "Tersedia", body: "Pelacak latihan gym dan catatan kalori harian.", href: mynaFitUrl, cta: "fit.mynahealth.id" },
-  { name: "Myna Food", status: "Segera hadir", body: "Panduan makan sesuai tujuan: diet, tinggi protein, dan makan seimbang.", href: "/#myna-food", cta: "Lihat detail" },
+  { name: "Myna Fit", status: "Tersedia", body: "Gym tracker dan catatan kalori dalam satu aplikasi.", href: mynaFitUrl, cta: "fit.mynahealth.id" },
+  { name: "Myna Food", status: "Segera hadir", body: "Bantu pilih menu sesuai goal: diet, high-protein, atau makan seimbang.", href: "/#myna-food", cta: "Lihat detail" },
 ];
-const values = [
-  { title: "Sederhana", body: "Fitur secukupnya agar hidup sehat terasa ringan, bukan beban." },
-  { title: "Dekat dengan keseharian", body: "Bahasa Indonesia sehari-hari dan pilihan makanan yang akrab." },
-  { title: "Menghargai privasi", body: "Data pengguna dilindungi dan tidak pernah dijual." },
-  { title: "Transparan", body: "Identitas perusahaan, alamat, dan kontak resmi selalu jelas." },
-];
+const h2 = "text-[28px] leading-[1.2] font-bold text-foreground md:text-[36px]";
 ---
 
-<Base title="Tentang Kami" description={`Profil ${company.name}, perusahaan di balik Myna Health: visi, misi, portofolio produk (Myna Fit, Myna Food), dan identitas perusahaan.`} og="tentang" jsonLd={[organizationLd(site)]}>
-  <PageHeader label="Tentang Kami" title="Profil perusahaan" description={`Myna Health adalah merek milik ${company.name}, perusahaan teknologi gaya hidup sehat yang berkantor di Kota Depok, Jawa Barat.`} />
+<Base title="Tentang Kami" description={`Kenalan dengan Myna Health, merek wellness dan lifestyle milik ${company.name}: visi, misi, produk (Myna Fit, Myna Food), dan identitas perusahaan.`} og="tentang" jsonLd={[organizationLd(site)]}>
+  <PageHeader label="Tentang Kami" title="Kenalan dulu." description={`Myna Health adalah merek milik ${company.name}, perusahaan teknologi wellness dan lifestyle dari Depok.`} />
 
   <section class="section-padding">
     <div class="container-myna grid max-w-6xl gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
       <div class="space-y-5 text-[17px] leading-relaxed text-foreground/80">
         <p class="section-label">Siapa kami</p>
-        <h2 class="text-[28px] leading-[1.2] font-bold text-foreground md:text-[36px]">Membuat hidup sehat terasa <span class="text-myna-blue dark:text-primary">mudah dijalani</span>.</h2>
+        <h2 class={h2}>Kami bikin sehat jadi kebiasaan, <span class="text-primary">bukan proyek.</span></h2>
+        <p>Mau rajin olahraga dan makan lebih teratur itu gampang diucapin. Jalaninnya yang susah, apalagi kalau caranya ribet atau bikin merasa bersalah.</p>
         <p>
-          Banyak orang ingin lebih aktif dan makan lebih teratur, tetapi bingung mulai dari mana dan sulit menjaga konsistensi.
-          {company.name} hadir untuk membantu lewat produk digital yang sederhana, berbahasa Indonesia, dan bisa dipakai setiap hari.
+          Karena itu kami bikin aplikasi kecil yang fokus ke satu kebiasaan. <strong class="text-foreground">Myna Fit</strong> untuk catat latihan dan kalori.
+          <strong class="text-foreground">Myna Food</strong>, yang segera hadir, untuk bantu pilih menu sesuai goal kamu.
         </p>
-        <p>
-          Di bawah merek <strong class="text-foreground">Myna Health</strong>, kami merancang, membangun, dan mengelola beberapa produk gaya hidup sehat.
-          Setiap produk fokus pada satu kebiasaan: berolahraga, mencatat asupan, atau memilih makanan sesuai tujuan.
-        </p>
+        <p>Semua produk Myna dikembangkan dan dikelola oleh {company.name} di Kota Depok, Jawa Barat.</p>
         <p class="rounded-2xl border border-border bg-card p-5 text-sm text-muted-foreground">{disclaimer}</p>
       </div>
       <aside class="space-y-4">
-        <div class="rounded-3xl bg-myna-navy p-7 text-white">
-          <p class="mb-2 text-xs font-semibold tracking-[0.15em] text-white/60 uppercase">Visi</p>
-          <p class="text-xl leading-snug font-semibold">Menjadi teman sehari-hari bagi orang Indonesia untuk menjalani gaya hidup yang lebih sehat.</p>
+        <div class="rounded-3xl bg-accent p-7">
+          <p class="mb-2 text-xs font-semibold tracking-[0.15em] text-accent-foreground/70 uppercase">Visi</p>
+          <p class="text-xl leading-snug font-semibold text-foreground">Jadi teman sehari-hari orang Indonesia buat hidup lebih sehat, dengan cara yang realistis.</p>
         </div>
         <div class="rounded-3xl border border-border bg-card p-7">
           <p class="mb-3 text-xs font-semibold tracking-[0.15em] text-muted-foreground uppercase">Misi</p>
@@ -63,10 +56,16 @@ const values = [
     </div>
   </section>
 
+  <div class="container-myna max-w-6xl pb-16 md:pb-24">
+    <div class="aspect-[16/7] overflow-hidden rounded-3xl">
+      <img src="/images/lifestyle-piknik.jpg" alt="Teman-teman piknik bersama di taman dengan buah segar" width="1400" height="1120" loading="lazy" class="h-full w-full object-cover" />
+    </div>
+  </div>
+
   <section class="section-padding pt-0 md:pt-0" aria-labelledby="portfolio-title">
     <div class="container-myna max-w-6xl">
-      <p class="section-label mb-3">Portofolio</p>
-      <h2 id="portfolio-title" class="mb-8 text-[28px] leading-[1.2] font-bold text-foreground md:text-[36px]">Produk kami</h2>
+      <p class="section-label mb-3">Produk</p>
+      <h2 id="portfolio-title" class:list={[h2, "mb-8"]}>Yang sudah dan akan hadir</h2>
       <div class="grid gap-6 md:grid-cols-2">
         {products.map((p) => (
           <a href={p.href} class="group flex flex-col rounded-2xl border border-border bg-card p-6 transition-all duration-200 hover:scale-[1.01] hover:shadow-lg">
@@ -84,11 +83,12 @@ const values = [
 
   <section class="section-padding pt-0 md:pt-0" aria-labelledby="values-title">
     <div class="container-myna max-w-6xl">
-      <p class="section-label mb-3">Nilai kami</p>
-      <h2 id="values-title" class="mb-8 text-[28px] leading-[1.2] font-bold text-foreground md:text-[36px]">Yang kami pegang</h2>
+      <p class="section-label mb-3">Yang kami pegang</p>
+      <h2 id="values-title" class:list={[h2, "mb-8"]}>Empat hal yang nggak bisa ditawar</h2>
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {values.map((v) => (
           <div class="rounded-2xl border border-border bg-card p-6">
+            <span class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-accent text-primary"><Icon name={v.icon} class="h-5 w-5" /></span>
             <h3 class="card-title mb-2">{v.title}</h3>
             <p class="card-desc">{v.body}</p>
           </div>
@@ -102,7 +102,7 @@ const values = [
       <h2 id="identity-title" class="sr-only">Identitas perusahaan</h2>
       <CompanyIdentity />
       <div class="mt-8 flex flex-wrap justify-center gap-4">
-        <a href="/kontak/" class="inline-flex h-12 items-center gap-2 rounded-full bg-myna-navy px-8 text-[15px] font-semibold text-white shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl">Hubungi kami <Icon name="arrow-right" /></a>
+        <a href="/kontak/" class="inline-flex h-12 items-center gap-2 rounded-full bg-primary px-8 text-[15px] font-semibold text-primary-foreground shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl">Hubungi kami <Icon name="arrow-right" /></a>
         <a href={mynaFitUrl} class="inline-flex h-12 items-center rounded-full border-2 border-primary px-8 text-[15px] font-semibold text-primary transition-colors hover:bg-primary hover:text-primary-foreground">Buka Myna Fit</a>
       </div>
     </div>

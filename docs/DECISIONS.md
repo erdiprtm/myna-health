@@ -631,3 +631,13 @@ Numbered P-xxx so they never collide with template decisions pulled by `/sync-te
 - Home meta description: "Myna Health (PT Myna Bio Teknologi) membangun aplikasi gaya hidup sehat: Myna Fit untuk pelacak kebugaran dan Myna Food untuk panduan makan sehat."
 - Registration numbers (NIB, deed) are **not** shown until Erdi provides them.
 
+## P-007: Homepage rebuilt from structure research; light only; new photos (Erdi, 2026-10-11)
+
+- **Research** (12 corporate and consumer sites incl. Novo Nordisk, Kenvue, Oura, Headspace, Calm, Kopi Kenangan, Fore, Somethinc, Rare Beauty) → skeleton: big-type hero, Who/What/How, bento products, values, manifesto, privacy commitment, company identity (Novo Nordisk-style HQ block with NIB), FAQ, CTA, 4-column footer with "© year PT…".
+- **Copy voice** (research on lululemon, Sweaty Betty, Gymshark, Oatly and Indonesian Gen Z copy): "a friend at the gym who is a bit nerdy about food". Short uneven lines, "kamu", light English mix (gym, set, rep, goal, high-protein), no shaming, no invented numbers, no AI tells (em dashes in copy, "perjalanan", "holistik", "solusi", "memberdayakan").
+- **Light only:** the Lovable original was light only and Erdi saw the device dark mode as "black background"; `theme.js` removed, `<meta name="color-scheme" content="light">`. Navy is used once (manifesto); inner-page headers are soft blue.
+- **Photos:** 5 Pexels photos (Pexels License: commercial use, no attribution required; no endorsement implied, so no quotes next to faces): 40027066 Andry Sasongko, 40105327 Jeny Godjali, 37090659 Fadli Octora, 19847550 Febry Arya, 35640122 ds rexy. Lovable photos removed; the wordmark stays.
+- **Social:** Instagram, TikTok, YouTube marks (Simple Icons, CC0) without links until handles exist (`socials` in `src/lib/site.ts`).
+- **NIB:** placeholder `xxx` (`nib` in `src/lib/site.ts`) until Erdi confirms the number. **Replace before KYC.**
+- No map, no phone number, no careers/newsroom placeholders.
+

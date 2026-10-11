@@ -48,31 +48,65 @@ export function fillPlaceholders(text: string): string {
 export const disclaimer =
   "Myna Health menyediakan informasi gaya hidup sehat dan bukan pengganti layanan medis atau tenaga kesehatan profesional.";
 
+/** Social accounts: logos only until Erdi shares the handles (url null = icon without a link). */
+export const socials = [
+  { name: "Instagram", url: null },
+  { name: "TikTok", url: null },
+  { name: "YouTube", url: null },
+] as const satisfies readonly { name: string; url: string | null }[];
+
+/** NIB (Nomor Induk Berusaha). Placeholder until Erdi confirms the number. */
+export const nib = "xxx";
+
 /** Myna Fit runs on its own domain (Lovable) for now. */
 export const mynaFitUrl = "https://fit.mynahealth.id";
 
 /** Where the contact form posts (API Worker; it emails erdi@… and redirects back here). */
 export const contactEndpoint = `${appUrl}/api/contact`;
 
+/** "Yang kami pegang": shown on the home page and Tentang Kami. */
+export const values = [
+  {
+    icon: "lock",
+    title: "Privasi itu hak kamu",
+    body: "Data kamu nggak kami jual. Mau minta salinan atau hapus? Tinggal bilang.",
+  },
+  {
+    icon: "sparkles",
+    title: "Nggak ada body shaming",
+    body: "Kami nggak akan bikin kamu malu sama badan sendiri, apalagi sama isi piring.",
+  },
+  {
+    icon: "clock",
+    title: "Kecil, tapi rutin",
+    body: "Lima belas menit hari ini lebih berguna daripada rencana sempurna buat minggu depan.",
+  },
+  {
+    icon: "info",
+    title: "Jujur soal batas",
+    body: "Kami kasih info gaya hidup, bukan nasihat medis. Untuk kondisi khusus, tanya ahlinya.",
+  },
+] as const;
+
 export const faqs = [
   {
-    q: "Apa itu Myna Health?",
-    a: "Myna Health adalah perusahaan teknologi gaya hidup sehat yang mengembangkan beberapa produk digital. Saat ini tersedia Myna Fit (pelacak latihan gym dan catatan kalori). Myna Food (panduan makan sesuai tujuan) segera hadir.",
-  },
-  {
     q: "Siapa yang mengelola Myna Health?",
-    a: "Myna Health adalah merek milik PT Myna Bio Teknologi, yang berkantor di Jl. Merdeka Raya No.7 Blok 6, Abadijaya, Sukmajaya, Kota Depok, Jawa Barat 16417. Email resmi: erdi@mynahealth.id.",
+    a: "PT Myna Bio Teknologi, perusahaan teknologi yang berkantor di Kota Depok, Jawa Barat. Detail lengkapnya ada di bagian Identitas perusahaan.",
   },
   {
-    q: "Di mana saya bisa memakai Myna Fit?",
-    a: "Myna Fit bisa langsung dibuka di browser HP atau laptop, di fit.mynahealth.id.",
-  },
-  {
-    q: "Kapan Myna Food tersedia?",
-    a: "Myna Food sedang kami siapkan. Kirim pesan lewat halaman Kontak jika ingin dikabari saat sudah rilis.",
-  },
-  {
-    q: "Apakah Myna Health layanan medis?",
+    q: "Myna Health itu layanan medis?",
     a: `Bukan. ${disclaimer}`,
+  },
+  {
+    q: "Myna Fit bisa dipakai di mana?",
+    a: "Langsung dari browser HP atau laptop di fit.mynahealth.id. Nggak perlu unduh aplikasi.",
+  },
+  {
+    q: "Kapan Myna Food rilis?",
+    a: "Lagi kami siapin. Kirim pesan lewat halaman Kontak kalau mau dikabari duluan.",
+  },
+  {
+    q: "Mau tanya atau ajak kerja sama, ke mana?",
+    a: "Isi formulir di halaman Kontak atau email ke erdi@mynahealth.id. Kami balas di hari kerja.",
   },
 ];

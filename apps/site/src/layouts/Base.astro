@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import Icon from "../components/Icon.astro";
+import SocialLinks from "../components/SocialLinks.astro";
 import { analyticsClientId, company, disclaimer, mynaFitUrl, product } from "../lib/site";
 
 interface Props {
@@ -55,8 +56,8 @@ const links = [
     <meta property="og:locale" content={product.locale.default === "id" ? "id_ID" : "en_US"} />
     <meta name="twitter:card" content="summary_large_image" />
     {jsonLd.length > 0 && <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, "\\u003c")} />}
-    <!-- Apply dark mode before paint (follows the device; no flash). -->
-    <script is:inline src="/theme.js"></script>
+    <!-- Light only, like the Lovable original (P-007): the site ignores the device's dark mode. -->
+    <meta name="color-scheme" content="light" />
   </head>
   <body class="flex min-h-screen flex-col" data-page-event={event} data-op-client={analyticsClientId}>
     <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-background focus:p-2">Langsung ke konten</a>
@@ -80,7 +81,7 @@ const links = [
           <div class="absolute inset-x-0 top-16 border-b border-border bg-card px-4 pb-4 shadow-sm">
             <div class="flex flex-col gap-1 pt-2">
               {links.map((l) => <a href={l.href} class="py-2 text-sm font-medium text-muted-foreground hover:text-foreground">{l.label}</a>)}
-              <a href="/kontak/" class="mt-2 inline-flex h-10 w-full items-center justify-center rounded-full bg-foreground px-4 text-sm font-semibold text-background shadow-lg">
+              <a href="/kontak/" class="mt-2 inline-flex h-10 w-full items-center justify-center rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-lg">
                 Hubungi Kami →
               </a>
             </div>
@@ -93,11 +94,19 @@ const links = [
     </main>
     <footer class="border-t border-border bg-card">
       <div class="container-myna py-12">
-        <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <img src="/logo.png" alt={product.name} width="480" height="197" loading="lazy" class="logo-on-light h-14 w-auto" />
-            <img src="/logo-white.png" alt={product.name} width="480" height="197" loading="lazy" class="logo-on-dark h-14 w-auto" />
-            <p class="mt-3 max-w-xs text-sm text-muted-foreground">Perusahaan teknologi gaya hidup sehat, pengembang Myna Fit dan Myna Food.</p>
+            <img src="/logo.png" alt={product.name} width="480" height="197" loading="lazy" class="h-12 w-auto" />
+            <p class="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">Aplikasi wellness dan lifestyle untuk keseharian kamu. Pelan-pelan, yang penting jalan.</p>
+            <div class="mt-5"><SocialLinks /></div>
+          </div>
+          <div>
+            <h2 class="mb-3 text-sm font-semibold text-foreground">Perusahaan</h2>
+            <ul class="flex flex-col gap-2 text-sm">
+              <li><a href="/tentang/" class="text-muted-foreground transition-colors hover:text-foreground">Tentang Kami</a></li>
+              <li><a href="/#perusahaan" class="text-muted-foreground transition-colors hover:text-foreground">Identitas perusahaan</a></li>
+              <li><a href="/kontak/" class="text-muted-foreground transition-colors hover:text-foreground">Kontak</a></li>
+            </ul>
           </div>
           <div>
             <h2 class="mb-3 text-sm font-semibold text-foreground">Produk</h2>
@@ -107,24 +116,21 @@ const links = [
             </ul>
           </div>
           <div>
-            <h2 class="mb-3 text-sm font-semibold text-foreground">Perusahaan</h2>
+            <h2 class="mb-3 text-sm font-semibold text-foreground">Legal</h2>
             <ul class="flex flex-col gap-2 text-sm">
-              <li><a href="/tentang/" class="text-muted-foreground transition-colors hover:text-foreground">Tentang Kami</a></li>
-              <li><a href="/kontak/" class="text-muted-foreground transition-colors hover:text-foreground">Kontak</a></li>
               <li><a href="/syarat/" class="text-muted-foreground transition-colors hover:text-foreground">Syarat & Ketentuan</a></li>
               <li><a href="/privasi/" class="text-muted-foreground transition-colors hover:text-foreground">Kebijakan Privasi</a></li>
               <li><a href="/refund/" class="text-muted-foreground transition-colors hover:text-foreground">Kebijakan Refund</a></li>
             </ul>
           </div>
-          <address class="text-sm not-italic text-muted-foreground" data-testid="company">
-            <h2 class="mb-3 text-sm font-semibold text-foreground">{company.name}</h2>
-            <p class="leading-relaxed">{company.addressLines.map((line) => <>{line}<br /></>)}</p>
-            <p class="mt-2"><a href={`mailto:${company.email}`} class="text-foreground underline underline-offset-4 hover:text-primary">{company.email}</a></p>
-          </address>
         </div>
-        <div class="mt-8 border-t border-border pt-6 text-center text-xs leading-relaxed text-muted-foreground">
-          <p class="mx-auto max-w-2xl" data-testid="disclaimer">{disclaimer}</p>
-          <p class="mt-2">© {year} {company.name}. Myna Health adalah merek milik {company.name}.</p>
+        <div class="mt-10 flex flex-col gap-4 border-t border-border pt-6 text-xs leading-relaxed text-muted-foreground md:flex-row md:justify-between">
+          <address class="not-italic" data-testid="company">
+            <span class="font-semibold text-foreground">© {year} {company.name}</span><br />
+            {company.addressLines.join(", ")}<br />
+            <a href={`mailto:${company.email}`} class="underline underline-offset-4 hover:text-primary">{company.email}</a>
+          </address>
+          <p class="max-w-md md:text-right" data-testid="disclaimer">{disclaimer}</p>
         </div>
       </div>
     </footer>

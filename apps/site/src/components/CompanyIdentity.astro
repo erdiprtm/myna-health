@@ -1,9 +1,10 @@
 ---
-import { company, companyAddress, product } from "../lib/site";
+import { company, companyAddress, nib, product } from "../lib/site";
 import Icon from "./Icon.astro";
 // Company identity block for entity KYC: who runs Myna Health, where, and how to reach them.
 const rows = [
   { icon: "building", label: "Nama badan usaha", value: company.name },
+  { icon: "info", label: "NIB", value: nib },
   { icon: "sparkles", label: "Merek", value: `${product.name} (Myna Fit, Myna Food)` },
   { icon: "map-pin", label: "Alamat kantor", value: companyAddress },
   { icon: "mail", label: "Email resmi", value: company.email, href: `mailto:${company.email}` },
@@ -12,9 +13,9 @@ const rows = [
 ---
 
 <div class="overflow-hidden rounded-3xl border border-border bg-card shadow-sm" data-testid="company-identity">
-  <div class="flex items-center gap-3 border-b border-border bg-myna-navy px-6 py-5 md:px-8">
-    <Icon name="building" class="h-5 w-5 text-myna-cyan" />
-    <h3 class="text-lg font-semibold text-white">Identitas perusahaan</h3>
+  <div class="flex items-center gap-3 border-b border-border bg-accent px-6 py-5 md:px-8">
+    <Icon name="building" class="h-5 w-5 text-primary" />
+    <h3 class="text-lg font-semibold text-foreground">Identitas perusahaan</h3>
   </div>
   <dl class="divide-y divide-border">
     {
