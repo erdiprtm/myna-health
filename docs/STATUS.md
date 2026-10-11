@@ -10,7 +10,7 @@ Progress log, newest entry on top.
 - **Repo** `erdiprtm/myna-health` from the factory (`/new-product`, public). Spec: `specs/myna-health.md`.
 - **Site** (`apps/site`): Lovable design rebuilt (P-002); pages `/`, `/harga/`, `/tentang/`, `/kontak/` (+ `terkirim`, `gagal`), `/syarat/`, `/privasi/`, `/refund/`, 404. Footer with PT Myna Bio Teknologi, address, email and the disclaimer on every page. No medical content (tested).
 - **API:** `POST /api/contact` emails erdi@mynahealth.id (P-003).
-- **Preview review (Erdi):** showcase only, no prices, no refunds, legal reviewed (P-005). Applied.
+- **Preview review (Erdi):** showcase only, no prices, no refunds, legal reviewed (P-005); corporate landing for entity KYC (P-006). Applied.
 - **Human next:** `RESEND_API_KEY` for the contact form (with the domain step).
 - **Not done yet:** domain switch (waits for approval of the preview).
 

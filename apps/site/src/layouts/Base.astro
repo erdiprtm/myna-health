@@ -27,8 +27,8 @@ const year = new Date().getFullYear();
 
 const links = [
   { href: "/#produk", label: "Produk" },
+  { href: "/#perusahaan", label: "Perusahaan" },
   { href: "/tentang/", label: "Tentang Kami" },
-  { href: "/kontak/", label: "Kontak" },
 ];
 ---
 
@@ -68,8 +68,8 @@ const links = [
         </a>
         <div class="hidden items-center gap-6 md:flex">
           {links.map((l) => <a href={l.href} class="nav-link text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">{l.label}</a>)}
-          <a href={mynaFitUrl} class="nav-cta rounded-full bg-myna-blue px-4 py-2 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-myna-blue-hover">
-            Buka Myna Fit →
+          <a href="/kontak/" class="nav-cta rounded-full bg-myna-blue px-4 py-2 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-myna-blue-hover">
+            Hubungi Kami →
           </a>
         </div>
         <details class="mobile-menu md:hidden">
@@ -80,8 +80,8 @@ const links = [
           <div class="absolute inset-x-0 top-16 border-b border-border bg-card px-4 pb-4 shadow-sm">
             <div class="flex flex-col gap-1 pt-2">
               {links.map((l) => <a href={l.href} class="py-2 text-sm font-medium text-muted-foreground hover:text-foreground">{l.label}</a>)}
-              <a href={mynaFitUrl} class="mt-2 inline-flex h-10 w-full items-center justify-center rounded-full bg-foreground px-4 text-sm font-semibold text-background shadow-lg">
-                Buka Myna Fit →
+              <a href="/kontak/" class="mt-2 inline-flex h-10 w-full items-center justify-center rounded-full bg-foreground px-4 text-sm font-semibold text-background shadow-lg">
+                Hubungi Kami →
               </a>
             </div>
           </div>
@@ -97,7 +97,7 @@ const links = [
           <div>
             <img src="/logo.png" alt={product.name} width="480" height="197" loading="lazy" class="logo-on-light h-14 w-auto" />
             <img src="/logo-white.png" alt={product.name} width="480" height="197" loading="lazy" class="logo-on-dark h-14 w-auto" />
-            <p class="mt-3 max-w-xs text-sm text-muted-foreground">Aplikasi gaya hidup sehat: panduan makan dan pelacak kebugaran.</p>
+            <p class="mt-3 max-w-xs text-sm text-muted-foreground">Perusahaan teknologi gaya hidup sehat, pengembang Myna Fit dan Myna Food.</p>
           </div>
           <div>
             <h2 class="mb-3 text-sm font-semibold text-foreground">Produk</h2>

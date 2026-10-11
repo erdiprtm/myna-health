@@ -81,7 +81,7 @@ describe("built site", () => {
     const html = page("index.html");
     expect(html).toContain("<title>Myna Health — Aplikasi Gaya Hidup Sehat</title>");
     expect(html).toContain(
-      '<meta name="description" content="Myna Health menghadirkan aplikasi gaya hidup sehat: Myna Fit untuk pelacak kebugaran dan Myna Food untuk panduan makan sehat.">',
+      '<meta name="description" content="Myna Health (PT Myna Bio Teknologi) membangun aplikasi gaya hidup sehat: Myna Fit untuk pelacak kebugaran dan Myna Food untuk panduan makan sehat.">',
     );
   });
 
@@ -112,6 +112,14 @@ describe("built site", () => {
     for (const { path, text } of allText()) {
       expect(text, path).not.toMatch(/Rp\s?\d/);
       if (path.endsWith(".html")) expect(text, path).not.toContain('href="/harga/"');
+    }
+  });
+
+  it("home and Tentang Kami show the company identity block (entity KYC)", () => {
+    for (const path of ["index.html", "tentang/index.html"]) {
+      const html = page(path);
+      expect(html, path).toContain('data-testid="company-identity"');
+      expect(html, path).toContain("Nama badan usaha");
     }
   });
 

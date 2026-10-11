@@ -57,7 +57,11 @@ export const contactEndpoint = `${appUrl}/api/contact`;
 export const faqs = [
   {
     q: "Apa itu Myna Health?",
-    a: "Myna Health adalah rumah bagi aplikasi gaya hidup sehat dari PT Myna Bio Teknologi. Saat ini tersedia Myna Fit (pelacak latihan gym dan catatan kalori). Myna Food (panduan makan sesuai tujuan) segera hadir.",
+    a: "Myna Health adalah perusahaan teknologi gaya hidup sehat yang mengembangkan beberapa produk digital. Saat ini tersedia Myna Fit (pelacak latihan gym dan catatan kalori). Myna Food (panduan makan sesuai tujuan) segera hadir.",
+  },
+  {
+    q: "Siapa yang mengelola Myna Health?",
+    a: "Myna Health adalah merek milik PT Myna Bio Teknologi, yang berkantor di Jl. Merdeka Raya No.7 Blok 6, Abadijaya, Sukmajaya, Kota Depok, Jawa Barat 16417. Email resmi: erdi@mynahealth.id.",
   },
   {
     q: "Di mana saya bisa memakai Myna Fit?",

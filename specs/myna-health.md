@@ -4,7 +4,7 @@
 Aplikasi gaya hidup sehat: panduan makan sehat dan pelacak kebugaran untuk gaya hidup yang lebih baik.
 
 ## Target user & problem
-Orang dewasa di Indonesia yang ingin hidup lebih sehat (rutin olahraga, makan lebih teratur) tetapi bingung mulai dari mana dan sulit konsisten. Hari ini mereka mencatat di kertas atau catatan HP, atau berpindah-pindah aplikasi. v1 is a **brand landing site only** (mynahealth.id): it presents the Myna products, prices and company identity, and must pass Duitku merchant KYC. The products themselves live elsewhere (Myna Fit on fit.mynahealth.id).
+Orang dewasa di Indonesia yang ingin hidup lebih sehat (rutin olahraga, makan lebih teratur) tetapi bingung mulai dari mana dan sulit konsisten. Hari ini mereka mencatat di kertas atau catatan HP, atau berpindah-pindah aplikasi. v1 is a **brand landing site only** (mynahealth.id): it presents the Myna products, prices and company identity, and must pass Duitku company-entity KYC for PT Myna Bio Teknologi: credible, trusted and good-looking. Product-level KYC (prices) comes later per product. The products themselves live elsewhere (Myna Fit on fit.mynahealth.id).
 
 ## Core features (v1 — max 3)
 1. Brand landing page (apps/site) that introduces Myna Health and its products: **Myna Fit** (gym tracker + calorie log, button to https://fit.mynahealth.id) and **Myna Food** (food guidance by goal: diet, high-protein, etc.; label "Segera hadir").

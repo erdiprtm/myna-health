@@ -621,5 +621,13 @@ Numbered P-xxx so they never collide with template decisions pulled by `/sync-te
 - `/harga/` stays as a redirect to `/` (static meta refresh, noindex, out of the sitemap) only because the template's site smoke test checks it.
 - **No refunds:** all payments for Myna products are final (`legal.refundPolicy`, `/refund/`, `/syarat/`).
 - **`legal.reviewed: true`** (Erdi): removes the TEMPLATE banner on production. Previews still show it by template design.
-- **Home meta description** changed from the one with the price to: "Myna Health menghadirkan aplikasi gaya hidup sehat: Myna Fit untuk pelacak kebugaran dan Myna Food untuk panduan makan sehat."
+- **Home meta description** no longer mentions a price (see P-006 for the current text).
+
+## P-006: Corporate landing for entity KYC (Erdi, 2026-10-11)
+
+- **Duitku KYC here is the company-entity KYC** for PT Myna Bio Teknologi. Product-level KYC (prices, checkout) comes later, per product project.
+- The site is a **credible corporate landing**: hero names the legal entity; "Tentang Myna Health" with plain facts (no invented numbers); portfolio header; principles timeline; commitments; a **company identity block** (entity name, brand, office address, official email, official site, links to legal documents) on home and Tentang Kami; navbar CTA "Hubungi Kami".
+- Tentang Kami is a company profile: who we are, vision, mission, portfolio, values, identity.
+- Home meta description: "Myna Health (PT Myna Bio Teknologi) membangun aplikasi gaya hidup sehat: Myna Fit untuk pelacak kebugaran dan Myna Food untuk panduan makan sehat."
+- Registration numbers (NIB, deed) are **not** shown until Erdi provides them.
 
