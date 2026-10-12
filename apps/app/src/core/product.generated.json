@@ -17,25 +17,25 @@
     "tokens": {
       "colors": {
         "light": {
-          "background": "#f7f8fa",
-          "foreground": "#131c31",
+          "background": "#fbf6f0",
+          "foreground": "#032b84",
           "card": "#ffffff",
-          "cardForeground": "#131c31",
+          "cardForeground": "#032b84",
           "popover": "#ffffff",
-          "popoverForeground": "#131c31",
-          "primary": "#1f35a6",
+          "popoverForeground": "#032b84",
+          "primary": "#113bfe",
           "primaryForeground": "#ffffff",
-          "secondary": "#eef1f5",
-          "secondaryForeground": "#131c31",
-          "muted": "#eef1f5",
-          "mutedForeground": "#525b6e",
-          "accent": "#e8ecf8",
-          "accentForeground": "#1f35a6",
-          "destructive": "#c42b2b",
+          "secondary": "#dae7fc",
+          "secondaryForeground": "#032b84",
+          "muted": "#f1ece4",
+          "mutedForeground": "#555c67",
+          "accent": "#dae7fc",
+          "accentForeground": "#032b84",
+          "destructive": "#dc2626",
           "destructiveForeground": "#ffffff",
-          "border": "#dde1e8",
-          "input": "#c9cfd9",
-          "ring": "#1f35a6"
+          "border": "#e4ddd1",
+          "input": "#cfc7ba",
+          "ring": "#113bfe"
         },
         "dark": {
           "background": "#0c0e12",
@@ -59,9 +59,9 @@
           "ring": "#6b7cf0"
         }
       },
-      "radius": "0.375rem",
+      "radius": "1.5rem",
       "fontFamily": {
-        "sans": "Schibsted Grotesk, system-ui, sans-serif"
+        "sans": "Montserrat, system-ui, sans-serif"
       }
     },
     "logo": "/logo.png",

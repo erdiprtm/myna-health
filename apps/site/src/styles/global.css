@@ -1,12 +1,11 @@
 @import "tailwindcss";
 @import "./tokens.css";
-@import "@fontsource/schibsted-grotesk/400.css";
-@import "@fontsource/schibsted-grotesk/500.css";
-@import "@fontsource/schibsted-grotesk/600.css";
-@import "@fontsource/schibsted-grotesk/700.css";
-@import "@fontsource/source-serif-4/400.css";
-@import "@fontsource/source-serif-4/400-italic.css";
-@import "@fontsource/source-serif-4/600.css";
+/* Garet substitute (P-011): Montserrat, OFL. Swap for Garet once a web licence exists. */
+@import "@fontsource/montserrat/400.css";
+@import "@fontsource/montserrat/500.css";
+@import "@fontsource/montserrat/600.css";
+@import "@fontsource/montserrat/700.css";
+@import "@fontsource/montserrat/800.css";
 
 /* Light only (P-007). The template's dark variant stays defined so shared classes compile. */
 @custom-variant dark (&:where(.dark, .dark *));
@@ -37,12 +36,21 @@
   --radius-sm: var(--radius);
 }
 
-/* P-009 "laporan tahunan": Schibsted Grotesk (a newsroom grotesque) for headings and interface,
-   Source Serif 4 for reading text. One accent (primary, deep Myna blue) for actions and links. */
+/* P-011 brand guideline 2026: navy #032b84 for titles and emphasis, electric #113bfe for actions,
+   soft blue #dae7fc and beige #fbf6f0 for surfaces, gray #555c67 for body text. Cyan and sky only
+   appear in the capsule supergraphic. One family (Montserrat, standing in for Garet). */
 @theme {
-  --font-sans: "Schibsted Grotesk", system-ui, sans-serif;
-  --font-serif: "Source Serif 4", Georgia, serif;
-  --color-hover: #172a86;
+  --font-sans: "Montserrat", system-ui, sans-serif;
+  --color-navy: #032b84;
+  --color-electric: #113bfe;
+  --color-soft: #dae7fc;
+  --color-beige: #fbf6f0;
+  --color-gray-brand: #555c67;
+  --color-cyan: #24dde2;
+  --color-sky: #5a9bff;
+  --color-badge: #11163a;
+  --color-hover: #032b84;
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 @utility container-myna {
@@ -52,34 +60,47 @@
   @apply mx-auto w-full max-w-[760px] px-4 md:px-8;
 }
 @utility h-display {
-  @apply text-[40px] leading-[1.04] font-semibold tracking-[-0.025em] sm:text-[52px] lg:text-[64px];
+  @apply text-[40px] leading-[1.05] font-extrabold tracking-[-0.03em] sm:text-[52px] lg:text-[64px];
 }
 @utility h-section {
-  @apply text-[28px] leading-[1.15] font-semibold tracking-[-0.02em] md:text-[36px];
+  @apply text-[28px] leading-[1.15] font-extrabold tracking-[-0.025em] text-navy md:text-[38px];
 }
 @utility lead {
-  @apply font-serif text-[19px] leading-[1.6] text-foreground/80 md:text-[21px];
+  @apply text-[18px] leading-[1.65] text-muted-foreground md:text-[20px];
 }
 @utility body-copy {
-  @apply font-serif text-[17px] leading-[1.65] text-foreground/80;
+  @apply text-[16px] leading-[1.7] text-muted-foreground;
 }
+/* Pill buttons, like the guideline's badge. Press feedback is a small scale. */
 @utility btn {
-  @apply inline-flex min-h-11 items-center justify-center rounded-md px-5 text-[15px] font-medium transition-colors duration-150 ease-out;
+  @apply inline-flex min-h-12 items-center justify-center rounded-full px-6 text-[15px] font-semibold transition-[background-color,color,border-color,transform] duration-150 ease-out active:scale-[0.97];
 }
 @utility btn-primary {
-  @apply btn bg-primary text-primary-foreground hover:bg-hover active:bg-hover;
+  @apply btn bg-electric text-white hover:bg-navy;
+}
+@utility btn-light {
+  @apply btn bg-white text-navy hover:bg-soft;
 }
 @utility btn-quiet {
-  @apply btn border border-input text-foreground hover:border-foreground/40 hover:bg-card;
+  @apply btn border border-navy/30 text-navy hover:border-navy;
 }
+@utility btn-quiet-light {
+  @apply btn border border-white/40 text-white hover:border-white;
+}
+/* Links read in navy (electric blue is for buttons and icons only; it is too bright for text). */
 @utility text-link {
-  @apply font-medium text-primary underline decoration-primary/30 underline-offset-[5px] transition-colors duration-150 hover:decoration-primary;
+  @apply font-semibold text-navy underline decoration-navy/30 underline-offset-[5px] transition-colors duration-150 hover:decoration-navy;
+}
+/* Guideline cards: white, a fine dark outline and a generous radius. */
+@utility card-outline {
+  @apply rounded-[28px] border border-navy/20 bg-card;
 }
 
 @layer base {
   html {
     font-family: var(--font-sans);
     scroll-behavior: smooth;
+    scroll-padding-top: 88px;
   }
   body {
     @apply bg-background text-foreground antialiased;
@@ -88,6 +109,7 @@
   h2,
   h3 {
     text-wrap: balance;
+    color: var(--color-navy);
   }
   p {
     text-wrap: pretty;
@@ -110,17 +132,17 @@
     @apply rotate-180;
   }
   .prose-legal {
-    @apply font-serif text-[17px];
+    @apply text-[16px];
   }
   .prose-legal h2 {
-    @apply mt-10 mb-3 font-sans text-xl font-semibold tracking-[-0.01em];
+    @apply mt-10 mb-3 text-xl font-bold tracking-[-0.01em] text-navy;
   }
   .prose-legal h3 {
-    @apply mt-7 mb-2 font-sans text-lg font-semibold;
+    @apply mt-7 mb-2 text-lg font-bold text-navy;
   }
   .prose-legal p,
   .prose-legal li {
-    @apply leading-[1.7] text-foreground/85;
+    @apply leading-[1.75] text-muted-foreground;
   }
   .prose-legal p {
     @apply my-4;
@@ -132,7 +154,7 @@
     @apply my-4 list-decimal space-y-1.5 pl-6;
   }
   .prose-legal table {
-    @apply my-6 w-full border-collapse font-sans text-sm;
+    @apply my-6 w-full border-collapse text-sm;
   }
   .prose-legal th,
   .prose-legal td {
@@ -145,7 +167,7 @@
     @apply my-6 border-l border-foreground/30 pl-5 text-muted-foreground italic;
   }
   .prose-legal a {
-    @apply text-primary underline underline-offset-4;
+    @apply font-semibold text-navy underline underline-offset-4;
   }
 }
 
@@ -156,4 +178,51 @@
 }
 .mobile-menu[open] .menu-close {
   @apply block;
+}
+
+/* Capsule supergraphic (P-011): one orchestrated entrance on load, then still.
+   Tiles rise and unmask in sequence; reduced motion shows them at rest. */
+.capsule {
+  border-radius: 9999px;
+  overflow: hidden;
+}
+.capsule img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .capsule-rise {
+    animation: capsule-rise 620ms var(--ease-out-strong) both;
+  }
+  .rise-2 {
+    animation-delay: 70ms;
+  }
+  .rise-3 {
+    animation-delay: 140ms;
+  }
+  .rise-4 {
+    animation-delay: 210ms;
+  }
+  .rise-5 {
+    animation-delay: 280ms;
+  }
+  .rise-6 {
+    animation-delay: 350ms;
+  }
+  .rise-7 {
+    animation-delay: 420ms;
+  }
+}
+@keyframes capsule-rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.96);
+    clip-path: inset(30% 0 0 0 round 9999px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0 0 0 0 round 9999px);
+  }
 }
