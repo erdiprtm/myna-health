@@ -638,7 +638,7 @@ Numbered P-xxx so they never collide with template decisions pulled by `/sync-te
 - **Light only:** the Lovable original was light only and Erdi saw the device dark mode as "black background"; `theme.js` removed, `<meta name="color-scheme" content="light">`. Navy is used once (manifesto); inner-page headers are soft blue.
 - **Photos:** 5 Pexels photos (Pexels License: commercial use, no attribution required; no endorsement implied, so no quotes next to faces): 40027066 Andry Sasongko, 40105327 Jeny Godjali, 37090659 Fadli Octora, 19847550 Febry Arya, 35640122 ds rexy. Lovable photos removed; the wordmark stays.
 - **Social:** Instagram, TikTok, YouTube marks (Simple Icons, CC0) without links until handles exist (`socials` in `src/lib/site.ts`).
-- **NIB:** placeholder `xxx` (`nib` in `src/lib/site.ts`) until Erdi confirms the number. **Replace before KYC.**
+- **NIB:** 2605260050475 (`nib` in `src/lib/site.ts`, confirmed by Erdi 2026-10-12).
 - No map, no phone number, no careers/newsroom placeholders.
 
 ## P-008: Corporate voice and elegant motion (Erdi, 2026-10-11)
@@ -682,4 +682,5 @@ Numbered P-xxx so they never collide with template decisions pulled by `/sync-te
 - **Motion:** one orchestrated entrance, the hero capsules rising and unmasking in a 70 ms stagger (620 ms, `cubic-bezier(0.23, 1, 0.32, 1)`), plus the existing Myna Fit screen cycle. Press feedback `scale(0.97)`. Nothing moves under `prefers-reduced-motion`. No gradients or blur, so the P-009 test still holds.
 - **Photos:** two previously approved Pexels photos re-added for the capsules (4852724, 7488999); Myna Food shows people again (Erdi asked for people, not food, earlier) instead of gado-gado.
 - Skills consulted (read only): Anthropic frontend-design, Vercel web interface guidelines, Emil Kowalski design engineering, make-interfaces-feel-better, web-animation-design.
+- **Copy (Erdi):** no city in marketing copy ("Depok" removed from hero, about, Tentang Kami and FAQ). The full office address stays where identity requires it: company identity block, footer, Kontak, legal pages and JSON-LD.
 

@@ -169,4 +169,16 @@ describe("built site", () => {
     expect(sitemap).not.toContain("/kontak/terkirim/");
     expect(page("kontak/terkirim/index.html")).toContain('<meta name="robots" content="noindex">');
   });
+
+  // Erdi, 2026-10-12: the NIB is public, and marketing copy never mentions the city.
+  it("shows the NIB and keeps the city to the address only", () => {
+    for (const path of ["index.html", "tentang/index.html"]) expect(page(path)).toContain("2605260050475");
+    for (const path of PAGES) {
+      const copy = page(path)
+        .replace(/<script type="application\/ld\+json">.*?<\/script>/gs, "")
+        .replaceAll("Kota Depok, Jawa Barat 16417", "")
+        .replaceAll("Kec. Sukmajaya", "");
+      expect(copy, path).not.toMatch(/Depok/);
+    }
+  });
 });

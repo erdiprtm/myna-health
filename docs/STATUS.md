@@ -7,7 +7,8 @@ Progress log, newest entry on top.
 ## 2026-10-12: brand guideline 2026 applied (branch `feat/brand-guideline`, P-011)
 
 - Navy, electric, soft blue and beige palette; Montserrat standing in for Garet; capsule supergraphic in the hero, closing panel and inner headers; pill buttons; one entrance animation.
-- **Human next:** Garet web licence (optional), NIB, social handles, `RESEND_API_KEY`, then the domain.
+- NIB filled (2605260050475); city removed from marketing copy.
+- **Human next:** Garet web licence (optional), social handles, `RESEND_API_KEY`, then the domain.
 
 ## 2026-10-12: product interface and new photos on the brand site (P-010)
 
