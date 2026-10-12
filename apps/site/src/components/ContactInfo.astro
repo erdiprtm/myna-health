@@ -1,0 +1,25 @@
+---
+import { company } from "../lib/site";
+---
+
+<div data-testid="contact-info">
+  <h2 class="text-xl font-semibold tracking-[-0.01em]">Informasi perusahaan</h2>
+  <dl class="mt-6 border-t border-foreground/80 text-[16px]">
+    <div class="border-b border-border py-4">
+      <dt class="text-sm text-muted-foreground">Perusahaan</dt>
+      <dd class="mt-1 font-medium text-foreground">{company.name}</dd>
+    </div>
+    <div class="border-b border-border py-4">
+      <dt class="text-sm text-muted-foreground">Alamat</dt>
+      <dd class="mt-1 text-foreground"><address class="not-italic">{company.addressLines.map((line) => <>{line}<br /></>)}</address></dd>
+    </div>
+    <div class="border-b border-border py-4">
+      <dt class="text-sm text-muted-foreground">Email</dt>
+      <dd class="mt-1"><a href={`mailto:${company.email}`} class="text-link">{company.email}</a></dd>
+    </div>
+    <div class="border-b border-border py-4">
+      <dt class="text-sm text-muted-foreground">Waktu balasan</dt>
+      <dd class="mt-1 text-foreground">Hari kerja, biasanya dalam 1 sampai 2 hari kerja.</dd>
+    </div>
+  </dl>
+</div>

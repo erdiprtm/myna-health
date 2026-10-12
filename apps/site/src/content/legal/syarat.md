@@ -1,53 +1,51 @@
 ---
 title: Syarat & Ketentuan
-description: Syarat penggunaan layanan {{name}}, langganan prabayar, dan hak serta kewajiban pengguna.
+description: Syarat penggunaan situs {{name}} dan aplikasi gaya hidup sehat dari {{companyName}}, termasuk hak serta kewajiban pengguna.
 version: "2026-10-11"
 ---
 
-> Dokumen ini adalah **template**. Wajib ditinjau oleh konsultan hukum sebelum produk diluncurkan.
+Syarat & Ketentuan ini berlaku untuk situs mynahealth.id dan aplikasi di bawah merek **{{name}}** (saat ini **Myna Fit**, dan **Myna Food** saat tersedia), yang dikelola oleh **{{companyName}}** ("kami"). Dengan memakai situs atau aplikasi kami, Anda menyetujui syarat berikut.
 
-Dengan memakai **{{name}}** yang disediakan oleh **{{companyName}}**, kamu menyetujui syarat berikut.
+## 1. Tentang situs dan produk
 
-## 1. Akun
+- Situs mynahealth.id adalah halaman perusahaan yang **memperkenalkan** produk-produk {{name}}. Tidak ada penjualan atau transaksi di situs ini.
+- **Myna Fit**: pelacak latihan gym dan catatan kalori harian, tersedia di fit.mynahealth.id.
+- **Myna Food**: panduan makan sesuai tujuan (segera hadir).
+- Setiap produk dapat memiliki ketentuan tambahan yang ditampilkan di produk tersebut.
 
-- Kamu masuk dengan email (tautan masuk) atau akun Google. Jaga keamanan akses ke email kamu.
-- Satu akun untuk satu orang. Data yang kamu berikan harus benar.
+## 2. Bukan layanan medis
 
-## 2. Masa coba gratis
+Myna Health menyediakan informasi gaya hidup sehat dan **bukan pengganti layanan medis atau tenaga kesehatan profesional**. Informasi di situs dan aplikasi kami bersifat **umum** dan tidak ditujukan untuk kondisi pribadi tertentu. Jika Anda memiliki kondisi kesehatan khusus, mintalah saran dari tenaga kesehatan profesional sebelum mengubah pola latihan atau pola makan.
 
-- Masa coba gratis selama **{{trialDays}} hari** diberikan **satu kali per pengguna**.
-- Masa coba berakhir otomatis tanpa tagihan.
+## 3. Akun di produk Myna
 
-## 3. Langganan prabayar
+- Anda bertanggung jawab menjaga keamanan akses ke akun dan email Anda.
+- Satu akun untuk satu orang. Data yang Anda berikan harus benar.
+- Anda harus berusia minimal 18 tahun, atau memakai layanan dengan persetujuan orang tua atau wali.
 
-- Paket yang tersedia: {{planList}}.
-- Pembayaran dilakukan di muka. **Tidak ada perpanjangan otomatis.** Memperpanjang berarti melakukan pembelian baru.
-- Membeli sebelum masa aktif habis **tidak menghanguskan sisa hari**: masa baru dimulai setelah masa lama berakhir.
-- Harga dalam Rupiah dan sudah termasuk pajak yang berlaku, kecuali dinyatakan lain.
+## 4. Pembayaran di produk Myna
 
-## 4. Pengembalian dana
-
-{{refundPolicy}}
+Jika suatu produk Myna menawarkan fitur berbayar, harga dan cara pembayarannya ditampilkan di produk tersebut sebelum Anda membayar. {{refundPolicy}}
 
 ## 5. Penggunaan yang dilarang
 
-Kamu tidak boleh menyalahgunakan layanan, termasuk mencoba membobol keamanan, mengganggu layanan, menjual ulang akses, atau memakai layanan untuk tindakan melanggar hukum.
+Anda tidak boleh menyalahgunakan situs atau aplikasi kami, termasuk mencoba membobol keamanan, mengganggu layanan, menjual ulang akses, atau memakai layanan untuk tindakan yang melanggar hukum.
 
-## 6. Informasi dalam layanan
+## 6. Hak kekayaan intelektual
 
-Informasi dalam layanan bersifat **umum** dan **bukan pengganti tenaga profesional** (misalnya dokter, ahli gizi, penasihat hukum, atau penasihat keuangan). Untuk kondisi khusus, konsultasikan dengan tenaga profesional.
+Nama, logo, desain, dan konten {{name}} adalah milik {{companyName}}. Anda tidak boleh memakainya tanpa izin tertulis dari kami.
 
 ## 7. Ketersediaan layanan
 
-Kami berusaha menjaga layanan tetap tersedia, tetapi tidak menjamin bebas gangguan. Kami dapat mengubah fitur untuk perbaikan layanan.
+Kami berusaha menjaga situs dan aplikasi tetap tersedia, tetapi tidak menjamin bebas gangguan. Kami dapat mengubah, menambah, atau menghentikan fitur maupun produk.
 
-## 8. Penghentian
+## 8. Batasan tanggung jawab
 
-Kamu dapat menghapus akun kapan saja dari menu **Akun**. Kami dapat menangguhkan akun yang melanggar syarat ini.
+Sejauh diizinkan hukum, kami tidak bertanggung jawab atas kerugian tidak langsung yang timbul dari penggunaan situs atau aplikasi kami.
 
-## 9. Batasan tanggung jawab
+## 9. Perubahan syarat
 
-Sejauh diizinkan hukum, tanggung jawab kami terbatas pada jumlah yang kamu bayarkan untuk langganan yang sedang berjalan.
+Kami dapat memperbarui syarat ini. Versi terbaru selalu tersedia di halaman ini, dengan tanggal versi di bagian atas.
 
 ## 10. Hukum yang berlaku
 
@@ -55,4 +53,4 @@ Syarat ini tunduk pada hukum Republik Indonesia. Sengketa diselesaikan secara mu
 
 ## 11. Kontak
 
-{{companyName}}: **{{contactEmail}}**
+{{companyName}}, {{companyAddress}}. Email: **{{contactEmail}}**

@@ -1,22 +1,60 @@
 ---
 import "../styles/global.css";
-import { analyticsClientId, appUrl, product } from "../lib/site";
+import Icon from "../components/Icon.astro";
+import SocialLinks from "../components/SocialLinks.astro";
+import { analyticsClientId, company, disclaimer, mynaFitUrl, product } from "../lib/site";
 
 interface Props {
   title: string;
   description: string;
+  /** Exact <title> (the home page); otherwise "<title> | Myna Health". */
+  fullTitle?: string;
   /** Path of the OG image under /og/, e.g. "home" → /og/home.png */
   og?: string;
   jsonLd?: unknown[];
   /** Standard analytics event fired on load (Section 9), e.g. "pricing_view". */
   event?: "site_view" | "pricing_view";
+  noindex?: boolean;
 }
 
-const { title, description, og = "home", jsonLd = [], event = "site_view" } = Astro.props;
+const { title, description, og = "home", jsonLd = [], event = "site_view", noindex = false } =
+  Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(`/og/${og}.png`, Astro.site);
-const fullTitle = title === product.name ? title : `${title} | ${product.name}`;
+const fullTitle = Astro.props.fullTitle ?? (title === product.name ? title : `${title} | ${product.name}`);
 const year = new Date().getFullYear();
+
+const links = [
+  { href: "/tentang/", label: "Tentang Kami" },
+  { href: "/#produk", label: "Produk" },
+  { href: "/#perusahaan", label: "Perusahaan" },
+];
+const here = Astro.url.pathname;
+const footerGroups = [
+  {
+    title: "Perusahaan",
+    links: [
+      { href: "/tentang/", label: "Tentang Kami" },
+      { href: "/#perusahaan", label: "Informasi perusahaan" },
+      { href: "/kontak/", label: "Kontak" },
+    ],
+  },
+  {
+    title: "Produk",
+    links: [
+      { href: mynaFitUrl, label: "Myna Fit" },
+      { href: "/#myna-food", label: "Myna Food (segera hadir)" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { href: "/syarat/", label: "Syarat & Ketentuan" },
+      { href: "/privasi/", label: "Kebijakan Privasi" },
+      { href: "/refund/", label: "Kebijakan Refund" },
+    ],
+  },
+];
 ---
 
 <!doctype html>
@@ -26,10 +64,11 @@ const year = new Date().getFullYear();
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="icon" href={product.brand.favicon} type="image/svg+xml" />
-    <meta name="theme-color" content={product.brand.tokens.colors.light.primary} />
+    <meta name="theme-color" content="#f7f8fa" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={product.name} />
     <meta property="og:title" content={fullTitle} />
@@ -41,32 +80,78 @@ const year = new Date().getFullYear();
     <meta property="og:locale" content={product.locale.default === "id" ? "id_ID" : "en_US"} />
     <meta name="twitter:card" content="summary_large_image" />
     {jsonLd.length > 0 && <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, "\\u003c")} />}
-    <!-- Apply dark mode before paint (follows the device; no flash). -->
-    <script is:inline src="/theme.js"></script>
+    <!-- Light only, like the Lovable original (P-007): the site ignores the device's dark mode. -->
+    <meta name="color-scheme" content="light" />
   </head>
   <body class="flex min-h-screen flex-col" data-page-event={event} data-op-client={analyticsClientId}>
-    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:rounded-md focus:bg-background focus:p-2">Langsung ke konten</a>
-    <header class="border-b border-border">
-      <nav class="mx-auto flex w-full max-w-5xl items-center justify-between gap-4 px-5 py-4" aria-label="Utama">
-        <a href="/" class="text-lg font-bold">{product.name}</a>
-        <div class="flex items-center gap-1 text-sm sm:gap-4">
-          <a href="/harga/" class="rounded-md px-2 py-2 text-muted-foreground hover:text-foreground">Harga</a>
-          <a href="/#faq" class="hidden rounded-md px-2 py-2 text-muted-foreground hover:text-foreground sm:inline">FAQ</a>
-          <a href={`${appUrl}/sign-in`} data-event="signup_started" class="rounded-lg bg-primary px-4 py-2 font-semibold text-primary-foreground hover:opacity-90">Masuk</a>
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-card focus:p-2">Langsung ke konten</a>
+    <header class="sticky top-0 z-50 border-b border-border bg-background">
+      <nav class="container-myna flex h-16 items-center justify-between md:h-[72px]" aria-label="Utama">
+        <a href="/" class="flex items-center" aria-label={`${product.name}, ke beranda`}>
+          <img src="/logo.png" alt={product.name} width="480" height="197" class="h-8 w-auto md:h-9" />
+        </a>
+        <div class="hidden items-center gap-8 md:flex">
+          {
+            links.map((l) => (
+              <a
+                href={l.href}
+                class="text-[15px] text-muted-foreground transition-colors duration-150 hover:text-foreground aria-[current=page]:text-foreground aria-[current=page]:font-medium"
+                aria-current={here === l.href ? "page" : undefined}
+              >
+                {l.label}
+              </a>
+            ))
+          }
+          <a href="/kontak/" class="btn-primary min-h-10 px-4 text-sm" aria-current={here.startsWith("/kontak/") ? "page" : undefined}>Hubungi kami</a>
         </div>
+        <details class="mobile-menu md:hidden">
+          <summary class="flex h-11 w-11 cursor-pointer items-center justify-center rounded-md text-foreground" aria-label="Menu">
+            <Icon name="menu" class="menu-open h-6 w-6" />
+            <Icon name="x" class="menu-close h-6 w-6" />
+          </summary>
+          <div class="absolute inset-x-0 top-16 border-b border-border bg-background px-4 pb-5">
+            <div class="flex flex-col pt-1">
+              {links.map((l) => <a href={l.href} class="border-b border-border py-3.5 text-base text-foreground">{l.label}</a>)}
+              <a href="/kontak/" class="btn-primary mt-5 w-full">Hubungi kami</a>
+            </div>
+          </div>
+        </details>
       </nav>
     </header>
     <main id="main" class="flex-1">
       <slot />
     </main>
-    <footer class="border-t border-border">
-      <div class="mx-auto flex w-full max-w-5xl flex-col gap-3 px-5 py-8 text-sm text-muted-foreground sm:flex-row sm:justify-between">
-        <p>© {year} {product.legal.companyName}</p>
-        <nav class="flex flex-wrap gap-4" aria-label="Legal">
-          <a href="/privasi/" class="hover:text-foreground">Kebijakan Privasi</a>
-          <a href="/syarat/" class="hover:text-foreground">Syarat & Ketentuan</a>
-          <a href="/kontak/" class="hover:text-foreground">Kontak</a>
-        </nav>
+    <footer class="mt-auto border-t border-border bg-card">
+      <div class="container-myna grid gap-12 py-14 md:grid-cols-12 md:py-16">
+        <div class="md:col-span-5">
+          <img src="/logo.png" alt={product.name} width="480" height="197" loading="lazy" class="h-9 w-auto" />
+          <address class="mt-6 text-sm leading-relaxed text-muted-foreground not-italic" data-testid="company">
+            <span class="font-medium text-foreground">{company.name}</span><br />
+            {company.addressLines.join(", ")}<br />
+            <a href={`mailto:${company.email}`} class="text-link font-normal">{company.email}</a>
+          </address>
+          <div class="mt-6"><SocialLinks /></div>
+        </div>
+        <div class="grid grid-cols-2 gap-8 sm:grid-cols-3 md:col-span-7">
+          {
+            footerGroups.map((g) => (
+              <div>
+                <h2 class="mb-3 text-sm font-semibold text-foreground">{g.title}</h2>
+                <ul class="flex flex-col gap-2.5 text-sm">
+                  {g.links.map((l) => (
+                    <li><a href={l.href} class="text-muted-foreground transition-colors duration-150 hover:text-foreground">{l.label}</a></li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+      <div class="border-t border-border">
+        <div class="container-myna flex flex-col gap-3 py-6 text-xs leading-relaxed text-muted-foreground md:flex-row md:justify-between md:gap-10">
+          <p>&copy; {year} {company.name}. Myna Health adalah merek milik {company.name}.</p>
+          <p class="max-w-md md:text-right" data-testid="disclaimer">{disclaimer}</p>
+        </div>
       </div>
     </footer>
     <script>
@@ -88,6 +173,11 @@ const year = new Date().getFullYear();
             el.dataset.plan ? { plan: el.dataset.plan } : undefined,
           ),
         );
+      }
+
+      // Close the mobile menu after picking a link (same-page anchors).
+      for (const a of document.querySelectorAll(".mobile-menu a")) {
+        a.addEventListener("click", () => a.closest("details")?.removeAttribute("open"));
       }
     </script>
   </body>

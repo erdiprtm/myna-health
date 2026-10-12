@@ -1,54 +1,117 @@
 ---
-import Faq from "../components/Faq.astro";
-import Pricing from "../components/Pricing.astro";
+import CompanyIdentity from "../components/CompanyIdentity.astro";
+import ContactAside from "../components/ContactAside.astro";
+import FitShowcase from "../components/FitShowcase.astro";
+import Principles from "../components/Principles.astro";
 import Base from "../layouts/Base.astro";
-import { faqLd, organizationLd, productLd } from "../lib/jsonld";
-import { appUrl, faqs, product } from "../lib/site";
+import { organizationLd } from "../lib/jsonld";
+import { company, disclaimer, foundedYear } from "../lib/site";
 
 const site = Astro.site as URL;
-const description = `${product.tagline} Coba gratis ${product.trial.days} hari, lalu pilih paket 6 atau 12 bulan. Bayar dengan QRIS, e-wallet, atau virtual account.`;
-// PRODUCT-OWNED copy: replace the feature list and hero text per product (from the spec).
-const features = [
-  { title: "Mulai dalam hitungan detik", body: "Masuk dengan email atau Google. Tanpa kata sandi." },
-  { title: "Bayar sekali, tanpa ribet", body: "QRIS, e-wallet, atau virtual account. Tidak ada tagihan otomatis." },
-  { title: "Datamu milikmu", body: "Unduh atau hapus data kapan saja, sesuai UU Pelindungan Data Pribadi." },
-];
+// PRODUCT-OWNED copy (specs/myna-health.md, P-008, P-009). Corporate voice: calm, plain, "Anda".
+// The company is the subject; products are its portfolio. No medical claims, no invented numbers.
 ---
 
-<Base title={product.name} description={description} jsonLd={[organizationLd(site), productLd(site), faqLd()]}>
-  <section class="mx-auto flex w-full max-w-5xl flex-col items-start gap-6 px-5 py-16 sm:py-24">
-    <h1 class="max-w-3xl text-4xl font-extrabold tracking-tight sm:text-5xl">{product.tagline}</h1>
-    <p class="max-w-2xl text-lg text-muted-foreground">
-      {product.name} membantu kamu lebih cepat. Coba gratis {product.trial.days} hari, lalu pilih paket 6 atau 12 bulan.
-    </p>
-    <div class="flex flex-wrap gap-3">
-      <a href={`${appUrl}/sign-in`} data-event="signup_started" class="rounded-lg bg-primary px-6 py-3 font-semibold text-primary-foreground hover:opacity-90">
-        Coba gratis {product.trial.days} hari
-      </a>
-      <a href="/harga/" class="rounded-lg border border-input px-6 py-3 font-semibold hover:bg-accent">Lihat harga</a>
+<Base
+  title="Myna Health"
+  fullTitle="Myna Health — Aplikasi Gaya Hidup Sehat"
+  description="Myna Health (PT Myna Bio Teknologi) membangun aplikasi wellness dan lifestyle: Myna Fit untuk pelacak kebugaran dan Myna Food untuk panduan makan sehat."
+  jsonLd={[organizationLd(site)]}
+>
+  <!-- Hero: copy left; a real photo right with a real Myna Fit card (habit streak) over its corner. -->
+  <section aria-labelledby="hero-title">
+    <div class="container-myna grid gap-12 pt-12 pb-16 md:grid-cols-12 md:items-center md:gap-8 md:pt-16 md:pb-24">
+      <div class="md:col-span-6 lg:col-span-7">
+        <h1 id="hero-title" class="h-display max-w-[13ch] text-foreground">Membangun kebiasaan sehat untuk Indonesia.</h1>
+        <p class="lead mt-6 max-w-[36ch]">{company.name} membuat aplikasi yang membantu orang lebih rutin berolahraga dan makan lebih teratur.</p>
+        <a href="#produk" class="btn-primary mt-8">Lihat produk</a>
+      </div>
+      <div class="relative md:col-span-6 lg:col-span-5">
+        <img
+          src="/images/hero-jogging-pontianak.jpg"
+          alt="Dua orang berkaos olahraga jogging bersama di jalan kota yang ramai pada pagi hari"
+          width="1120"
+          height="1400"
+          fetchpriority="high"
+          class="aspect-[4/5] w-full rounded-md object-cover"
+        />
+        <figure class="absolute -bottom-8 left-4 w-[78%] max-w-[330px] md:-left-12 lg:-left-20">
+          <img
+            src="/images/fit-kartu-7-hari.webp"
+            alt="Kartu Myna Fit: catatan tujuh hari terakhir, tiga hari latihan dan enam hari catat makan"
+            width="1050"
+            height="486"
+            class="w-full rounded-[18px] shadow-[0_1px_2px_rgb(19_28_49/0.08),0_12px_28px_rgb(19_28_49/0.14)]"
+          />
+          <figcaption class="sr-only">Tampilan dari aplikasi Myna Fit</figcaption>
+        </figure>
+      </div>
     </div>
   </section>
 
-  <section class="border-y border-border bg-muted/40">
-    <div class="mx-auto grid w-full max-w-5xl gap-6 px-5 py-14 sm:grid-cols-3">
-      {
-        features.map((f) => (
-          <div class="flex flex-col gap-2">
-            <h2 class="text-lg font-semibold">{f.title}</h2>
-            <p class="text-muted-foreground">{f.body}</p>
+  <!-- Portfolio: Myna Fit shown through its own interface; Myna Food (no interface yet) with a photo. -->
+  <section id="produk" class="scroll-mt-20 border-t border-border py-16 md:py-24" aria-labelledby="products-title">
+    <div class="container-myna">
+      <div class="grid gap-4 md:grid-cols-12 md:gap-8">
+        <h2 id="products-title" class="h-section md:col-span-5">Produk kami</h2>
+        <p class="body-copy max-w-[48ch] md:col-span-6 md:col-start-7">
+          Setiap produk berfokus pada satu kebiasaan, supaya mudah dijalani setiap hari tanpa perlu mengubah banyak hal sekaligus.
+        </p>
+      </div>
+      <div class="mt-12 md:mt-16"><FitShowcase /></div>
+      <article id="myna-food" class="mt-16 grid scroll-mt-24 gap-8 md:mt-24 md:grid-cols-12 md:items-center">
+        <img src="/images/food-gado-gado.jpg" alt="Sepiring gado-gado dengan sayuran segar, telur rebus, dan saus kacang" width="1000" height="1378" loading="lazy" class="aspect-[4/3] w-full rounded-md object-cover md:col-span-5 md:aspect-[4/5]" />
+        <div class="md:col-span-6 md:col-start-7">
+          <div class="flex items-baseline justify-between gap-4 border-b border-border pb-4">
+            <h3 class="text-2xl font-semibold tracking-[-0.015em]">Myna Food</h3>
+            <p class="text-sm text-muted-foreground">Segera hadir</p>
           </div>
-        ))
-      }
+          <p class="body-copy mt-5 max-w-[52ch]">
+            Panduan makan sesuai tujuan, seperti diet, tinggi protein, atau pola makan seimbang, dengan menu yang mudah ditemukan di Indonesia.
+          </p>
+          <p class="mt-6"><a href="/kontak/" class="text-link">Tanyakan jadwal peluncuran</a></p>
+        </div>
+      </article>
+      <p class="mt-16 max-w-[70ch] text-sm text-muted-foreground">{disclaimer}</p>
     </div>
   </section>
 
-  <section class="mx-auto w-full max-w-5xl px-5 py-14" aria-labelledby="harga">
-    <h2 id="harga" class="mb-6 text-3xl font-bold">Harga</h2>
-    <Pricing />
+  <!-- Company statement: set as reading text, not a banner. -->
+  <section class="border-t border-border py-16 md:py-28" aria-labelledby="about-title">
+    <div class="container-myna grid gap-6 md:grid-cols-12 md:gap-8">
+      <h2 id="about-title" class="text-[15px] font-medium text-muted-foreground md:col-span-3 md:pt-3">Tentang kami</h2>
+      <div class="md:col-span-9">
+        <p class="font-serif text-[26px] leading-[1.35] tracking-[-0.01em] text-foreground md:text-[36px]">
+          Kami percaya hidup sehat tumbuh dari kebiasaan kecil yang dijalani setiap hari. Tugas kami adalah membuat kebiasaan itu terasa mudah.
+        </p>
+        <p class="body-copy mt-8 max-w-[60ch]">
+          {company.name} didirikan pada {foundedYear} di Kota Depok, Jawa Barat. Di bawah merek Myna Health, kami merancang, membangun, dan mengelola aplikasi untuk gaya hidup yang lebih sehat.
+        </p>
+        <p class="mt-6"><a href="/tentang/" class="text-link">Profil perusahaan</a></p>
+      </div>
+    </div>
   </section>
 
-  <section id="faq" class="mx-auto w-full max-w-3xl px-5 py-14" aria-labelledby="faq-title">
-    <h2 id="faq-title" class="mb-6 text-3xl font-bold">Pertanyaan umum</h2>
-    <Faq items={faqs} />
+  <!-- Principles: a definition list, not a card grid. -->
+  <section id="prinsip" class="scroll-mt-20 border-t border-border py-16 md:py-24" aria-labelledby="values-title">
+    <div class="container-myna grid gap-10 md:grid-cols-12 md:gap-8">
+      <div class="md:col-span-4">
+        <h2 id="values-title" class="h-section">Cara kami bekerja</h2>
+        <p class="body-copy mt-4 max-w-[32ch]">Pegangan kami saat membuat setiap keputusan produk.</p>
+      </div>
+      <div class="md:col-span-8"><Principles /></div>
+    </div>
+  </section>
+
+  <!-- Company identity (entity KYC) with the contact route beside it. -->
+  <section id="perusahaan" class="scroll-mt-20 border-t border-border bg-card py-16 md:py-24" aria-labelledby="identity-title">
+    <div class="container-myna grid gap-12 md:grid-cols-12 md:gap-8">
+      <div class="md:col-span-8">
+        <h2 id="identity-title" class="h-section">Informasi perusahaan</h2>
+        <p class="body-copy mt-4 max-w-[52ch]">Myna Health adalah merek milik {company.name}. Berikut data badan usaha kami.</p>
+        <div class="mt-10"><CompanyIdentity /></div>
+      </div>
+      <div class="md:col-span-4 md:col-start-9 md:pt-2"><ContactAside /></div>
+    </div>
   </section>
 </Base>

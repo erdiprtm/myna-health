@@ -1,0 +1,95 @@
+---
+import CompanyIdentity from "../components/CompanyIdentity.astro";
+import ContactAside from "../components/ContactAside.astro";
+import PageHeader from "../components/PageHeader.astro";
+import Principles from "../components/Principles.astro";
+import Base from "../layouts/Base.astro";
+import { organizationLd } from "../lib/jsonld";
+import { company, disclaimer, foundedYear, mynaFitUrl } from "../lib/site";
+
+const site = Astro.site as URL;
+const missions = [
+  "Mengembangkan aplikasi yang sederhana dan nyaman dipakai setiap hari.",
+  "Menyajikan informasi gaya hidup yang jelas dan bertanggung jawab, tanpa klaim medis.",
+  "Melindungi data pengguna sesuai UU Pelindungan Data Pribadi.",
+  "Menambah produk sesuai kebutuhan pengguna di Indonesia.",
+];
+const products = [
+  { name: "Myna Fit", status: "Tersedia di web", body: "Pelacak latihan gym dan catatan kalori dalam satu aplikasi.", href: mynaFitUrl, cta: "Buka Myna Fit" },
+  { name: "Myna Food", status: "Segera hadir", body: "Panduan makan sesuai tujuan: diet, tinggi protein, atau pola makan seimbang.", href: "/#myna-food", cta: "Lihat di beranda" },
+];
+---
+
+<Base title="Tentang Kami" description={`Profil ${company.name}, perusahaan di balik Myna Health: visi, misi, prinsip, portofolio produk (Myna Fit, Myna Food), dan identitas perusahaan.`} og="tentang" jsonLd={[organizationLd(site)]}>
+  <PageHeader label="Tentang Kami" title="Profil perusahaan" description={`Myna Health adalah merek milik ${company.name}, perusahaan teknologi gaya hidup sehat yang didirikan pada ${foundedYear} di Depok, Jawa Barat.`} />
+
+  <!-- Who we are: reading column with the vision set apart in the margin. -->
+  <section class="py-14 md:py-20" aria-labelledby="who-title">
+    <div class="container-myna grid gap-12 md:grid-cols-12 md:gap-8">
+      <div class="md:col-span-7">
+        <h2 id="who-title" class="h-section">Siapa kami</h2>
+        <div class="body-copy mt-6 space-y-5">
+          <p>Banyak orang ingin lebih aktif dan makan lebih teratur, tetapi sulit menjaganya secara konsisten. Kami percaya kuncinya ada pada alat yang sederhana dan dekat dengan keseharian.</p>
+          <p>
+            Karena itu setiap produk kami berfokus pada satu kebiasaan. <strong class="font-semibold text-foreground">Myna Fit</strong> membantu mencatat latihan dan kalori harian.
+            <strong class="font-semibold text-foreground">Myna Food</strong>, yang segera hadir, membantu memilih menu sesuai tujuan.
+          </p>
+          <p>Seluruh produk Myna dikembangkan dan dikelola oleh {company.name}, yang berkantor di Kota Depok, Jawa Barat.</p>
+        </div>
+        <p class="mt-8 max-w-[60ch] border-t border-border pt-5 text-sm text-muted-foreground">{disclaimer}</p>
+      </div>
+      <aside class="md:col-span-4 md:col-start-9 md:pt-2">
+        <h2 class="text-[15px] font-medium text-muted-foreground">Visi</h2>
+        <p class="mt-3 font-serif text-[24px] leading-[1.35] text-foreground">Menjadi pendamping sehari-hari masyarakat Indonesia untuk menjalani hidup yang lebih sehat.</p>
+        <h2 class="mt-10 text-[15px] font-medium text-muted-foreground">Misi</h2>
+        <ol class="mt-3 list-decimal space-y-3 pl-5 font-serif text-[16px] leading-[1.55] text-foreground/85 marker:text-muted-foreground">
+          {missions.map((m) => <li>{m}</li>)}
+        </ol>
+      </aside>
+    </div>
+  </section>
+
+  <div class="container-myna">
+    <img src="/images/gym-cek-hp.jpg" alt="Perempuan berpakaian olahraga tersenyum melihat ponselnya saat istirahat di gym" width="1600" height="1067" loading="lazy" class="aspect-[3/2] w-full rounded-md object-cover md:aspect-[21/9] md:object-[center_35%]" />
+  </div>
+
+  <!-- Portfolio: a two-row list. -->
+  <section class="py-14 md:py-20" aria-labelledby="portfolio-title">
+    <div class="container-myna grid gap-8 md:grid-cols-12">
+      <h2 id="portfolio-title" class="h-section md:col-span-4">Portofolio produk</h2>
+      <ul class="border-t border-foreground/80 md:col-span-8">
+        {
+          products.map((p) => (
+            <li class="grid gap-2 border-b border-border py-6 sm:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] sm:gap-8">
+              <div>
+                <h3 class="text-lg font-semibold tracking-[-0.01em]">{p.name}</h3>
+                <p class="mt-1 text-sm text-muted-foreground">{p.status}</p>
+              </div>
+              <div>
+                <p class="body-copy">{p.body}</p>
+                <p class="mt-3"><a href={p.href} class="text-link">{p.cta}</a></p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="border-t border-border py-14 md:py-20" aria-labelledby="values-title">
+    <div class="container-myna grid gap-8 md:grid-cols-12">
+      <h2 id="values-title" class="h-section md:col-span-4">Cara kami bekerja</h2>
+      <div class="md:col-span-8"><Principles /></div>
+    </div>
+  </section>
+
+  <section class="border-t border-border bg-card py-14 md:py-20" aria-labelledby="identity-title">
+    <div class="container-myna grid gap-12 md:grid-cols-12 md:gap-8">
+      <div class="md:col-span-8">
+        <h2 id="identity-title" class="h-section">Informasi perusahaan</h2>
+        <div class="mt-8"><CompanyIdentity /></div>
+      </div>
+      <div class="md:col-span-4 md:col-start-9 md:pt-2"><ContactAside /></div>
+    </div>
+  </section>
+</Base>

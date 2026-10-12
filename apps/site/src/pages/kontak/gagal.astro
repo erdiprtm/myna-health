@@ -1,0 +1,12 @@
+---
+import PageHeader from "../../components/PageHeader.astro";
+import Base from "../../layouts/Base.astro";
+import { company } from "../../lib/site";
+---
+
+<Base title="Pesan belum terkirim" description="Maaf, pesan Anda belum berhasil terkirim. Coba lagi beberapa saat lagi atau kirim email langsung ke alamat kami." og="kontak" noindex>
+  <PageHeader label="Kontak" title="Pesan belum terkirim" description="Maaf, ada kendala saat mengirim pesan. Periksa isian formulir lalu coba lagi, atau kirim email langsung.">
+    <p class="mt-8 text-xl"><a href={`mailto:${company.email}`} class="text-link">{company.email}</a></p>
+    <a href="/kontak/" class="btn-quiet mt-6">Coba lagi</a>
+  </PageHeader>
+</Base>

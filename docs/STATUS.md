@@ -4,6 +4,32 @@ Progress log, newest entry on top.
 
 ---
 
+## 2026-10-12: product interface and new photos on the brand site (P-010)
+
+- **Erdi on P-009:** better; show the digital product and use better photos.
+- Myna Fit is now shown with three real screens from its interface, cycling in a device frame (CSS only, still with reduced motion). The hero carries Myna Fit's real 7-day card.
+- New photos: Indonesian joggers (hero), gado-gado (Myna Food), gym and phone (Tentang Kami).
+
+## 2026-10-12: brand site redesign from anti-slop design rules (branch `feat/brand-site`)
+
+- **Erdi:** the P-008 design still looked like AI slop. The agent read 8 design-rule repos (taste-skill, no-slop-ui, avoid-ai-design, anti-slop, Netxeo design laws, design-guide, web-design-skills, huashu-design) and redesigned every page (P-009).
+- **Direction "laporan tahunan":** Schibsted Grotesk plus Source Serif 4, cool paper and navy ink, one deep-blue accent, 6px radius, hairline rules instead of cards, no animation. All decorative motion, gradients and glass are gone.
+- Work moved to a cloud session: Node 24.21.0 and pnpm 12.7.0 installed there, `pnpm verify` run there.
+- New build test keeps the banned patterns out (P-009).
+- **Human next (unchanged):** NIB number (placeholder `xxx`), social handles, `RESEND_API_KEY` for the contact form, approval of the preview, then the domain switch.
+
+## 2026-10-11: myna-health created; brand site v1 built (branch `feat/brand-site`)
+
+- **Original Lovable repo archived:** tag `archive/telehealth-v1` on `erdiprtm/mynahealth` `main` (502e6c1). Nothing else touched there.
+- **Repo** `erdiprtm/myna-health` from the factory (`/new-product`, public). Spec: `specs/myna-health.md`.
+- **Site** (`apps/site`): Lovable design rebuilt (P-002); pages `/`, `/harga/`, `/tentang/`, `/kontak/` (+ `terkirim`, `gagal`), `/syarat/`, `/privasi/`, `/refund/`, 404. Footer with PT Myna Bio Teknologi, address, email and the disclaimer on every page. No medical content (tested).
+- **API:** `POST /api/contact` emails erdi@mynahealth.id (P-003).
+- **Preview review (Erdi):** showcase only, no prices, no refunds, legal reviewed (P-005); corporate landing for entity KYC (P-006). Applied.
+- **Homepage v2 (P-007):** research-based structure, light only, Pexels photos, social marks, NIB row.
+- **Homepage v3 (P-008):** corporate voice ("Anda"), elegant motion, founded 2026, founders not shown.
+- **Human next:** NIB number (placeholder `xxx`), social handles, `RESEND_API_KEY` for the contact form (with the domain step).
+- **Not done yet:** domain switch (waits for approval of the preview).
+
 ## 2026-10-11: Phase 8 accepted ✅ (dummy built, tested end to end, deleted)
 
 - **Built** `erdiprtm/catatan-harian` from `specs/catatan-harian.md`:

@@ -1,0 +1,39 @@
+---
+import { company, companyAddress, nib, product } from "../lib/site";
+// Company identity for entity KYC: who runs Myna Health, where, and how to reach them.
+// A plain definition table: these are records, so they read like records.
+const rows = [
+  { label: "Nama badan usaha", value: company.name },
+  { label: "NIB", value: nib },
+  { label: "Merek", value: `${product.name} (Myna Fit, Myna Food)` },
+  { label: "Alamat kantor", value: companyAddress },
+  { label: "Email resmi", value: company.email, href: `mailto:${company.email}` },
+  { label: "Situs resmi", value: "mynahealth.id", href: "/" },
+] as const;
+const docs = [
+  { href: "/syarat/", label: "Syarat & Ketentuan" },
+  { href: "/privasi/", label: "Kebijakan Privasi" },
+  { href: "/refund/", label: "Kebijakan Refund" },
+];
+---
+
+<div data-testid="company-identity">
+  <dl class="border-t border-foreground/80">
+    {
+      rows.map((r) => (
+        <div class="grid gap-1 border-b border-border py-4 sm:grid-cols-[200px_1fr] sm:gap-6">
+          <dt class="text-sm text-muted-foreground">{r.label}</dt>
+          <dd class="text-[16px] font-medium text-foreground">
+            {"href" in r ? <a href={r.href} class="text-link">{r.value}</a> : r.value}
+          </dd>
+        </div>
+      ))
+    }
+    <div class="grid gap-1 border-b border-border py-4 sm:grid-cols-[200px_1fr] sm:gap-6">
+      <dt class="text-sm text-muted-foreground">Dokumen</dt>
+      <dd class="flex flex-wrap gap-x-6 gap-y-2 text-[16px]">
+        {docs.map((d) => <a href={d.href} class="text-link">{d.label}</a>)}
+      </dd>
+    </div>
+  </dl>
+</div>

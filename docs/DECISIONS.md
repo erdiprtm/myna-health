@@ -582,3 +582,92 @@ Building "Catatan Harian" from its spec in a real product repo showed places whe
   - API tests use a test-only route `PAID = "/api/__test/paid"` (`test/helpers.ts`) behind the real `sessionMiddleware` + `requireAccess`.
   - `/build-from-spec` now tells products to replace the home screen and delete the example once a real paid feature exists.
 - **Trade-off:** the Paywall UI is no longer driven by a template E2E. It is a small core component, and products' own E2E cover their paywalled screens (as the dummy's notes E2E did).
+
+---
+
+# Product decisions (myna-health)
+
+Numbered P-xxx so they never collide with template decisions pulled by `/sync-template`.
+
+## P-001: mynahealth.id is a brand landing site; the app stays the template minimum (2026-10-11)
+
+- **Scope.** v1 is `apps/site` only (specs/myna-health.md). It presents Myna Fit (links out to https://fit.mynahealth.id, which stays on Lovable) and Myna Food ("Segera hadir"), prices, company identity and the legal pages for Duitku merchant KYC.
+- **apps/app** is untouched template code, deployed by CI as usual but not linked from the site.
+- **Trial** stays `enabled` in `product.config.ts` only because template API tests assume it; the site never mentions a trial.
+- **No medical content anywhere** is enforced by `apps/site/test/build.test.ts` (a banned-terms scan over every built HTML/XML/TXT file).
+
+## P-002: Design rebuilt from the Lovable project (2026-10-11)
+
+- **Source:** github.com/erdiprtm/mynahealth, archived as tag `archive/telehealth-v1` (read-only; nothing else was changed there).
+- **Kept:** warm off-white background `#f7f5f3`, brand blue `#113bfe` / landing blue `#2b3fe0`, navy bands `#032b84` / `#003087`, cyan accent `#24dde2`, orange second-product accent `#c46126`; Outfit font; `rounded-2xl` cards, `rounded-full` CTAs, `hover:scale-[1.02]` + shadow lift; navbar transparent over the navy hero, solid with blur on scroll; hero product cards overlapping the band; trust marquee; two-column product blocks; scroll-filled "cara kerja" timeline; emoji benefit tiles; navy final-CTA panel with photo; white 4-column footer.
+- **Brand tokens** are in `product.config.ts`; the extra Myna palette lives in `apps/site/src/styles/global.css` (`@theme`, e.g. `bg-myna-navy`, `text-food`).
+- **Assets copied:** the Myna Health wordmark (black/white PNG) and only neutral lifestyle photos, renamed. Product shots (pill bottle, injection pen) and app mockups that show medical UI were **not** copied.
+- **Icons:** inline Lucide SVGs (`Icon.astro`), no runtime JS, CSP stays `self`.
+
+## P-003: Contact form = plain HTML POST to the API Worker, emailed via Resend (2026-10-11)
+
+- `apps/api/src/features/contact.ts`: `POST /api/contact` (form-urlencoded) → email to `legal.contactEmail` → `303` back to `/kontak/terkirim/` or `/kontak/gagal/` on the posting site. Nothing is stored.
+- No JS and no CORS: the site's CSP allows the API origin in `form-action` (astro.config.mjs).
+- Guards: `Origin` must be an allowed site host (`SITE_HOSTS` var, wildcard like `AUTH_HOSTS`), Zod validation, hidden spam-trap field, `CONTACT_LIMITER` 5/min per IP (namespaces 1005 prod, 1006 preview).
+- **Needs** `RESEND_API_KEY` (and `MAIL_FROM` on a verified sending domain) on the Worker; without it the form lands on `/kontak/gagal/`, which shows the email address.
+
+## P-004: Dependencies (2026-10-11)
+
+- `@fontsource/outfit` **5.3.0** (picked with `scripts/pick-versions.mjs`), replacing `@fontsource/inter` on the site and in OG images.
+
+## P-005: Showcase only, no prices, no refunds, legal reviewed (Erdi, 2026-10-11)
+
+- **Myna Health is the holding brand** for several products. The site showcases them and sells nothing: no prices, no pricing section, no pricing page, no Product/Offer JSON-LD. A test fails on any `Rp<digit>` in the build.
+- `/harga/` stays as a redirect to `/` (static meta refresh, noindex, out of the sitemap) only because the template's site smoke test checks it.
+- **No refunds:** all payments for Myna products are final (`legal.refundPolicy`, `/refund/`, `/syarat/`).
+- **`legal.reviewed: true`** (Erdi): removes the TEMPLATE banner on production. Previews still show it by template design.
+- **Home meta description** no longer mentions a price (see P-006 for the current text).
+
+## P-006: Corporate landing for entity KYC (Erdi, 2026-10-11)
+
+- **Duitku KYC here is the company-entity KYC** for PT Myna Bio Teknologi. Product-level KYC (prices, checkout) comes later, per product project.
+- The site is a **credible corporate landing**: hero names the legal entity; "Tentang Myna Health" with plain facts (no invented numbers); portfolio header; principles timeline; commitments; a **company identity block** (entity name, brand, office address, official email, official site, links to legal documents) on home and Tentang Kami; navbar CTA "Hubungi Kami".
+- Tentang Kami is a company profile: who we are, vision, mission, portfolio, values, identity.
+- Home meta description: "Myna Health (PT Myna Bio Teknologi) membangun aplikasi gaya hidup sehat: Myna Fit untuk pelacak kebugaran dan Myna Food untuk panduan makan sehat."
+- Registration numbers (NIB, deed) are **not** shown until Erdi provides them.
+
+## P-007: Homepage rebuilt from structure research; light only; new photos (Erdi, 2026-10-11)
+
+- **Research** (12 corporate and consumer sites incl. Novo Nordisk, Kenvue, Oura, Headspace, Calm, Kopi Kenangan, Fore, Somethinc, Rare Beauty) → skeleton: big-type hero, Who/What/How, bento products, values, manifesto, privacy commitment, company identity (Novo Nordisk-style HQ block with NIB), FAQ, CTA, 4-column footer with "© year PT…".
+- **Copy voice** (research on lululemon, Sweaty Betty, Gymshark, Oatly and Indonesian Gen Z copy): "a friend at the gym who is a bit nerdy about food". Short uneven lines, "kamu", light English mix (gym, set, rep, goal, high-protein), no shaming, no invented numbers, no AI tells (em dashes in copy, "perjalanan", "holistik", "solusi", "memberdayakan").
+- **Light only:** the Lovable original was light only and Erdi saw the device dark mode as "black background"; `theme.js` removed, `<meta name="color-scheme" content="light">`. Navy is used once (manifesto); inner-page headers are soft blue.
+- **Photos:** 5 Pexels photos (Pexels License: commercial use, no attribution required; no endorsement implied, so no quotes next to faces): 40027066 Andry Sasongko, 40105327 Jeny Godjali, 37090659 Fadli Octora, 19847550 Febry Arya, 35640122 ds rexy. Lovable photos removed; the wordmark stays.
+- **Social:** Instagram, TikTok, YouTube marks (Simple Icons, CC0) without links until handles exist (`socials` in `src/lib/site.ts`).
+- **NIB:** placeholder `xxx` (`nib` in `src/lib/site.ts`) until Erdi confirms the number. **Replace before KYC.**
+- No map, no phone number, no careers/newsroom placeholders.
+
+## P-008: Corporate voice and elegant motion (Erdi, 2026-10-11)
+
+- **Feedback on P-007:** it read like an app ad and was too casual. The home page now speaks as the company: calm, confident, warm, "Anda", no slang. Products are the portfolio; the casual Gen Z voice is kept for future product pages. Manifesto and FAQ removed from home (FAQ moved to /kontak/).
+- **Structure:** hero ("Membangun kebiasaan sehat untuk Indonesia.") → about → portfolio → statement → principles (sticky heading, numbered list) → privacy → company identity → closing CTA.
+- **Motion (CSS-first, no libraries, CSP unchanged):** word-by-word headline rise with blur, clip-path photo reveal, slow gradient orbs, drawn rules on facts, scroll-revealed sections, hero parallax and a statement that fills word by word while scrolling (small rAF script), shine and underline hovers. Everything is visible without JS and under `prefers-reduced-motion`.
+- **Founders are not shown** (Erdi wants stealth). Founded year 2026 is shown.
+- Legal pages switched from "kamu" to "Anda".
+- **Follow-up (Erdi):** the navy gradient (`.navy-gradient`: navy base, blue top-left glow, cyan bottom-right glow, drifting orbs) is used on the statement, inner-page headers and the closing CTA. Text blue is the deeper `myna-ink` #1f35a6 (the button blue #113bfe was too bright for text). Photos are consistently people: hero = couple stretching together outdoors in sportswear (Pexels 4852724; the lake photo read as a pre-wedding shoot), Myna Food = couple preparing fresh food (Pexels 7488999).
+
+
+## P-009: Redesign from anti-slop design rules, "laporan tahunan" direction (Erdi, 2026-10-12)
+
+- **Feedback:** Erdi said the P-008 design still looked like AI slop and asked for a redesign based on 8 public design-rule repos: Leonxlnx/taste-skill, LeoStehlik/no-slop-ui, funboy322/avoid-ai-design, miqdadbadjuber/anti-slop, Netxeo/skill-file-design, GrubbyLee/design-guide, lotfb86/web-design-skills, alchaincyf/huashu-design. They were read only; nothing from them is installed or vendored.
+- **Design read:** a corporate landing for payment-provider reviewers and Indonesian consumers, set like a calm annual report. Taste-skill dials for a trust-first site: VARIANCE 4, MOTION 2, DENSITY 4.
+- **Removed (named tells in the repos):** gradient orbs, navy gradient bands, the word-by-word blur headline, clip-path photo reveal, parallax, the scroll-filled statement, button shine, fade-up on every section, glass badges and navbar blur, pill buttons, 2rem rounded cards with big shadows, icons in tinted squares and on every label, uppercase tracked eyebrows, `01/02` numbering, the accent word in the H1, `→` on CTAs, en dashes in copy, the dark band inside a light page. The site now ships no animation at all; hover and focus states are colour changes at 150 ms.
+- **Type:** Schibsted Grotesk (headings and interface; a newsroom grotesque, not on the repos' overused-font lists) plus Source Serif 4 (reading text and legal pages). Both `@fontsource/*` **5.3.0** (picked with `scripts/pick-versions.mjs`), replacing `@fontsource/outfit` (P-004). Static packages, not the variable ones, because the OG renderer (satori) needs `.woff`.
+- **Colour** (in `product.config.ts`, regenerated with `pnpm theme`): cool paper `#f7f8fa`, navy ink `#131c31`, one grey family, one accent `#1f35a6` (the Myna text blue, kept for brand continuity) used only for actions and links. Brand blue `#113bfe` was too saturated for a single accent. Emerald and teal were avoided because the repos flag them as the default health-brand fallback.
+- **Shape:** one radius (6px) on buttons, inputs and photos. Hairline rules instead of cards; a heavier top rule opens each definition list.
+- **Layout:** left-aligned hero with one action and a full-width photo; products at unequal sizes (the live Myna Fit larger, the upcoming Myna Food smaller and lower); company statement as large serif reading text; principles, company identity, mission and FAQ as definition lists; contact route beside the company records. No layout repeats in consecutive sections. Header is solid (no blur) and marks the current page. Footer: company block plus three real link groups.
+- **Guarded by a test** (`apps/site/test/build.test.ts`): no gradients, backdrop filters, blur filters, gradient text or `transition: all` in the CSS; no em/en dashes or arrow glyphs in visible copy (except the agreed home title and the template's legal banner).
+- **Kept from earlier decisions:** light only (P-007), corporate voice with "Anda" (P-008), founders not shown, NIB placeholder `xxx`, social marks without links, the same photos (the hero is now a wide crop so both people stay in frame), OG images (now paper and ink with an accent rule).
+
+## P-010: Show the product through its own interface; new photos (Erdi, 2026-10-12)
+
+- **Feedback on P-009:** better, but the products are digital and the page should show them (UI screenshots or motion, like fit.mynahealth.id), and the photos needed to be better.
+- **Myna Fit interface, real not mocked:** three screens captured from Myna Fit's own interface renders on fit.mynahealth.id (workout of the day, progress chart plus the 7-day log, food-photo scan), at 3x on a 390px viewport, with the floating badges hidden. The progress and scan screens are those cards stacked on the app's own background. Stored as WebP in `apps/site/public/images/fit-*.webp`. Re-capture them when Myna Fit's interface changes.
+- **Motion, motivated:** in the Myna Fit block a device frame cycles through the three screens every 4 s while the matching feature line fills (`FitShowcase.astro`, CSS keyframes only, no script, CSP unchanged). With `prefers-reduced-motion` it stays on the first screen. This replaces P-009's "no animation at all"; it is the only animation on the site.
+- **Hero:** a portrait photo with Myna Fit's real "7 hari terakhir" card over its corner, tying the headline (habits) to the product.
+- **Myna Food** has no interface yet, so it keeps a photo and nothing is mocked up for it.
+- **Photos** (Pexels License: free commercial use, no attribution required, no endorsement implied): hero 27300143 (two joggers on a city street, Pontianak), Myna Food 3008740 (gado-gado), Tentang Kami 5384001 (woman checking her phone at the gym). Chosen for Indonesian settings and food and for showing a phone in use. The 4 earlier photos (P-007/P-008) were removed.

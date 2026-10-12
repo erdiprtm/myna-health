@@ -1,10 +1,8 @@
-# Factory template
+# Myna Health
 
-This repo is the **factory template**: the sector-agnostic foundation that web-first (native-ready) products are generated from. It contains no product-specific code. Product repos are created from it with `/new-product` and keep pulling template updates (`docs/TEMPLATE_SYNC.md`).
+Brand landing site for **mynahealth.id**: Myna Health, healthy-lifestyle apps by PT Myna Bio Teknologi (Myna Fit, Myna Food). Spec: [`specs/myna-health.md`](specs/myna-health.md). v1 is `apps/site` only; `apps/app` stays the template minimum. **No medical content anywhere** (enforced by `apps/site/test/build.test.ts`).
 
-> In a product repo, replace this section with: product name, one-liner, and a link to `specs/<slug>.md`.
-
-The full design is in `FACTORY_BLUEPRINT.md`. Progress is in `docs/STATUS.md`, decisions in `docs/DECISIONS.md`.
+Built from the factory template; pull template updates with `/sync-template` (`docs/TEMPLATE_SYNC.md`). Progress in `docs/STATUS.md`, decisions in `docs/DECISIONS.md` (product ones are `P-xxx`).
 
 ## Ownership rule
 

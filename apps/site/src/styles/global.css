@@ -1,7 +1,14 @@
 @import "tailwindcss";
 @import "./tokens.css";
+@import "@fontsource/schibsted-grotesk/400.css";
+@import "@fontsource/schibsted-grotesk/500.css";
+@import "@fontsource/schibsted-grotesk/600.css";
+@import "@fontsource/schibsted-grotesk/700.css";
+@import "@fontsource/source-serif-4/400.css";
+@import "@fontsource/source-serif-4/400-italic.css";
+@import "@fontsource/source-serif-4/600.css";
 
-/* Dark mode via the `dark` class on <html> (set before paint in Base.astro). */
+/* Light only (P-007). The template's dark variant stays defined so shared classes compile. */
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* Same token names as the app (React Native Reusables), from product.config.ts. */
@@ -26,40 +33,127 @@
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
   --radius-lg: var(--radius);
-  --radius-md: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-sm: var(--radius);
+}
+
+/* P-009 "laporan tahunan": Schibsted Grotesk (a newsroom grotesque) for headings and interface,
+   Source Serif 4 for reading text. One accent (primary, deep Myna blue) for actions and links. */
+@theme {
+  --font-sans: "Schibsted Grotesk", system-ui, sans-serif;
+  --font-serif: "Source Serif 4", Georgia, serif;
+  --color-hover: #172a86;
+}
+
+@utility container-myna {
+  @apply mx-auto w-full max-w-[1200px] px-4 md:px-8;
+}
+@utility container-text {
+  @apply mx-auto w-full max-w-[760px] px-4 md:px-8;
+}
+@utility h-display {
+  @apply text-[40px] leading-[1.04] font-semibold tracking-[-0.025em] sm:text-[52px] lg:text-[64px];
+}
+@utility h-section {
+  @apply text-[28px] leading-[1.15] font-semibold tracking-[-0.02em] md:text-[36px];
+}
+@utility lead {
+  @apply font-serif text-[19px] leading-[1.6] text-foreground/80 md:text-[21px];
+}
+@utility body-copy {
+  @apply font-serif text-[17px] leading-[1.65] text-foreground/80;
+}
+@utility btn {
+  @apply inline-flex min-h-11 items-center justify-center rounded-md px-5 text-[15px] font-medium transition-colors duration-150 ease-out;
+}
+@utility btn-primary {
+  @apply btn bg-primary text-primary-foreground hover:bg-hover active:bg-hover;
+}
+@utility btn-quiet {
+  @apply btn border border-input text-foreground hover:border-foreground/40 hover:bg-card;
+}
+@utility text-link {
+  @apply font-medium text-primary underline decoration-primary/30 underline-offset-[5px] transition-colors duration-150 hover:decoration-primary;
 }
 
 @layer base {
   html {
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
   }
   body {
     @apply bg-background text-foreground antialiased;
   }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    @apply rounded-sm outline-2 outline-offset-2 outline-ring;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  details > summary {
+    list-style: none;
+  }
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
+  details[open] .faq-chevron {
+    @apply rotate-180;
+  }
+  .prose-legal {
+    @apply font-serif text-[17px];
+  }
   .prose-legal h2 {
-    @apply mt-8 mb-3 text-xl font-semibold;
+    @apply mt-10 mb-3 font-sans text-xl font-semibold tracking-[-0.01em];
+  }
+  .prose-legal h3 {
+    @apply mt-7 mb-2 font-sans text-lg font-semibold;
   }
   .prose-legal p,
   .prose-legal li {
-    @apply leading-7 text-foreground;
+    @apply leading-[1.7] text-foreground/85;
+  }
+  .prose-legal p {
+    @apply my-4;
   }
   .prose-legal ul {
-    @apply list-disc space-y-1 pl-6;
+    @apply my-4 list-disc space-y-1.5 pl-6;
   }
   .prose-legal ol {
-    @apply list-decimal space-y-1 pl-6;
+    @apply my-4 list-decimal space-y-1.5 pl-6;
   }
   .prose-legal table {
-    @apply my-4 w-full border-collapse text-sm;
+    @apply my-6 w-full border-collapse font-sans text-sm;
   }
   .prose-legal th,
   .prose-legal td {
-    @apply border border-border p-2 text-left align-top;
+    @apply border-b border-border py-2.5 pr-4 text-left align-top;
+  }
+  .prose-legal th {
+    @apply font-semibold;
   }
   .prose-legal blockquote {
-    @apply my-4 rounded-lg border border-border bg-muted p-4 text-muted-foreground;
+    @apply my-6 border-l border-foreground/30 pl-5 text-muted-foreground italic;
   }
   .prose-legal a {
-    @apply text-primary underline;
+    @apply text-primary underline underline-offset-4;
   }
+}
+
+/* Mobile menu (no JS needed: <details>). */
+.mobile-menu .menu-close,
+.mobile-menu[open] .menu-open {
+  @apply hidden;
+}
+.mobile-menu[open] .menu-close {
+  @apply block;
 }
