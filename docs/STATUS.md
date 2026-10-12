@@ -4,6 +4,12 @@ Progress log, newest entry on top.
 
 ---
 
+## 2026-10-12: product interface and new photos on the brand site (P-010)
+
+- **Erdi on P-009:** better; show the digital product and use better photos.
+- Myna Fit is now shown with three real screens from its interface, cycling in a device frame (CSS only, still with reduced motion). The hero carries Myna Fit's real 7-day card.
+- New photos: Indonesian joggers (hero), gado-gado (Myna Food), gym and phone (Tentang Kami).
+
 ## 2026-10-12: brand site redesign from anti-slop design rules (branch `feat/brand-site`)
 
 - **Erdi:** the P-008 design still looked like AI slop. The agent read 8 design-rule repos (taste-skill, no-slop-ui, avoid-ai-design, anti-slop, Netxeo design laws, design-guide, web-design-skills, huashu-design) and redesigned every page (P-009).

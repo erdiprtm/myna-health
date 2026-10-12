@@ -1,0 +1,177 @@
+---
+import { mynaFitUrl } from "../lib/site";
+// Myna Fit, shown with its own interface: three screens captured from fit.mynahealth.id (P-010).
+// The phone cycles through them while the matching feature line fills. CSS only (CSP: no inline
+// script needed); with prefers-reduced-motion it stays on the first screen.
+const screens = [
+  {
+    src: "/images/fit-layar-latihan.webp",
+    alt: "Layar Myna Fit: latihan hari ini, Bench Press Barbell set 1 dan 2 dengan beban dan repetisi, lalu timer istirahat",
+    title: "Program latihan harian",
+    body: "Gerakan, set, dan waktu istirahat untuk hari ini, lengkap dengan angka sesi sebelumnya.",
+  },
+  {
+    src: "/images/fit-layar-progres.webp",
+    alt: "Layar Myna Fit: grafik progres beban Bench Press selama tiga minggu dan catatan latihan tujuh hari terakhir",
+    title: "Progres tiap gerakan",
+    body: "Grafik beban, rekor pribadi, dan catatan latihan tujuh hari terakhir.",
+  },
+  {
+    src: "/images/fit-layar-scan.webp",
+    alt: "Layar Myna Fit: contoh hasil scan foto sepiring nasi dan lauk dengan perkiraan kalori tiap makanan",
+    title: "Scan foto makanan",
+    body: "Foto makanan Anda, lalu lihat perkiraan kalori dan protein dari isi piring.",
+  },
+];
+---
+
+<article id="myna-fit" class="scroll-mt-24 overflow-hidden rounded-md border border-border bg-card">
+  <div class="grid md:grid-cols-12">
+    <div class="p-6 sm:p-10 md:col-span-6 md:p-12 lg:col-span-5">
+      <div class="flex items-baseline justify-between gap-4 border-b border-border pb-4">
+        <h3 class="text-2xl font-semibold tracking-[-0.015em]">Myna Fit</h3>
+        <p class="text-sm text-muted-foreground">Tersedia di web</p>
+      </div>
+      <p class="body-copy mt-5">
+        Pelacak latihan gym dan catatan kalori. Pengguna mencatat set, repetisi, dan beban, lalu melihat perkembangannya dari minggu ke minggu.
+      </p>
+      <ol class="mt-8 border-t border-border">
+        {
+          screens.map((s, i) => (
+            <li class:list={["fit-step relative border-b border-border py-4", `fit-step-${i + 1}`]}>
+              <p class="text-[16px] font-semibold">{s.title}</p>
+              <p class="mt-1 text-[15px] leading-relaxed text-muted-foreground">{s.body}</p>
+              <span class="fit-bar" aria-hidden="true" />
+            </li>
+          ))
+        }
+      </ol>
+      <p class="mt-8"><a href={mynaFitUrl} class="text-link">Buka Myna Fit</a> <span class="ml-2 text-sm text-muted-foreground">fit.mynahealth.id</span></p>
+    </div>
+    <div class="order-first flex items-center justify-center bg-secondary px-6 py-10 md:order-none md:col-span-6 md:py-16 lg:col-span-7">
+      <div class="fit-phone">
+        <div class="fit-screen">
+          {
+            screens.map((s, i) => (
+              <img
+                src={s.src}
+                alt={s.alt}
+                width="600"
+                height="1032"
+                loading="lazy"
+                class:list={["fit-slide", `fit-slide-${i + 1}`]}
+              />
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<style>
+  /* A plain device frame: the radius depicts hardware, so it sits outside the 6px UI radius. */
+  .fit-phone {
+    width: min(100%, 300px);
+    padding: 9px;
+    border-radius: 46px;
+    background: #131c31;
+    box-shadow: 0 1px 2px rgb(19 28 49 / 0.08), 0 12px 32px rgb(19 28 49 / 0.12);
+  }
+  .fit-screen {
+    position: relative;
+    overflow: hidden;
+    border-radius: 38px;
+    aspect-ratio: 600 / 1032;
+    background: #f8f6f3;
+  }
+  .fit-slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+  }
+  .fit-slide-1 {
+    opacity: 1;
+  }
+  .fit-bar {
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    height: 2px;
+    width: 100%;
+    background: var(--color-primary);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  /* 12 s loop, 4 s per screen. Negative delays put screens 2 and 3 later in the same cycle. */
+  @media (prefers-reduced-motion: no-preference) {
+    .fit-slide,
+    .fit-step,
+    .fit-bar {
+      animation-duration: 12s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+    .fit-slide {
+      animation-name: fit-slide;
+    }
+    .fit-step {
+      animation-name: fit-step;
+    }
+    .fit-bar {
+      animation-name: fit-bar;
+    }
+    .fit-slide-2,
+    .fit-step-2,
+    .fit-step-2 .fit-bar {
+      animation-delay: -8s;
+    }
+    .fit-slide-3,
+    .fit-step-3,
+    .fit-step-3 .fit-bar {
+      animation-delay: -4s;
+    }
+  }
+  @keyframes fit-slide {
+    0%,
+    30% {
+      opacity: 1;
+    }
+    34%,
+    96% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes fit-step {
+    0%,
+    31% {
+      opacity: 1;
+    }
+    34%,
+    97% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes fit-bar {
+    0% {
+      transform: scaleX(0);
+    }
+    33% {
+      transform: scaleX(1);
+    }
+    33.4%,
+    100% {
+      transform: scaleX(0);
+    }
+  }
+</style>
