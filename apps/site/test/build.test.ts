@@ -116,6 +116,26 @@ describe("built site", () => {
     }
   });
 
+  // P-009: the redesign drops the generic AI-landing look. Keep it from creeping back in.
+  it("ships none of the banned decorative patterns (P-009)", () => {
+    const assets = new URL("_astro/", dist);
+    const css = readdirSync(assets)
+      .filter((f) => f.endsWith(".css"))
+      .map((f) => readFileSync(new URL(f, assets), "utf8"))
+      .join("");
+    expect(css).not.toMatch(/(linear|radial)-gradient|backdrop-filter|filter:\s*blur|background-clip:\s*text/);
+    expect(css).not.toMatch(/transition(-property)?:\s*all/);
+    for (const { path, text } of allText()) {
+      if (!path.endsWith(".html")) continue;
+      // Visible copy only: the agreed home <title> and the template's legal banner keep their dash.
+      const copy = text
+        .replace(/<(script|style|title)[\s\S]*?<\/\1>/g, "")
+        .replace(/<[^>]+>/g, " ")
+        .replace("TEMPLATE — perlu review hukum sebelum launch", "");
+      expect(copy, path).not.toMatch(/[—–→]/);
+    }
+  });
+
   it("home and Tentang Kami show the company identity block (entity KYC)", () => {
     for (const path of ["index.html", "tentang/index.html"]) {
       const html = page(path);

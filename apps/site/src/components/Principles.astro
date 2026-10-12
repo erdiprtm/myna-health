@@ -1,0 +1,15 @@
+---
+import { values } from "../lib/site";
+// Company principles as a definition list (home, Tentang Kami).
+---
+
+<dl class="border-t border-foreground/80">
+  {
+    values.map((v) => (
+      <div class="grid gap-2 border-b border-border py-6 sm:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] sm:gap-8">
+        <dt class="text-lg font-semibold tracking-[-0.01em]">{v.title}</dt>
+        <dd class="body-copy">{v.body}</dd>
+      </div>
+    ))
+  }
+</dl>

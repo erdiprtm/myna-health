@@ -8,15 +8,15 @@ interface Props {
 const { items = faqs } = Astro.props;
 ---
 
-<div class="space-y-2">
+<div class="border-t border-foreground/80">
   {
     items.map((item) => (
-      <details class="rounded-xl border border-border/60 bg-card px-5">
-        <summary class="flex cursor-pointer items-center justify-between gap-3 py-5 text-left text-base font-medium text-foreground">
+      <details class="border-b border-border">
+        <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 py-5 text-left text-[17px] font-medium text-foreground">
           {item.q}
-          <Icon name="chevron-down" class="faq-chevron h-4 w-4 text-muted-foreground transition-transform duration-200" />
+          <Icon name="chevron-down" class="faq-chevron h-4 w-4 text-muted-foreground transition-transform duration-150" />
         </summary>
-        <p class="pb-5 leading-relaxed text-muted-foreground">{item.a}</p>
+        <p class="body-copy max-w-[62ch] pb-6">{item.a}</p>
       </details>
     ))
   }

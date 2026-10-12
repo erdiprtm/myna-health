@@ -1,41 +1,39 @@
 ---
 import { company, companyAddress, nib, product } from "../lib/site";
-import Icon from "./Icon.astro";
-// Company identity block for entity KYC: who runs Myna Health, where, and how to reach them.
+// Company identity for entity KYC: who runs Myna Health, where, and how to reach them.
+// A plain definition table: these are records, so they read like records.
 const rows = [
-  { icon: "building", label: "Nama badan usaha", value: company.name },
-  { icon: "info", label: "NIB", value: nib },
-  { icon: "sparkles", label: "Merek", value: `${product.name} (Myna Fit, Myna Food)` },
-  { icon: "map-pin", label: "Alamat kantor", value: companyAddress },
-  { icon: "mail", label: "Email resmi", value: company.email, href: `mailto:${company.email}` },
-  { icon: "shield-check", label: "Situs resmi", value: "mynahealth.id", href: "/" },
+  { label: "Nama badan usaha", value: company.name },
+  { label: "NIB", value: nib },
+  { label: "Merek", value: `${product.name} (Myna Fit, Myna Food)` },
+  { label: "Alamat kantor", value: companyAddress },
+  { label: "Email resmi", value: company.email, href: `mailto:${company.email}` },
+  { label: "Situs resmi", value: "mynahealth.id", href: "/" },
 ] as const;
+const docs = [
+  { href: "/syarat/", label: "Syarat & Ketentuan" },
+  { href: "/privasi/", label: "Kebijakan Privasi" },
+  { href: "/refund/", label: "Kebijakan Refund" },
+];
 ---
 
-<div class="overflow-hidden rounded-3xl border border-border bg-card shadow-sm" data-testid="company-identity">
-  <div class="flex items-center gap-3 border-b border-border bg-accent px-6 py-5 md:px-8">
-    <Icon name="building" class="h-5 w-5 text-myna-ink" />
-    <h3 class="text-lg font-semibold text-foreground">Identitas perusahaan</h3>
-  </div>
-  <dl class="divide-y divide-border">
+<div data-testid="company-identity">
+  <dl class="border-t border-foreground/80">
     {
       rows.map((r) => (
-        <div class="grid gap-1 px-6 py-4 sm:grid-cols-[200px_1fr] sm:gap-6 md:px-8">
-          <dt class="flex items-center gap-2 text-xs font-semibold tracking-[0.1em] text-muted-foreground uppercase">
-            <Icon name={r.icon} class="h-4 w-4 text-myna-ink" />
-            {r.label}
-          </dt>
-          <dd class="text-[15px] font-medium text-foreground">
-            {"href" in r ? <a href={r.href} class="underline underline-offset-4 hover:text-myna-ink">{r.value}</a> : r.value}
+        <div class="grid gap-1 border-b border-border py-4 sm:grid-cols-[200px_1fr] sm:gap-6">
+          <dt class="text-sm text-muted-foreground">{r.label}</dt>
+          <dd class="text-[16px] font-medium text-foreground">
+            {"href" in r ? <a href={r.href} class="text-link">{r.value}</a> : r.value}
           </dd>
         </div>
       ))
     }
+    <div class="grid gap-1 border-b border-border py-4 sm:grid-cols-[200px_1fr] sm:gap-6">
+      <dt class="text-sm text-muted-foreground">Dokumen</dt>
+      <dd class="flex flex-wrap gap-x-6 gap-y-2 text-[16px]">
+        {docs.map((d) => <a href={d.href} class="text-link">{d.label}</a>)}
+      </dd>
+    </div>
   </dl>
-  <div class="flex flex-wrap gap-x-6 gap-y-2 border-t border-border bg-secondary/50 px-6 py-4 text-sm md:px-8">
-    <span class="font-semibold text-foreground">Dokumen:</span>
-    <a href="/syarat/" class="text-myna-ink underline underline-offset-4">Syarat & Ketentuan</a>
-    <a href="/privasi/" class="text-myna-ink underline underline-offset-4">Kebijakan Privasi</a>
-    <a href="/refund/" class="text-myna-ink underline underline-offset-4">Kebijakan Refund</a>
-  </div>
 </div>

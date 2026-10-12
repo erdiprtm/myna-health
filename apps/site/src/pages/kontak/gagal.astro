@@ -5,9 +5,8 @@ import { company } from "../../lib/site";
 ---
 
 <Base title="Pesan belum terkirim" description="Maaf, pesan Anda belum berhasil terkirim. Coba lagi beberapa saat lagi atau kirim email langsung ke alamat kami." og="kontak" noindex>
-  <PageHeader label="Kontak" title="Pesan belum terkirim" description="Maaf, ada kendala saat mengirim pesan. Periksa isian formulir lalu coba lagi, atau kirim email langsung." />
-  <section class="section-padding text-center">
-    <p class="mb-6"><a href={`mailto:${company.email}`} class="text-2xl font-semibold text-myna-ink underline underline-offset-4">{company.email}</a></p>
-    <a href="/kontak/" class="inline-flex h-12 items-center rounded-full border-2 border-primary px-8 text-[15px] font-semibold text-myna-ink transition-colors hover:bg-primary hover:text-primary-foreground">Coba lagi</a>
-  </section>
+  <PageHeader label="Kontak" title="Pesan belum terkirim" description="Maaf, ada kendala saat mengirim pesan. Periksa isian formulir lalu coba lagi, atau kirim email langsung.">
+    <p class="mt-8 text-xl"><a href={`mailto:${company.email}`} class="text-link">{company.email}</a></p>
+    <a href="/kontak/" class="btn-quiet mt-6">Coba lagi</a>
+  </PageHeader>
 </Base>

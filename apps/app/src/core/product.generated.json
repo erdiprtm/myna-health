@@ -17,25 +17,25 @@
     "tokens": {
       "colors": {
         "light": {
-          "background": "#f7f5f3",
-          "foreground": "#1d212b",
+          "background": "#f7f8fa",
+          "foreground": "#131c31",
           "card": "#ffffff",
-          "cardForeground": "#1d212b",
+          "cardForeground": "#131c31",
           "popover": "#ffffff",
-          "popoverForeground": "#1d212b",
-          "primary": "#113bfe",
+          "popoverForeground": "#131c31",
+          "primary": "#1f35a6",
           "primaryForeground": "#ffffff",
-          "secondary": "#f0ece6",
-          "secondaryForeground": "#1d212b",
-          "muted": "#f2f0ed",
-          "mutedForeground": "#5f6676",
-          "accent": "#eff3ff",
+          "secondary": "#eef1f5",
+          "secondaryForeground": "#131c31",
+          "muted": "#eef1f5",
+          "mutedForeground": "#525b6e",
+          "accent": "#e8ecf8",
           "accentForeground": "#1f35a6",
-          "destructive": "#ef4343",
+          "destructive": "#c42b2b",
           "destructiveForeground": "#ffffff",
-          "border": "#e5e2dc",
-          "input": "#e1ddd6",
-          "ring": "#113bfe"
+          "border": "#dde1e8",
+          "input": "#c9cfd9",
+          "ring": "#1f35a6"
         },
         "dark": {
           "background": "#0c0e12",
@@ -59,9 +59,9 @@
           "ring": "#6b7cf0"
         }
       },
-      "radius": "0.75rem",
+      "radius": "0.375rem",
       "fontFamily": {
-        "sans": "Outfit, system-ui, sans-serif"
+        "sans": "Schibsted Grotesk, system-ui, sans-serif"
       }
     },
     "logo": "/logo.png",

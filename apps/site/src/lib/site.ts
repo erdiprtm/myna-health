@@ -82,7 +82,7 @@ export const values = [
   {
     icon: "lock",
     title: "Menjaga privasi",
-    body: "Data pengguna dilindungi sesuai UU Pelindungan Data Pribadi dan tidak pernah diperjualbelikan.",
+    body: "Kami hanya menyimpan data yang diisi sendiri oleh pengguna. Data itu dilindungi sesuai UU Pelindungan Data Pribadi, tidak diperjualbelikan, dan dapat diminta salinan atau penghapusannya kapan saja.",
   },
   {
     icon: "map-pin",

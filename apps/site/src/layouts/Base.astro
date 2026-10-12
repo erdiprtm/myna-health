@@ -14,12 +14,10 @@ interface Props {
   jsonLd?: unknown[];
   /** Standard analytics event fired on load (Section 9), e.g. "pricing_view". */
   event?: "site_view" | "pricing_view";
-  /** Transparent navbar over the navy hero band (home page). */
-  heroNav?: boolean;
   noindex?: boolean;
 }
 
-const { title, description, og = "home", jsonLd = [], event = "site_view", heroNav = false, noindex = false } =
+const { title, description, og = "home", jsonLd = [], event = "site_view", noindex = false } =
   Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(`/og/${og}.png`, Astro.site);
@@ -29,8 +27,33 @@ const year = new Date().getFullYear();
 const links = [
   { href: "/tentang/", label: "Tentang Kami" },
   { href: "/#produk", label: "Produk" },
-  { href: "/#prinsip", label: "Prinsip" },
   { href: "/#perusahaan", label: "Perusahaan" },
+];
+const here = Astro.url.pathname;
+const footerGroups = [
+  {
+    title: "Perusahaan",
+    links: [
+      { href: "/tentang/", label: "Tentang Kami" },
+      { href: "/#perusahaan", label: "Informasi perusahaan" },
+      { href: "/kontak/", label: "Kontak" },
+    ],
+  },
+  {
+    title: "Produk",
+    links: [
+      { href: mynaFitUrl, label: "Myna Fit" },
+      { href: "/#myna-food", label: "Myna Food (segera hadir)" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { href: "/syarat/", label: "Syarat & Ketentuan" },
+      { href: "/privasi/", label: "Kebijakan Privasi" },
+      { href: "/refund/", label: "Kebijakan Refund" },
+    ],
+  },
 ];
 ---
 
@@ -45,7 +68,7 @@ const links = [
     <link rel="canonical" href={canonical} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="icon" href={product.brand.favicon} type="image/svg+xml" />
-    <meta name="theme-color" content="#032b84" />
+    <meta name="theme-color" content="#f7f8fa" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={product.name} />
     <meta property="og:title" content={fullTitle} />
@@ -61,76 +84,72 @@ const links = [
     <meta name="color-scheme" content="light" />
   </head>
   <body class="flex min-h-screen flex-col" data-page-event={event} data-op-client={analyticsClientId}>
-    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-background focus:p-2">Langsung ke konten</a>
-    <header class="site-nav fixed inset-x-0 top-0 z-50 border-b border-border bg-card/95 shadow-sm backdrop-blur-md transition-all duration-300" data-hero={heroNav ? "" : undefined}>
-      <nav class="container-myna flex h-16 items-center justify-between md:h-20" aria-label="Utama">
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-card focus:p-2">Langsung ke konten</a>
+    <header class="sticky top-0 z-50 border-b border-border bg-background">
+      <nav class="container-myna flex h-16 items-center justify-between md:h-[72px]" aria-label="Utama">
         <a href="/" class="flex items-center" aria-label={`${product.name}, ke beranda`}>
-          <img src="/logo.png" alt={product.name} width="480" height="197" class="logo-on-light h-9 w-auto md:h-[42px]" />
-          <img src="/logo-white.png" alt={product.name} width="480" height="197" class="logo-on-dark h-9 w-auto md:h-[42px]" />
+          <img src="/logo.png" alt={product.name} width="480" height="197" class="h-8 w-auto md:h-9" />
         </a>
-        <div class="hidden items-center gap-6 md:flex">
-          {links.map((l) => <a href={l.href} class="nav-link text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">{l.label}</a>)}
-          <a href="/kontak/" class="nav-cta rounded-full bg-myna-blue px-4 py-2 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-myna-blue-hover">
-            Hubungi Kami →
-          </a>
+        <div class="hidden items-center gap-8 md:flex">
+          {
+            links.map((l) => (
+              <a
+                href={l.href}
+                class="text-[15px] text-muted-foreground transition-colors duration-150 hover:text-foreground aria-[current=page]:text-foreground aria-[current=page]:font-medium"
+                aria-current={here === l.href ? "page" : undefined}
+              >
+                {l.label}
+              </a>
+            ))
+          }
+          <a href="/kontak/" class="btn-primary min-h-10 px-4 text-sm" aria-current={here.startsWith("/kontak/") ? "page" : undefined}>Hubungi kami</a>
         </div>
         <details class="mobile-menu md:hidden">
-          <summary class="nav-link cursor-pointer rounded-md p-2 text-foreground" aria-label="Menu">
+          <summary class="flex h-11 w-11 cursor-pointer items-center justify-center rounded-md text-foreground" aria-label="Menu">
             <Icon name="menu" class="menu-open h-6 w-6" />
             <Icon name="x" class="menu-close h-6 w-6" />
           </summary>
-          <div class="absolute inset-x-0 top-16 border-b border-border bg-card px-4 pb-4 shadow-sm">
-            <div class="flex flex-col gap-1 pt-2">
-              {links.map((l) => <a href={l.href} class="py-2 text-sm font-medium text-muted-foreground hover:text-foreground">{l.label}</a>)}
-              <a href="/kontak/" class="mt-2 inline-flex h-10 w-full items-center justify-center rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-lg">
-                Hubungi Kami →
-              </a>
+          <div class="absolute inset-x-0 top-16 border-b border-border bg-background px-4 pb-5">
+            <div class="flex flex-col pt-1">
+              {links.map((l) => <a href={l.href} class="border-b border-border py-3.5 text-base text-foreground">{l.label}</a>)}
+              <a href="/kontak/" class="btn-primary mt-5 w-full">Hubungi kami</a>
             </div>
           </div>
         </details>
       </nav>
     </header>
-    <main id="main" class:list={["flex-1", !heroNav && "pt-16 md:pt-20"]}>
+    <main id="main" class="flex-1">
       <slot />
     </main>
-    <footer class="border-t border-border bg-card">
-      <div class="container-myna py-12">
-        <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
-          <div>
-            <img src="/logo.png" alt={product.name} width="480" height="197" loading="lazy" class="h-12 w-auto" />
-            <p class="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">Produk digital wellness dan lifestyle, dibangun di Indonesia sejak 2026.</p>
-            <div class="mt-5"><SocialLinks /></div>
-          </div>
-          <div>
-            <h2 class="mb-3 text-sm font-semibold text-foreground">Perusahaan</h2>
-            <ul class="flex flex-col gap-2 text-sm">
-              <li><a href="/tentang/" class="text-muted-foreground transition-colors hover:text-foreground">Tentang Kami</a></li>
-              <li><a href="/#perusahaan" class="text-muted-foreground transition-colors hover:text-foreground">Identitas perusahaan</a></li>
-              <li><a href="/kontak/" class="text-muted-foreground transition-colors hover:text-foreground">Kontak</a></li>
-            </ul>
-          </div>
-          <div>
-            <h2 class="mb-3 text-sm font-semibold text-foreground">Produk</h2>
-            <ul class="flex flex-col gap-2 text-sm">
-              <li><a href={mynaFitUrl} class="text-muted-foreground transition-colors hover:text-foreground">Myna Fit</a></li>
-              <li><a href="/#myna-food" class="text-muted-foreground transition-colors hover:text-foreground">Myna Food <span class="text-xs">(segera hadir)</span></a></li>
-            </ul>
-          </div>
-          <div>
-            <h2 class="mb-3 text-sm font-semibold text-foreground">Legal</h2>
-            <ul class="flex flex-col gap-2 text-sm">
-              <li><a href="/syarat/" class="text-muted-foreground transition-colors hover:text-foreground">Syarat & Ketentuan</a></li>
-              <li><a href="/privasi/" class="text-muted-foreground transition-colors hover:text-foreground">Kebijakan Privasi</a></li>
-              <li><a href="/refund/" class="text-muted-foreground transition-colors hover:text-foreground">Kebijakan Refund</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="mt-10 flex flex-col gap-4 border-t border-border pt-6 text-xs leading-relaxed text-muted-foreground md:flex-row md:justify-between">
-          <address class="not-italic" data-testid="company">
-            <span class="font-semibold text-foreground">© {year} {company.name}</span><br />
+    <footer class="mt-auto border-t border-border bg-card">
+      <div class="container-myna grid gap-12 py-14 md:grid-cols-12 md:py-16">
+        <div class="md:col-span-5">
+          <img src="/logo.png" alt={product.name} width="480" height="197" loading="lazy" class="h-9 w-auto" />
+          <address class="mt-6 text-sm leading-relaxed text-muted-foreground not-italic" data-testid="company">
+            <span class="font-medium text-foreground">{company.name}</span><br />
             {company.addressLines.join(", ")}<br />
-            <a href={`mailto:${company.email}`} class="underline underline-offset-4 hover:text-myna-ink">{company.email}</a>
+            <a href={`mailto:${company.email}`} class="text-link font-normal">{company.email}</a>
           </address>
+          <div class="mt-6"><SocialLinks /></div>
+        </div>
+        <div class="grid grid-cols-2 gap-8 sm:grid-cols-3 md:col-span-7">
+          {
+            footerGroups.map((g) => (
+              <div>
+                <h2 class="mb-3 text-sm font-semibold text-foreground">{g.title}</h2>
+                <ul class="flex flex-col gap-2.5 text-sm">
+                  {g.links.map((l) => (
+                    <li><a href={l.href} class="text-muted-foreground transition-colors duration-150 hover:text-foreground">{l.label}</a></li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+      <div class="border-t border-border">
+        <div class="container-myna flex flex-col gap-3 py-6 text-xs leading-relaxed text-muted-foreground md:flex-row md:justify-between md:gap-10">
+          <p>&copy; {year} {company.name}. Myna Health adalah merek milik {company.name}.</p>
           <p class="max-w-md md:text-right" data-testid="disclaimer">{disclaimer}</p>
         </div>
       </div>
@@ -156,87 +175,10 @@ const links = [
         );
       }
 
-      // Lovable look: transparent navbar over the hero that turns solid on scroll.
-      document.documentElement.classList.add("js");
-      const nav = document.querySelector<HTMLElement>(".site-nav");
-      const onScroll = () => nav?.toggleAttribute("data-scrolled", window.scrollY > 10);
-      onScroll();
-      window.addEventListener("scroll", onScroll, { passive: true });
       // Close the mobile menu after picking a link (same-page anchors).
       for (const a of document.querySelectorAll(".mobile-menu a")) {
         a.addEventListener("click", () => a.closest("details")?.removeAttribute("open"));
       }
-
-      // Scroll reveal and the "how it works" timeline fill.
-      const reveal = new IntersectionObserver(
-        (entries) => {
-          for (const e of entries) {
-            if (e.isIntersecting) {
-              e.target.classList.add("is-visible");
-              reveal.unobserve(e.target);
-            }
-          }
-        },
-        { rootMargin: "0px 0px -10% 0px" },
-      );
-      for (const el of document.querySelectorAll("[data-reveal]")) reveal.observe(el);
-
-      const timeline = document.querySelector<HTMLElement>("[data-timeline]");
-      const fill = timeline?.querySelector<HTMLElement>("[data-timeline-fill]");
-      if (timeline && fill) {
-        let frame = 0;
-        const update = () => {
-          frame = 0;
-          const r = timeline.getBoundingClientRect();
-          const progress = (window.innerHeight * 0.6 - r.top) / r.height;
-          fill.style.height = `${Math.max(0, Math.min(1, progress)) * 100}%`;
-        };
-        update();
-        window.addEventListener(
-          "scroll",
-          () => {
-            frame ||= requestAnimationFrame(update);
-          },
-          { passive: true },
-        );
-      }
-
-      // Scroll-linked motion (P-008): hero parallax and the statement that fills in word by word.
-      const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const parallax = document.querySelector<HTMLElement>("[data-parallax]");
-      const fillWords = [...document.querySelectorAll<HTMLElement>("[data-fill] .fill-word")];
-      const fillBox = document.querySelector<HTMLElement>("[data-fill]");
-      if (!still && (parallax || fillBox)) {
-        let ticking = 0;
-        const onFrame = () => {
-          ticking = 0;
-          if (parallax) parallax.style.transform = `translate3d(0, ${Math.min(window.scrollY, 900) * -0.06}px, 0)`;
-          if (fillBox) {
-            const r = fillBox.getBoundingClientRect();
-            const progress = (window.innerHeight * 0.85 - r.top) / (r.height + window.innerHeight * 0.35);
-            const lit = Math.max(0, Math.min(1, progress)) * fillWords.length;
-            fillWords.forEach((w, i) => {
-              w.style.opacity = String(0.25 + 0.75 * Math.max(0, Math.min(1, lit - i)));
-            });
-          }
-        };
-        onFrame();
-        window.addEventListener(
-          "scroll",
-          () => {
-            ticking ||= requestAnimationFrame(onFrame);
-          },
-          { passive: true },
-        );
-      }
-
-      // Pause marquees while off-screen.
-      const marquee = new IntersectionObserver((entries) => {
-        for (const e of entries) {
-          (e.target as HTMLElement).style.animationPlayState = e.isIntersecting ? "running" : "paused";
-        }
-      });
-      for (const el of document.querySelectorAll(".marquee-track")) marquee.observe(el);
     </script>
   </body>
 </html>

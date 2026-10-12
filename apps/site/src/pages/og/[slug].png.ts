@@ -14,11 +14,11 @@ const initResvg = () => {
   wasmReady ??= readFile(require.resolve("@resvg/resvg-wasm/index_bg.wasm")).then((buf) => initWasm(buf));
   return wasmReady;
 };
-// @fontsource/outfit only exports CSS; its .woff files sit next to index.css (satori can't read woff2).
-const fontDir = join(dirname(require.resolve("@fontsource/outfit")), "files");
+// @fontsource packages only export CSS; their .woff files sit next to index.css (satori can't read woff2).
+const fontFile = (pkg: string, file: string) => readFile(join(dirname(require.resolve(pkg)), "files", file));
 const fonts = Promise.all([
-  readFile(join(fontDir, "outfit-latin-700-normal.woff")),
-  readFile(join(fontDir, "outfit-latin-400-normal.woff")),
+  fontFile("@fontsource/schibsted-grotesk", "schibsted-grotesk-latin-600-normal.woff"),
+  fontFile("@fontsource/schibsted-grotesk", "schibsted-grotesk-latin-400-normal.woff"),
 ]);
 
 export const getStaticPaths = (async () => {
@@ -35,8 +35,8 @@ export const getStaticPaths = (async () => {
 export const GET: APIRoute = async ({ props }) => {
   await initResvg();
   const [bold, regular] = await fonts;
-  // Myna navy band with white text, like the site's hero.
-  const [primary, primaryForeground] = ["#032b84", "#ffffff"];
+  // The site's paper and ink (P-009), with the accent as a single rule.
+  const [paper, ink, accent] = ["#f7f8fa", "#131c31", "#1f35a6"];
   const svg = await satori(
     {
       type: "div",
@@ -49,21 +49,22 @@ export const GET: APIRoute = async ({ props }) => {
           width: "100%",
           height: "100%",
           padding: 80,
-          background: primary,
-          color: primaryForeground,
-          fontFamily: "Outfit",
+          background: paper,
+          color: ink,
+          fontFamily: "Schibsted Grotesk",
+          borderTop: `16px solid ${accent}`,
         },
         children: [
           {
             type: "div",
             key: "name",
-            props: { style: { fontSize: 36, fontWeight: 400, opacity: 0.85 }, children: product.name },
+            props: { style: { fontSize: 34, fontWeight: 400, color: "#525b6e" }, children: product.name },
           },
           {
             type: "div",
             key: "title",
             props: {
-              style: { fontSize: 68, fontWeight: 700, lineHeight: 1.15, maxWidth: 1000 },
+              style: { fontSize: 66, fontWeight: 600, lineHeight: 1.12, letterSpacing: -1.5, maxWidth: 980 },
               children: String(props.title),
             },
           },
@@ -74,8 +75,8 @@ export const GET: APIRoute = async ({ props }) => {
       width: 1200,
       height: 630,
       fonts: [
-        { name: "Outfit", data: bold, weight: 700, style: "normal" },
-        { name: "Outfit", data: regular, weight: 400, style: "normal" },
+        { name: "Schibsted Grotesk", data: bold, weight: 600, style: "normal" },
+        { name: "Schibsted Grotesk", data: regular, weight: 400, style: "normal" },
       ],
     },
   );

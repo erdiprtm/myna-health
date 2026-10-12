@@ -1,5 +1,5 @@
 ---
-// Inner-page header: the navy gradient band, with the Lovable section typography.
+// Inner-page header: left-aligned title on the page surface, closed by a hairline.
 interface Props {
   label?: string;
   title: string;
@@ -8,15 +8,11 @@ interface Props {
 const { label, title, description } = Astro.props;
 ---
 
-<section class="navy-gradient relative isolate overflow-hidden">
-  <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
-    <div class="orb orb-cta-a"></div>
-    <div class="orb orb-cta-b"></div>
-  </div>
-  <div class="container-myna py-14 text-center md:py-20">
-    {label && <p class="mb-3 text-xs font-semibold tracking-[0.15em] text-white/60 uppercase">{label}</p>}
-    <h1 class="text-[32px] leading-[1.2] font-bold text-white md:text-[48px]">{title}</h1>
-    {description && <p class="mx-auto mt-4 max-w-[600px] text-lg text-white/75">{description}</p>}
+<section class="border-b border-border">
+  <div class="container-myna pt-12 pb-10 md:pt-20 md:pb-14">
+    {label && <p class="mb-4 text-[15px] font-medium text-muted-foreground">{label}</p>}
+    <h1 class="max-w-[18ch] text-[36px] leading-[1.08] font-semibold tracking-[-0.025em] md:text-[52px]">{title}</h1>
+    {description && <p class="lead mt-5 max-w-[56ch]">{description}</p>}
     <slot />
   </div>
 </section>

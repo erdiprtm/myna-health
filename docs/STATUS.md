@@ -4,6 +4,14 @@ Progress log, newest entry on top.
 
 ---
 
+## 2026-10-12: brand site redesign from anti-slop design rules (branch `feat/brand-site`)
+
+- **Erdi:** the P-008 design still looked like AI slop. The agent read 8 design-rule repos (taste-skill, no-slop-ui, avoid-ai-design, anti-slop, Netxeo design laws, design-guide, web-design-skills, huashu-design) and redesigned every page (P-009).
+- **Direction "laporan tahunan":** Schibsted Grotesk plus Source Serif 4, cool paper and navy ink, one deep-blue accent, 6px radius, hairline rules instead of cards, no animation. All decorative motion, gradients and glass are gone.
+- Work moved to a cloud session: Node 24.21.0 and pnpm 12.7.0 installed there, `pnpm verify` run there.
+- New build test keeps the banned patterns out (P-009).
+- **Human next (unchanged):** NIB number (placeholder `xxx`), social handles, `RESEND_API_KEY` for the contact form, approval of the preview, then the domain switch.
+
 ## 2026-10-11: myna-health created; brand site v1 built (branch `feat/brand-site`)
 
 - **Original Lovable repo archived:** tag `archive/telehealth-v1` on `erdiprtm/mynahealth` `main` (502e6c1). Nothing else touched there.

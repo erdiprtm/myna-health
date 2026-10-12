@@ -4,8 +4,7 @@ import Base from "../layouts/Base.astro";
 ---
 
 <Base title="Halaman tidak ditemukan" description="Halaman yang Anda cari tidak ada atau sudah dipindahkan. Kembali ke beranda Myna Health untuk melanjutkan." noindex>
-  <PageHeader title="Halaman tidak ditemukan" description="Halaman yang Anda cari tidak ada atau sudah dipindahkan." />
-  <section class="section-padding text-center">
-    <a href="/" class="inline-flex h-12 items-center rounded-full bg-myna-blue px-8 text-[15px] font-semibold text-white shadow-lg transition-all hover:scale-[1.02] hover:bg-myna-blue-hover">Ke beranda</a>
-  </section>
+  <PageHeader label="404" title="Halaman tidak ditemukan" description="Halaman yang Anda cari tidak ada atau sudah dipindahkan.">
+    <a href="/" class="btn-quiet mt-8">Ke beranda</a>
+  </PageHeader>
 </Base>
