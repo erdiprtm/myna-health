@@ -5,8 +5,8 @@ import { company } from "../lib/site";
 
 <aside aria-labelledby="contact-aside-title">
   <h3 id="contact-aside-title" class="text-xl font-semibold tracking-[-0.01em]">Hubungi kami</h3>
-  <p class="body-copy mt-3">Untuk pertanyaan atau kerja sama, kirim pesan lewat formulir kontak. Kami membalas melalui email pada hari kerja.</p>
-  <a href="/kontak/" class="btn-primary mt-6">Kirim pesan</a>
+  <p class="body-copy mt-3">Untuk pertanyaan atau kerja sama, kirim email kepada kami. Kami membalas pada hari kerja.</p>
+  <a href={`mailto:${company.email}`} class="btn-primary mt-6">Kirim email</a>
   <p class="mt-6 text-sm text-muted-foreground">
     Atau email langsung ke<br />
     <a href={`mailto:${company.email}`} class="text-link text-base">{company.email}</a>

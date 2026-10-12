@@ -22,8 +22,6 @@
     "APP_ENV": "production",
     "COMMIT_SHA": "dev",
     "AUTH_HOSTS": "myna-health.erdiprtm.workers.dev",
-    // Brand site origins allowed to post the contact form (src/features/contact.ts).
-    "SITE_HOSTS": "mynahealth.id,www.mynahealth.id,myna-health-site.erdiprtm.workers.dev",
     // Sandbox until the human explicitly switches this product to production (Operating rule 7).
     "DUITKU_MODE": "sandbox",
     "DOKU_MODE": "sandbox"
@@ -33,8 +31,7 @@
   // Abuse protection (src/core/rate-limit.ts). namespace_id is per account; keys carry the slug.
   "ratelimits": [
     { "name": "CHECKOUT_LIMITER", "namespace_id": "1001", "simple": { "limit": 10, "period": 60 } },
-    { "name": "WEBHOOK_LIMITER", "namespace_id": "1002", "simple": { "limit": 120, "period": 60 } },
-    { "name": "CONTACT_LIMITER", "namespace_id": "1005", "simple": { "limit": 5, "period": 60 } }
+    { "name": "WEBHOOK_LIMITER", "namespace_id": "1002", "simple": { "limit": 120, "period": 60 } }
   ],
   "version_metadata": { "binding": "CF_VERSION_METADATA" },
   "d1_databases": [
@@ -51,15 +48,13 @@
         "APP_ENV": "preview",
         "COMMIT_SHA": "dev",
         "AUTH_HOSTS": "myna-health-preview.erdiprtm.workers.dev,*-myna-health-preview.erdiprtm.workers.dev",
-        "SITE_HOSTS": "myna-health-site-preview.erdiprtm.workers.dev,*-myna-health-site-preview.erdiprtm.workers.dev",
         "DUITKU_MODE": "sandbox",
         "DOKU_MODE": "sandbox"
       },
       "triggers": { "crons": [] },
       "ratelimits": [
         { "name": "CHECKOUT_LIMITER", "namespace_id": "1003", "simple": { "limit": 10, "period": 60 } },
-        { "name": "WEBHOOK_LIMITER", "namespace_id": "1004", "simple": { "limit": 120, "period": 60 } },
-        { "name": "CONTACT_LIMITER", "namespace_id": "1006", "simple": { "limit": 5, "period": 60 } }
+        { "name": "WEBHOOK_LIMITER", "namespace_id": "1004", "simple": { "limit": 120, "period": 60 } }
       ],
       "version_metadata": { "binding": "CF_VERSION_METADATA" },
       "d1_databases": [

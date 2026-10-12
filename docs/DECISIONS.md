@@ -691,3 +691,9 @@ Numbered P-xxx so they never collide with template decisions pulled by `/sync-te
 - **Canonicals:** production builds use `https://mynahealth.id`; the deploy smoke test keeps using `SITE_URL` (workers.dev) so it never depends on DNS caches during the cutover.
 - **Cutover order:** delete the `@` and `www` A records (Lovable) in Cloudflare, then merge, so the custom domains can be created. Rollback if the deploy cannot attach them: re-add both A records `185.158.133.1`, DNS only.
 
+## P-013: No contact form; contact by email (Erdi, 2026-10-12)
+
+- Erdi: the form is not needed, the email is enough. Removed the `/kontak/` form, the `/kontak/terkirim/` and `/kontak/gagal/` pages, `POST /api/contact` (`apps/api/src/features/contact.ts` and its test, `SITE_HOSTS`, `CONTACT_LIMITER`) and the API origin in the site CSP `form-action` (back to `'self'`). Supersedes P-003.
+- `/kontak/` now leads with the official email (mailto) beside the company records, then the FAQ. CTAs on home and Tentang Kami open an email. The privacy policy speaks of email correspondence instead of a form. A test keeps `<form>` off every page.
+- `RESEND_API_KEY` is no longer needed for the site.
+

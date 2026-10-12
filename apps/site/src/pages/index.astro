@@ -108,8 +108,8 @@ const site = Astro.site as URL;
           <h2 id="cta-title" class="text-[32px] leading-[1.1] font-extrabold tracking-[-0.025em] text-white md:text-[44px]">Mari terhubung.</h2>
           <p class="mt-4 max-w-[44ch] text-[17px] leading-[1.65] text-white/80">Untuk pertanyaan, kemitraan, atau informasi perusahaan, silakan hubungi kami.</p>
           <div class="mt-8 flex flex-wrap gap-3">
-            <a href="/kontak/" class="btn-light">Kirim pesan</a>
-            <a href={`mailto:${company.email}`} class="btn-quiet-light">{company.email}</a>
+            <a href={`mailto:${company.email}`} class="btn-light">Kirim email</a>
+            <a href="/kontak/" class="btn-quiet-light">Halaman kontak</a>
           </div>
         </div>
         <div class="hidden justify-self-end md:col-span-5 md:flex md:items-center"><Capsules variant="cta" /></div>

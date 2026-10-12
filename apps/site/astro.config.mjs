@@ -11,8 +11,6 @@ const site =
   process.env.PUBLIC_APP_ENV === "production"
     ? "https://mynahealth.id"
     : (process.env.SITE_URL ?? "https://myna-health-site.erdiprtm.workers.dev");
-// The contact form posts to the API Worker (apps/api/src/features/contact.ts): allow its origin.
-const apiOrigin = new URL(process.env.PUBLIC_APP_URL ?? "https://myna-health.erdiprtm.workers.dev").origin;
 
 export default defineConfig({
   site,
@@ -29,15 +27,13 @@ export default defineConfig({
         "img-src 'self' data: https:",
         "connect-src 'self' https:",
         "font-src 'self'",
-        `form-action 'self' ${apiOrigin}`,
+        "form-action 'self'",
       ],
     },
   },
   // No pricing on the brand site (showcase only). The template smoke test still checks /harga/.
   redirects: { "/harga/": "/" },
-  integrations: [
-    sitemap({ filter: (page) => !page.includes("/og/") && !/\/(kontak\/(terkirim|gagal)|harga)\//.test(page) }),
-  ],
+  integrations: [sitemap({ filter: (page) => !page.includes("/og/") && !/\/harga\//.test(page) })],
   // Never inline scripts into HTML: the CSP allows script files from self only.
   vite: { plugins: [tailwindcss()], build: { assetsInlineLimit: 0 } },
 });
