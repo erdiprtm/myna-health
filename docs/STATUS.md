@@ -8,7 +8,8 @@ Progress log, newest entry on top.
 
 - PR #3 merged: the site Worker serves `mynahealth.id` (custom domain); old Lovable A records deleted. Checked: public resolvers (1.1.1.1, 8.8.8.8, 9.9.9.9) answer Cloudflare, `https://mynahealth.id` 200 with the new site, `fit.mynahealth.id` 200 on Lovable.
 - Erdi tested Google Workspace mail: sending and receiving both work.
-- **Human next:** remove `mynahealth.id` and `www` (not `fit`) from the old Lovable project; then a 301 www → apex redirect rule in Cloudflare and deleting `_lovable` / `_lovable.www` TXT.
+- Done by Erdi: root and www disconnected from the old Lovable project; 301 www → apex redirect rule; Always Use HTTPS; `_lovable` / `_lovable.www` TXT deleted. Re-checked: http → https, www → apex (path and query kept), fit 200, MX unchanged.
+- **Human next:** social handles, `RESEND_API_KEY` for the contact form (Resend domain `hello.mynahealth.id` already exists).
 
 ## 2026-10-12: mynahealth.id zone active on Cloudflare (P-012)
 
