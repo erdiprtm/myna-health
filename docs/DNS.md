@@ -1,5 +1,13 @@
 # mynahealth.id DNS
 
+**Current state (2026-10-12):** DNS on Cloudflare (`fay.ns.cloudflare.com`, `harlan.ns.cloudflare.com`), registrar still IDCloudHost.
+- `mynahealth.id` and `www` are **Worker** records for `myna-health-site` (custom domains from `apps/site/wrangler.jsonc`, proxied).
+- Redirect rule "Redirect from WWW to root": `https://www.mynahealth.id/*` → `https://mynahealth.id/${1}`, 301, query string kept. SSL/TLS "Always Use HTTPS" is on.
+- `_lovable` and `_lovable.www` deleted; root and www disconnected from the old Lovable project. Everything else below is unchanged and DNS only.
+
+---
+
+
 Snapshot of the zone at IDCloudHost (nameservers `bromo.cloudhost.id`, `rinjani.cloudhost.id`), taken 2026-10-12 from Erdi's DNS panel and checked record by record with public `dig`. No DNSSEC (no DS record). Registrar: IDCloudHost, expires 2027-04-04.
 
 This is the list to reproduce **exactly** when the zone moves to Cloudflare. Every record is **DNS only** (grey cloud) unless the cutover step below says otherwise.
