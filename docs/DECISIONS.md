@@ -638,7 +638,7 @@ Numbered P-xxx so they never collide with template decisions pulled by `/sync-te
 - **Light only:** the Lovable original was light only and Erdi saw the device dark mode as "black background"; `theme.js` removed, `<meta name="color-scheme" content="light">`. Navy is used once (manifesto); inner-page headers are soft blue.
 - **Photos:** 5 Pexels photos (Pexels License: commercial use, no attribution required; no endorsement implied, so no quotes next to faces): 40027066 Andry Sasongko, 40105327 Jeny Godjali, 37090659 Fadli Octora, 19847550 Febry Arya, 35640122 ds rexy. Lovable photos removed; the wordmark stays.
 - **Social:** Instagram, TikTok, YouTube marks (Simple Icons, CC0) without links until handles exist (`socials` in `src/lib/site.ts`).
-- **NIB:** placeholder `xxx` (`nib` in `src/lib/site.ts`) until Erdi confirms the number. **Replace before KYC.**
+- **NIB:** 2605260050475 (`nib` in `src/lib/site.ts`, confirmed by Erdi 2026-10-12).
 - No map, no phone number, no careers/newsroom placeholders.
 
 ## P-008: Corporate voice and elegant motion (Erdi, 2026-10-11)
@@ -671,3 +671,16 @@ Numbered P-xxx so they never collide with template decisions pulled by `/sync-te
 - **Hero:** a portrait photo with Myna Fit's real "7 hari terakhir" card over its corner, tying the headline (habits) to the product.
 - **Myna Food** has no interface yet, so it keeps a photo and nothing is mocked up for it.
 - **Photos** (Pexels License: free commercial use, no attribution required, no endorsement implied): hero 27300143 (two joggers on a city street, Pontianak), Myna Food 3008740 (gado-gado), Tentang Kami 5384001 (woman checking her phone at the gym). Chosen for Indonesian settings and food and for showing a phone in use. The 4 earlier photos (P-007/P-008) were removed.
+
+## P-011: Brand guideline 2026 applied to the site (Erdi, 2026-10-12)
+
+- **Source:** "Brand Guidelines - Myna Health" (23 pages, from Erdi's Documents). Only the visual identity is used; its telehealth/program content (Men Performance, Weight Loss, consultation) is not.
+- **Colour** (Men Performance palette, which is the blue core of the brand): navy `#032b84` for titles, logo and emphasis; electric `#113bfe` for buttons and icons only (Erdi found it too bright for text, so links are navy); soft blue `#dae7fc` and beige `#fbf6f0` for surfaces; gray `#555c67` for body text. Cyan `#24dde2` and sky `#5a9bff` appear only in the capsule supergraphic.
+- **Type:** the guideline's Garet is commercial (only Book/Heavy are listed free, licence terms unverified), so **Montserrat** (`@fontsource/montserrat` 5.3.0, OFL) stands in: wide geometric, double-storey a, weights to 800. One family site-wide; Source Serif and Schibsted Grotesk (P-009) removed. Swap to Garet once a web licence is bought.
+- **Supergraphic:** the guideline's vertical capsules and circles with people photos (`Capsules.astro`). Placement from the frontend-design rule "open with the most characteristic thing in the brand's world, spend boldness once": the home hero (navy, like the guideline cover), a small cluster in the closing navy panel (like its closing slide), and a three-capsule accent on inner-page headers (soft blue). Decorative and `aria-hidden`.
+- **Shape:** pill buttons (the guideline's badge), 28px outline cards, 1.5rem base radius. Dark badge `#11163a` for "Segera hadir".
+- **Motion:** one orchestrated entrance, the hero capsules rising and unmasking in a 70 ms stagger (620 ms, `cubic-bezier(0.23, 1, 0.32, 1)`), plus the existing Myna Fit screen cycle. Press feedback `scale(0.97)`. Nothing moves under `prefers-reduced-motion`. No gradients or blur, so the P-009 test still holds.
+- **Photos:** two previously approved Pexels photos re-added for the capsules (4852724, 7488999); Myna Food shows people again (Erdi asked for people, not food, earlier) instead of gado-gado.
+- Skills consulted (read only): Anthropic frontend-design, Vercel web interface guidelines, Emil Kowalski design engineering, make-interfaces-feel-better, web-animation-design.
+- **Copy (Erdi):** no city in marketing copy ("Depok" removed from hero, about, Tentang Kami and FAQ). The full office address stays where identity requires it: company identity block, footer, Kontak, legal pages and JSON-LD.
+

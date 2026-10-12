@@ -58,8 +58,8 @@ export const socials = [
 /** Year PT Myna Bio Teknologi was founded. */
 export const foundedYear = 2026;
 
-/** NIB (Nomor Induk Berusaha). Placeholder until Erdi confirms the number. */
-export const nib = "xxx";
+/** NIB (Nomor Induk Berusaha) of PT Myna Bio Teknologi. */
+export const nib = "2605260050475";
 
 /** Myna Fit runs on its own domain (Lovable) for now. */
 export const mynaFitUrl = "https://fit.mynahealth.id";
@@ -94,7 +94,7 @@ export const values = [
 export const faqs = [
   {
     q: "Siapa yang mengelola Myna Health?",
-    a: "Myna Health adalah merek milik PT Myna Bio Teknologi, perusahaan yang didirikan pada 2026 dan berkantor di Kota Depok, Jawa Barat.",
+    a: "Myna Health adalah merek milik PT Myna Bio Teknologi, perusahaan teknologi gaya hidup sehat yang didirikan pada 2026. Data lengkap badan usaha ada di bagian Informasi perusahaan.",
   },
   {
     q: "Apakah Myna Health layanan medis?",

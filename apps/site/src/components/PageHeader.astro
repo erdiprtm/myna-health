@@ -1,5 +1,6 @@
 ---
-// Inner-page header: left-aligned title on the page surface, closed by a hairline.
+// Inner-page header: the guideline's soft-blue surface, a navy title, and a small capsule trio
+// (decorative) on the right. The capsules echo the home hero without competing with it.
 interface Props {
   label?: string;
   title: string;
@@ -8,11 +9,16 @@ interface Props {
 const { label, title, description } = Astro.props;
 ---
 
-<section class="border-b border-border">
-  <div class="container-myna pt-12 pb-10 md:pt-20 md:pb-14">
-    {label && <p class="mb-4 text-[15px] font-medium text-muted-foreground">{label}</p>}
-    <h1 class="max-w-[18ch] text-[36px] leading-[1.08] font-semibold tracking-[-0.025em] md:text-[52px]">{title}</h1>
+<section class="overflow-hidden bg-soft">
+  <div class="container-myna relative pt-12 pb-10 md:pt-20 md:pb-14">
+    {label && <p class="mb-4 text-[15px] font-semibold text-navy/70">{label}</p>}
+    <h1 class="max-w-[18ch] text-[36px] leading-[1.08] font-extrabold tracking-[-0.03em] md:text-[52px]">{title}</h1>
     {description && <p class="lead mt-5 max-w-[56ch]">{description}</p>}
     <slot />
+    <div class="pointer-events-none absolute top-1/2 right-8 hidden -translate-y-1/2 gap-3 lg:flex" aria-hidden="true">
+      <span class="capsule block h-40 w-16 bg-electric"></span>
+      <span class="capsule mt-10 block h-40 w-16 bg-cyan"></span>
+      <span class="capsule block h-16 w-16 bg-sky"></span>
+    </div>
   </div>
 </section>
