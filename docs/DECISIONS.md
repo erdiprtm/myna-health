@@ -684,3 +684,10 @@ Numbered P-xxx so they never collide with template decisions pulled by `/sync-te
 - Skills consulted (read only): Anthropic frontend-design, Vercel web interface guidelines, Emil Kowalski design engineering, make-interfaces-feel-better, web-animation-design.
 - **Copy (Erdi):** no city in marketing copy ("Depok" removed from hero, about, Tentang Kami and FAQ). The full office address stays where identity requires it: company identity block, footer, Kontak, legal pages and JSON-LD.
 
+## P-012: mynahealth.id on Cloudflare, served by the site Worker (Erdi, 2026-10-12)
+
+- **DNS moved** from IDCloudHost's nameservers to Cloudflare (`fay`/`harlan.ns.cloudflare.com`); the registrar stays IDCloudHost. All 20 records were copied exactly and are DNS only (`docs/DNS.md`): Google Workspace mail (MX, SPF, DKIM, DMARC, verification), `fit` (Myna Fit on Lovable), Lovable verifications, `auth` NS delegation to Lovable, Resend `hello` sending domain, `erp-agent`.
+- **Site:** `apps/site/wrangler.jsonc` gives the production Worker the custom domains `mynahealth.id` and `www.mynahealth.id`; `env.preview` sets `routes: []` because routes are inheritable.
+- **Canonicals:** production builds use `https://mynahealth.id`; the deploy smoke test keeps using `SITE_URL` (workers.dev) so it never depends on DNS caches during the cutover.
+- **Cutover order:** delete the `@` and `www` A records (Lovable) in Cloudflare, then merge, so the custom domains can be created. Rollback if the deploy cannot attach them: re-add both A records `185.158.133.1`, DNS only.
+

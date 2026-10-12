@@ -4,6 +4,11 @@ Progress log, newest entry on top.
 
 ---
 
+## 2026-10-12: mynahealth.id zone active on Cloudflare (P-012)
+
+- Nameservers changed at IDCloudHost to Cloudflare; all 20 records copied and verified against the Cloudflare nameserver.
+- Branch `feat/custom-domain`: custom domains for the site Worker. Waits for Erdi to delete the `@`/`www` A records, then merge.
+
 ## 2026-10-12: brand guideline 2026 applied (branch `feat/brand-guideline`, P-011)
 
 - Navy, electric, soft blue and beige palette; Montserrat standing in for Garet; capsule supergraphic in the hero, closing panel and inner headers; pill buttons; one entrance animation.

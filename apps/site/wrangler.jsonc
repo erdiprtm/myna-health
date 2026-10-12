@@ -11,7 +11,14 @@
     "not_found_handling": "404-page",
     "html_handling": "auto-trailing-slash"
   },
+  // mynahealth.id and www point at this Worker (docs/DNS.md). Custom domains need the active
+  // Cloudflare zone and no existing A/CNAME record on the hostname.
+  "routes": [
+    { "pattern": "mynahealth.id", "custom_domain": true },
+    { "pattern": "www.mynahealth.id", "custom_domain": true }
+  ],
   "env": {
-    "preview": {}
+    // routes are inheritable: previews must never claim the production hostnames.
+    "preview": { "routes": [] }
   }
 }
