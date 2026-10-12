@@ -64,9 +64,6 @@ export const nib = "2605260050475";
 /** Myna Fit runs on its own domain (Lovable) for now. */
 export const mynaFitUrl = "https://fit.mynahealth.id";
 
-/** Where the contact form posts (API Worker; it emails erdi@… and redirects back here). */
-export const contactEndpoint = `${appUrl}/api/contact`;
-
 /** Company principles: shown on the home page and Tentang Kami. */
 export const values = [
   {

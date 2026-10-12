@@ -9,7 +9,7 @@ Kebijakan ini menjelaskan bagaimana **{{companyName}}** ("kami") memproses data 
 ## 1. Data yang kami kumpulkan
 
 - **Data akun:** alamat email, nama, dan waktu pendaftaran.
-- **Data formulir kontak:** nama, email, dan isi pesan yang Anda kirim lewat halaman Kontak. Pesan diteruskan ke email kami untuk dibalas.
+- **Data korespondensi:** nama, alamat email, dan isi pesan yang Anda kirim ke email kami.
 - **Data pembayaran (jika Anda membeli fitur berbayar di produk Myna):** paket yang dipilih, jumlah, status, dan waktu pembayaran. Data kartu atau rekening **tidak** kami simpan. Pembayaran diproses oleh penyedia pembayaran.
 - **Data teknis:** alamat IP dan jenis perangkat/browser, untuk keamanan (misalnya mencegah penyalahgunaan login) dan pencatatan sesi.
 - **Data penggunaan:** kejadian anonim seperti halaman yang dibuka, tanpa data pribadi, untuk memperbaiki layanan.
@@ -20,7 +20,7 @@ Kebijakan ini menjelaskan bagaimana **{{companyName}}** ("kami") memproses data 
 | Tujuan | Dasar pemrosesan |
 |---|---|
 | Membuat dan mengelola akun, login | Pelaksanaan perjanjian (Syarat & Ketentuan) |
-| Membalas pesan dari formulir kontak | Kepentingan yang sah |
+| Membalas email yang Anda kirim | Kepentingan yang sah |
 | Memproses pembayaran dan memberi akses | Pelaksanaan perjanjian |
 | Mengirim email layanan (tautan masuk, struk, pengingat perpanjangan) | Pelaksanaan perjanjian |
 | Keamanan dan pencegahan penipuan | Kepentingan yang sah |
@@ -33,7 +33,7 @@ Kami memakai penyedia layanan berikut sebagai pemroses data. Sebagian dari merek
 
 - **Cloudflare:** hosting situs, aplikasi, dan basis data.
 - **Penyedia pembayaran:** pemrosesan pembayaran.
-- **Resend:** pengiriman email, termasuk pesan dari formulir kontak.
+- **Resend:** pengiriman email layanan dari aplikasi.
 - **Google Workspace:** kotak masuk email kami.
 - **Layanan analitik dan pemantauan error:** tanpa data pribadi.
 
@@ -41,7 +41,7 @@ Kami **tidak menjual** data pribadi Anda.
 
 ## 4. Penyimpanan
 
-Data akun disimpan selama akun aktif. Setelah akun dihapus, data pribadi dihapus. Pesan dari formulir kontak disimpan di kotak masuk email kami selama diperlukan untuk menanggapi pertanyaanmu. Catatan transaksi disimpan **tanpa identitas** selama diwajibkan peraturan perpajakan dan keuangan.
+Data akun disimpan selama akun aktif. Setelah akun dihapus, data pribadi dihapus. Email yang Anda kirim disimpan di kotak masuk kami selama diperlukan untuk menanggapi pertanyaan Anda. Catatan transaksi disimpan **tanpa identitas** selama diwajibkan peraturan perpajakan dan keuangan.
 
 ## 5. Hak Anda
 

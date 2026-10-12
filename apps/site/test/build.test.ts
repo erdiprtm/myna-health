@@ -87,7 +87,7 @@ describe("built site", () => {
   });
 
   it("every page shows the company identity, contact email and disclaimer (Duitku KYC)", () => {
-    for (const path of [...PAGES, "kontak/terkirim/index.html", "kontak/gagal/index.html", "404.html"]) {
+    for (const path of [...PAGES, "404.html"]) {
       const html = page(path);
       expect(html, path).toContain("PT Myna Bio Teknologi");
       expect(html, path).toContain("Jl. Merdeka Raya No.7 Blok 6, RT.1/RW.7");
@@ -149,10 +149,11 @@ describe("built site", () => {
     expect(page("syarat/index.html")).toContain("tidak ada refund");
   });
 
-  it("contact page has the address, email and a form to the API, and no phone number", () => {
+  // Erdi, 2026-10-12: contact is by email only; no form anywhere.
+  it("contact page has the address and email, no form and no phone number", () => {
     const html = page("kontak/index.html");
-    expect(html).toMatch(/<form method="post" action="https?:\/\/[^"]+\/api\/contact"/);
-    for (const name of ["name", "email", "message"]) expect(html).toContain(`name="${name}"`);
+    expect(html).toContain('href="mailto:erdi@mynahealth.id"');
+    for (const { path, text } of allText()) if (path.endsWith(".html")) expect(text, path).not.toMatch(/<form\b/);
     for (const { path, text } of allText()) {
       expect(text, path).not.toContain("tel:");
       expect(text, path).not.toMatch(/(\+62|\b08)\d[\d\s-]{6,}/);
@@ -160,14 +161,13 @@ describe("built site", () => {
     }
   });
 
-  it("form result pages stay out of the sitemap and search", () => {
+  it("the sitemap lists the legal pages and skips the pricing redirect", () => {
     const sitemap = allText()
       .filter((f) => f.path.includes("sitemap"))
       .map((f) => f.text)
       .join("");
     expect(sitemap).toContain("/refund/");
-    expect(sitemap).not.toContain("/kontak/terkirim/");
-    expect(page("kontak/terkirim/index.html")).toContain('<meta name="robots" content="noindex">');
+    expect(sitemap).not.toContain("/harga/");
   });
 
   // Erdi, 2026-10-12: the NIB is public, and marketing copy never mentions the city.
