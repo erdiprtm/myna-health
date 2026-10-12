@@ -7,7 +7,7 @@ export default defineProduct({
   name: "Myna Health",
   tagline: "Aplikasi gaya hidup sehat: panduan makan sehat dan pelacak kebugaran untuk gaya hidup yang lebih baik.",
   locale: { default: "id", supported: ["id", "en"] },
-  domain: { app: null, site: null },
+  domain: { app: null, site: "mynahealth.id" },
   brand: {
     tokens: {
       colors: {

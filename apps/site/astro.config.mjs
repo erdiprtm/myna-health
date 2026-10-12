@@ -5,7 +5,12 @@ import { defineConfig } from "astro/config";
 
 // SITE_URL is set by CI per environment (production / preview). Canonical URLs, the sitemap and
 // OG image URLs are built from it. product.config.ts `domain.site` replaces it once a domain exists.
-const site = process.env.SITE_URL ?? "https://myna-health-site.erdiprtm.workers.dev";
+// Production canonicals use the brand domain; the CI smoke test still reaches the Worker through
+// SITE_URL (workers.dev), which does not depend on DNS caches during the cutover.
+const site =
+  process.env.PUBLIC_APP_ENV === "production"
+    ? "https://mynahealth.id"
+    : (process.env.SITE_URL ?? "https://myna-health-site.erdiprtm.workers.dev");
 // The contact form posts to the API Worker (apps/api/src/features/contact.ts): allow its origin.
 const apiOrigin = new URL(process.env.PUBLIC_APP_URL ?? "https://myna-health.erdiprtm.workers.dev").origin;
 
