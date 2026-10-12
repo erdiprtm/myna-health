@@ -4,6 +4,12 @@ Progress log, newest entry on top.
 
 ---
 
+## 2026-10-12: mynahealth.id live on the new site ✅
+
+- PR #3 merged: the site Worker serves `mynahealth.id` (custom domain); old Lovable A records deleted. Checked: public resolvers (1.1.1.1, 8.8.8.8, 9.9.9.9) answer Cloudflare, `https://mynahealth.id` 200 with the new site, `fit.mynahealth.id` 200 on Lovable.
+- Erdi tested Google Workspace mail: sending and receiving both work.
+- **Human next:** remove `mynahealth.id` and `www` (not `fit`) from the old Lovable project; then a 301 www → apex redirect rule in Cloudflare and deleting `_lovable` / `_lovable.www` TXT.
+
 ## 2026-10-12: mynahealth.id zone active on Cloudflare (P-012)
 
 - Nameservers changed at IDCloudHost to Cloudflare; all 20 records copied and verified against the Cloudflare nameserver.
