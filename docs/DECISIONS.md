@@ -697,3 +697,7 @@ Numbered P-xxx so they never collide with template decisions pulled by `/sync-te
 - `/kontak/` now leads with the official email (mailto) beside the company records, then the FAQ. CTAs on home and Tentang Kami open an email. The privacy policy speaks of email correspondence instead of a form. A test keeps `<form>` off every page.
 - `RESEND_API_KEY` is no longer needed for the site.
 
+## P-014: Public email is halo@mynahealth.id (Erdi, 2026-10-13)
+
+- `legal.contactEmail` is `halo@mynahealth.id`, a Google Workspace alias of Erdi's account (receives into the same inbox; Gmail "Send mail as" set up by Erdi). It appears in the footer, Kontak, company identity, legal pages and JSON-LD. A generic address reads more corporate and keeps a founder's name off the site (founders stay hidden, P-008).
+

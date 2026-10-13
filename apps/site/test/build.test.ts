@@ -92,7 +92,7 @@ describe("built site", () => {
       expect(html, path).toContain("PT Myna Bio Teknologi");
       expect(html, path).toContain("Jl. Merdeka Raya No.7 Blok 6, RT.1/RW.7");
       expect(html, path).toContain("Kota Depok, Jawa Barat 16417");
-      expect(html, path).toContain("erdi@mynahealth.id");
+      expect(html, path).toContain("halo@mynahealth.id");
       expect(html, path).toContain(
         "Myna Health menyediakan informasi gaya hidup sehat dan bukan pengganti layanan medis atau tenaga kesehatan profesional.",
       );
@@ -152,7 +152,7 @@ describe("built site", () => {
   // Erdi, 2026-10-12: contact is by email only; no form anywhere.
   it("contact page has the address and email, no form and no phone number", () => {
     const html = page("kontak/index.html");
-    expect(html).toContain('href="mailto:erdi@mynahealth.id"');
+    expect(html).toContain('href="mailto:halo@mynahealth.id"');
     for (const { path, text } of allText()) if (path.endsWith(".html")) expect(text, path).not.toMatch(/<form\b/);
     for (const { path, text } of allText()) {
       expect(text, path).not.toContain("tel:");
