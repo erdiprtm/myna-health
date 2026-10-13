@@ -4,6 +4,10 @@ Progress log, newest entry on top.
 
 ---
 
+## 2026-10-13: public email halo@mynahealth.id (P-014)
+
+- Erdi created the Workspace alias `halo@mynahealth.id`; the site shows it instead of `erdi@`.
+
 ## 2026-10-12: mynahealth.id live on the new site ✅
 
 - PR #3 merged: the site Worker serves `mynahealth.id` (custom domain); old Lovable A records deleted. Checked: public resolvers (1.1.1.1, 8.8.8.8, 9.9.9.9) answer Cloudflare, `https://mynahealth.id` 200 with the new site, `fit.mynahealth.id` 200 on Lovable.

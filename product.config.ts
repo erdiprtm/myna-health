@@ -73,7 +73,7 @@ export default defineProduct({
   },
   legal: {
     companyName: "PT Myna Bio Teknologi",
-    contactEmail: "erdi@mynahealth.id",
+    contactEmail: "halo@mynahealth.id",
     sensitiveDataConsent: false,
     // Erdi confirmed the legal pages (2026-10-11): removes the TEMPLATE banner on production.
     reviewed: true,
