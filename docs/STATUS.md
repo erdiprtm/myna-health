@@ -4,6 +4,11 @@ Progress log, newest entry on top.
 
 ---
 
+## 2026-10-19: Motion on the brand site (branch `feat/motion`, P-015)
+
+- Interactive Myna Fit showcase, smooth FAQ, closing-panel reveal, Motion hero entrance; CTA "Jadi Sehat Bareng". Home +4.9 KB gzip JS, other pages unchanged.
+- Waits for Erdi's approval of the preview before merging.
+
 ## 2026-10-13: public email halo@mynahealth.id (P-014)
 
 - Erdi created the Workspace alias `halo@mynahealth.id`; the site shows it instead of `erdi@`.

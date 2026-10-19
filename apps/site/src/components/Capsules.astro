@@ -38,14 +38,14 @@ const { variant = "hero" } = Astro.props;
     </div>
   ) : (
     <div class="grid w-full max-w-[230px] grid-cols-2 gap-3" aria-hidden="true">
-      <div class="capsule aspect-[1/1.9] bg-cyan" />
+      <div data-cta-item class="capsule aspect-[1/1.9] bg-cyan" />
       <div class="flex flex-col gap-3">
-        <div class="capsule aspect-square bg-electric" />
-        <div class="capsule aspect-square bg-soft">
+        <div data-cta-item class="capsule aspect-square bg-electric" />
+        <div data-cta-item class="capsule aspect-square bg-soft">
           <img src="/images/kapsul-pasangan-stretching.jpg" alt="" width="900" height="600" loading="lazy" class="object-[50%_30%]" />
         </div>
       </div>
-      <div class="capsule col-span-2 aspect-[2.4/1] bg-sky">
+      <div data-cta-item class="capsule col-span-2 aspect-[2.4/1] bg-sky">
         <img src="/images/kapsul-pasangan-dapur.jpg" alt="" width="900" height="600" loading="lazy" class="object-[45%_40%]" />
       </div>
     </div>

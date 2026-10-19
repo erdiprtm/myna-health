@@ -11,13 +11,62 @@ const { items = faqs } = Astro.props;
 <div class="border-t border-foreground/80">
   {
     items.map((item) => (
-      <details class="border-b border-border">
+      <details class="border-b border-border" data-faq>
         <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-4 py-5 text-left text-[17px] font-medium text-foreground">
           {item.q}
           <Icon name="chevron-down" class="faq-chevron h-4 w-4 text-muted-foreground transition-transform duration-150" />
         </summary>
-        <p class="body-copy max-w-[62ch] pb-6">{item.a}</p>
+        <div data-faq-body>
+          <p class="body-copy max-w-[62ch] pb-6">{item.a}</p>
+        </div>
       </details>
     ))
   }
 </div>
+
+<script>
+  // Smooth open and close (P-015, Motion). Native <details> stays the source of truth: it works
+  // without JS, with the keyboard, and with reduced motion (then it simply opens and closes).
+  import { animate, EASE, motionOk } from "../scripts/motion";
+
+  if (motionOk()) {
+    for (const details of document.querySelectorAll<HTMLDetailsElement>("details[data-faq]")) {
+      const summary = details.querySelector("summary");
+      const body = details.querySelector<HTMLElement>("[data-faq-body]");
+      if (!summary || !body) continue;
+      let running: ReturnType<typeof animate> | undefined;
+      let wantOpen = details.open;
+      let generation = 0;
+      const reset = () => {
+        body.style.height = "";
+        body.style.opacity = "";
+        body.style.overflow = "";
+      };
+      summary.addEventListener("click", (event) => {
+        event.preventDefault();
+        wantOpen = !wantOpen;
+        const mine = ++generation;
+        // Start from wherever the answer is now, so a click mid-animation reverses smoothly.
+        const from = details.open ? body.offsetHeight : 0;
+        running?.stop();
+        body.style.overflow = "hidden";
+        if (wantOpen) {
+          details.open = true;
+          const to = body.scrollHeight;
+          running = animate(body, { height: [`${from}px`, `${to}px`], opacity: [0.4, 1] }, { duration: 0.24, ease: EASE });
+          running.finished.then(() => {
+            if (mine === generation) reset();
+          });
+        } else {
+          running = animate(body, { height: [`${from}px`, "0px"], opacity: [1, 0] }, { duration: 0.18, ease: EASE });
+          running.finished.then(() => {
+            if (mine !== generation) return;
+            details.open = false;
+            reset();
+          });
+        }
+      });
+    }
+  }
+</script>
+

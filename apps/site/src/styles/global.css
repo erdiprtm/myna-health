@@ -191,27 +191,29 @@
   height: 100%;
   object-fit: cover;
 }
+/* P-015: Motion runs this entrance as soon as the page script loads (index.astro). This CSS copy
+   is the fallback when JS is late or off: the same rise, 600 ms later, so content never waits on JS. */
 @media (prefers-reduced-motion: no-preference) {
   .capsule-rise {
-    animation: capsule-rise 620ms var(--ease-out-strong) both;
+    animation: capsule-rise 620ms var(--ease-out-strong) 600ms both;
   }
   .rise-2 {
-    animation-delay: 70ms;
+    animation-delay: 670ms;
   }
   .rise-3 {
-    animation-delay: 140ms;
+    animation-delay: 740ms;
   }
   .rise-4 {
-    animation-delay: 210ms;
+    animation-delay: 810ms;
   }
   .rise-5 {
-    animation-delay: 280ms;
+    animation-delay: 880ms;
   }
   .rise-6 {
-    animation-delay: 350ms;
+    animation-delay: 950ms;
   }
   .rise-7 {
-    animation-delay: 420ms;
+    animation-delay: 1020ms;
   }
 }
 @keyframes capsule-rise {

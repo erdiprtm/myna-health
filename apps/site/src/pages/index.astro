@@ -103,11 +103,11 @@ const site = Astro.site as URL;
   <!-- Closing panel: navy with a small capsule cluster, like the guideline's closing slide. -->
   <section class="py-16 md:py-24" aria-labelledby="cta-title">
     <div class="container-myna">
-      <div class="grid items-center gap-10 overflow-hidden rounded-[36px] bg-navy px-8 py-12 md:grid-cols-12 md:px-14 md:py-16">
+      <div data-cta class="grid items-center gap-10 overflow-hidden rounded-[36px] bg-navy px-8 py-12 md:grid-cols-12 md:px-14 md:py-16">
         <div class="md:col-span-7">
           <h2 id="cta-title" class="text-[32px] leading-[1.1] font-extrabold tracking-[-0.025em] text-white md:text-[44px]">Mari terhubung.</h2>
           <p class="mt-4 max-w-[44ch] text-[17px] leading-[1.65] text-white/80">Untuk pertanyaan, kemitraan, atau informasi perusahaan, silakan hubungi kami.</p>
-          <div class="mt-8 flex flex-wrap gap-3">
+          <div data-cta-item class="mt-8 flex flex-wrap gap-3">
             <a href={`mailto:${company.email}`} class="btn-light">Kirim email</a>
             <a href="/kontak/" class="btn-quiet-light">Halaman kontak</a>
           </div>
@@ -117,3 +117,49 @@ const site = Astro.site as URL;
     </div>
   </section>
 </Base>
+
+<script>
+  // P-015 (Motion). Two moments only: the hero capsules settle in on load, and the closing panel's
+  // capsules and email button rise once when it scrolls into view. Nothing else on the page moves.
+  import { animate, EASE, inView, motionOk } from "../scripts/motion";
+
+  if (motionOk()) {
+    // Hero: take over from the delayed CSS fallback while it is still waiting (first ~550 ms).
+    const tiles = [...document.querySelectorAll<HTMLElement>(".capsule-rise")];
+    if (tiles.length > 0 && performance.now() < 550) {
+      tiles.forEach((tile, i) => {
+        tile.style.animation = "none";
+        animate(
+          tile,
+          {
+            opacity: [0, 1],
+            transform: ["translateY(28px) scale(0.96)", "translateY(0px) scale(1)"],
+            clipPath: ["inset(30% 0 0 0 round 9999px)", "inset(0% 0 0 0 round 9999px)"],
+          },
+          { duration: 0.7, delay: i * 0.07, ease: EASE },
+        );
+      });
+    }
+
+    // Closing panel: only if it starts below the fold, so nothing visible ever blinks out.
+    const panel = document.querySelector<HTMLElement>("[data-cta]");
+    if (panel && panel.getBoundingClientRect().top > window.innerHeight) {
+      const items = [...panel.querySelectorAll<HTMLElement>("[data-cta-item]")];
+      for (const el of items) {
+        el.style.opacity = "0";
+        el.style.transform = "translateY(16px)";
+      }
+      const stop = inView(
+        panel,
+        () => {
+          items.forEach((el, i) => {
+            animate(el, { opacity: [0, 1], transform: ["translateY(16px)", "translateY(0px)"] }, { duration: 0.5, delay: i * 0.07, ease: EASE });
+          });
+          stop();
+        },
+        { amount: 0.35 },
+      );
+    }
+  }
+</script>
+
