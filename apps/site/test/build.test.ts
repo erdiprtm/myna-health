@@ -181,4 +181,36 @@ describe("built site", () => {
       expect(copy, path).not.toMatch(/Depok/);
     }
   });
+
+  // P-015: Motion ships only where it is used, stays small, and always checks reduced motion.
+  it("loads Motion only on the home and contact pages, within budget", async () => {
+    const { gzipSync } = await import("node:zlib");
+    const astroDir = new URL("_astro/", dist);
+    const chunks = readdirSync(astroDir).filter((f) => f.endsWith(".js"));
+    const motion = chunks.find((f) => f.startsWith("motion."));
+    expect(motion, "motion chunk").toBeTruthy();
+    const motionJs = readFileSync(new URL(motion as string, astroDir));
+    expect(gzipSync(motionJs).length).toBeLessThan(4500);
+    expect(motionJs.toString()).toContain("prefers-reduced-motion");
+    const scriptsOf = (path: string) =>
+      [...page(path).matchAll(/<script type="module" src="\/_astro\/([^"]+)"/g)].map((m) => m[1] as string);
+    const importsMotion = (file: string) => readFileSync(new URL(file, astroDir), "utf8").includes(motion as string);
+    for (const path of ["index.html", "kontak/index.html"])
+      expect(scriptsOf(path).some(importsMotion), path).toBe(true);
+    for (const path of [
+      "tentang/index.html",
+      "syarat/index.html",
+      "privasi/index.html",
+      "refund/index.html",
+      "404.html",
+    ])
+      expect(scriptsOf(path).some(importsMotion), path).toBe(false);
+  });
+
+  it("the Myna Fit call to action reads Jadi Sehat Bareng", () => {
+    for (const path of ["index.html", "tentang/index.html"]) {
+      expect(page(path), path).toContain("Jadi Sehat Bareng");
+      expect(page(path), path).not.toContain("Buka Myna Fit");
+    }
+  });
 });

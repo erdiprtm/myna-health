@@ -701,3 +701,12 @@ Numbered P-xxx so they never collide with template decisions pulled by `/sync-te
 
 - `legal.contactEmail` is `halo@mynahealth.id`, a Google Workspace alias of Erdi's account (receives into the same inbox; Gmail "Send mail as" set up by Erdi). It appears in the footer, Kontak, company identity, legal pages and JSON-LD. A generic address reads more corporate and keeps a founder's name off the site (founders stay hidden, P-008).
 
+## P-015: Motion (motion.dev) for four calm moments (Erdi, 2026-10-19)
+
+- **Library:** `motion` **14.0.0** (MIT, picked with `scripts/pick-versions.mjs`, pinned), vanilla JS only: `animate` from `motion/mini` (WAAPI) plus `inView`. Measured: **3.2 KB gzip** chunk; the hybrid `animate` from `motion` would be 20.7 KB. No `motion/react` (the site has no React), no Motion+ and no `npx motion-ai`. Shared helper `apps/site/src/scripts/motion.ts` (`EASE` = strong ease-out `[0.23, 1, 0.32, 1]`, `motionOk()` reduced-motion check).
+- **Where:** (1) Myna Fit showcase: cycle runs only on screen, pauses on hover or keyboard focus, each feature line is a button that opens its screen; CTA "Jadi Sehat Bareng" (Erdi) to fit.mynahealth.id. (2) FAQ: smooth, reversible open/close on native `<details>`. (3) Closing panel: capsules and email button rise once when scrolled into view (only if below the fold). (4) Hero capsules: Motion takes over the entrance while the delayed CSS copy waits (fallback 600 ms later when JS is late or off).
+- **Where not:** company identity/NIB, footer, legal pages, disclaimer, body text and section headings; no parallax, scroll-jacking, counters or looping attention-getters.
+- **Rules:** content is visible without JS; reduced motion means nothing moves (showcase buttons still switch screens instantly); only transform, opacity, clip-path and the FAQ height animate; durations 0.18 to 0.7 s.
+- **Weight:** home +4.9 KB gzip, Kontak +3.7 KB, every other page +0. Guarded by `apps/site/test/build.test.ts` (Motion only on home and Kontak, chunk under 4.5 KB gzip, reduced-motion check present).
+- Checked headless (Playwright): hero, showcase click/auto-advance/hover pause, panel reveal, FAQ (incl. mid-way reversal and keyboard), reduced motion and no-JS fallbacks, no console errors.
+

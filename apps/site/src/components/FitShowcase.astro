@@ -1,8 +1,10 @@
 ---
 import { mynaFitUrl } from "../lib/site";
 // Myna Fit, shown with its own interface: three screens captured from fit.mynahealth.id (P-010).
-// The phone cycles through them while the matching feature line fills. CSS only (CSP: no inline
-// script needed); with prefers-reduced-motion it stays on the first screen.
+// The phone cycles through them while the matching feature line fills (P-015, Motion):
+// it runs only while the block is on screen, pauses on hover or keyboard focus, and each feature
+// line is a button that opens its screen. Without JS a CSS loop does the same; with reduced
+// motion nothing moves and the buttons switch screens instantly.
 const screens = [
   {
     src: "/images/fit-layar-latihan.webp",
@@ -25,7 +27,7 @@ const screens = [
 ];
 ---
 
-<article id="myna-fit" class="scroll-mt-24 overflow-hidden rounded-md border border-border bg-card">
+<article id="myna-fit" data-fit class="scroll-mt-24 overflow-hidden rounded-md border border-border bg-card">
   <div class="grid md:grid-cols-12">
     <div class="p-6 sm:p-10 md:col-span-6 md:p-12 lg:col-span-5">
       <div class="flex items-baseline justify-between gap-4 border-b border-border pb-4">
@@ -38,19 +40,27 @@ const screens = [
       <ol class="mt-8 border-t border-border">
         {
           screens.map((s, i) => (
-            <li class:list={["fit-step relative border-b border-border py-4", `fit-step-${i + 1}`]}>
-              <p class="text-[16px] font-semibold">{s.title}</p>
-              <p class="mt-1 text-[15px] leading-relaxed text-muted-foreground">{s.body}</p>
+            <li class:list={["fit-step relative border-b border-border transition-opacity duration-200", `fit-step-${i + 1}`]}>
+              <button
+                type="button"
+                data-fit-step={i}
+                aria-controls="fit-screen"
+                aria-pressed={i === 0 ? "true" : "false"}
+                class="block w-full cursor-pointer py-4 text-left"
+              >
+                <span class="block text-[16px] font-semibold">{s.title}</span>
+                <span class="mt-1 block text-[15px] leading-relaxed text-muted-foreground">{s.body}</span>
+              </button>
               <span class="fit-bar" aria-hidden="true" />
             </li>
           ))
         }
       </ol>
-      <p class="mt-8"><a href={mynaFitUrl} class="text-link">Buka Myna Fit</a> <span class="ml-2 text-sm text-muted-foreground">fit.mynahealth.id</span></p>
+      <p class="mt-8"><a href={mynaFitUrl} class="btn-primary">Jadi Sehat Bareng</a> <span class="ml-2 text-sm text-muted-foreground">fit.mynahealth.id</span></p>
     </div>
     <div class="order-first flex items-center justify-center bg-secondary px-6 py-10 md:order-none md:col-span-6 md:py-16 lg:col-span-7">
       <div class="fit-phone">
-        <div class="fit-screen">
+        <div class="fit-screen" id="fit-screen" aria-live="polite">
           {
             screens.map((s, i) => (
               <img
@@ -108,31 +118,42 @@ const screens = [
   }
 
   /* 12 s loop, 4 s per screen. Negative delays put screens 2 and 3 later in the same cycle. */
+  /* Enhanced (JS): the script drives slides and bars; inactive lines are dimmed. */
+  [data-enhanced] .fit-step:has([aria-pressed="false"]) {
+    opacity: 0.55;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    [data-enhanced] .fit-step:has([aria-pressed="false"]):hover {
+      opacity: 0.85;
+    }
+  }
+
+  /* Without JS: the original CSS loop (12 s, 4 s per screen). */
   @media (prefers-reduced-motion: no-preference) {
-    .fit-slide,
-    .fit-step,
-    .fit-bar {
+    article:not([data-enhanced]) .fit-slide,
+    article:not([data-enhanced]) .fit-step,
+    article:not([data-enhanced]) .fit-bar {
       animation-duration: 12s;
       animation-iteration-count: infinite;
       animation-timing-function: linear;
     }
-    .fit-slide {
+    article:not([data-enhanced]) .fit-slide {
       animation-name: fit-slide;
     }
-    .fit-step {
+    article:not([data-enhanced]) .fit-step {
       animation-name: fit-step;
     }
-    .fit-bar {
+    article:not([data-enhanced]) .fit-bar {
       animation-name: fit-bar;
     }
-    .fit-slide-2,
-    .fit-step-2,
-    .fit-step-2 .fit-bar {
+    article:not([data-enhanced]) .fit-slide-2,
+    article:not([data-enhanced]) .fit-step-2,
+    article:not([data-enhanced]) .fit-step-2 .fit-bar {
       animation-delay: -8s;
     }
-    .fit-slide-3,
-    .fit-step-3,
-    .fit-step-3 .fit-bar {
+    article:not([data-enhanced]) .fit-slide-3,
+    article:not([data-enhanced]) .fit-step-3,
+    article:not([data-enhanced]) .fit-step-3 .fit-bar {
       animation-delay: -4s;
     }
   }
@@ -175,3 +196,99 @@ const screens = [
     }
   }
 </style>
+
+<script>
+  import { animate, EASE, inView, motionOk } from "../scripts/motion";
+
+  const root = document.querySelector<HTMLElement>("[data-fit]");
+  if (root) {
+    root.dataset.enhanced = "";
+    const slides = [...root.querySelectorAll<HTMLElement>(".fit-slide")];
+    const steps = [...root.querySelectorAll<HTMLButtonElement>("[data-fit-step]")];
+    const bars = steps.map((b) => b.parentElement?.querySelector<HTMLElement>(".fit-bar") ?? null);
+    const moving = motionOk();
+    const DWELL = 4; // seconds per screen
+    let current = 0;
+    let generation = 0;
+    let onScreen = false;
+    let held = false; // hover or keyboard focus inside the block
+    let timer: ReturnType<typeof animate> | undefined;
+
+    const sync = () => {
+      if (!timer) return;
+      if (onScreen && !held) timer.play();
+      else timer.pause();
+    };
+
+    const runBar = () => {
+      timer?.stop();
+      timer = undefined;
+      for (const bar of bars) if (bar) bar.style.transform = "scaleX(0)";
+      const bar = bars[current];
+      if (!moving || !bar) return;
+      const mine = ++generation;
+      timer = animate(bar, { transform: ["scaleX(0)", "scaleX(1)"] }, { duration: DWELL, ease: "linear" });
+      timer.finished.then(() => {
+        if (mine === generation) show((current + 1) % slides.length);
+      });
+      sync();
+    };
+
+    const show = (next: number) => {
+      const prev = current;
+      current = next;
+      steps.forEach((b, i) => b.setAttribute("aria-pressed", i === next ? "true" : "false"));
+      if (next !== prev) {
+        const from = slides[prev];
+        const to = slides[next];
+        if (from && to) {
+          if (moving) {
+            animate(from, { opacity: [1, 0] }, { duration: 0.35, ease: EASE });
+            animate(to, { opacity: [0, 1] }, { duration: 0.35, ease: EASE });
+          } else {
+            from.style.opacity = "0";
+            to.style.opacity = "1";
+          }
+        }
+      }
+      runBar();
+    };
+
+    steps.forEach((b, i) => b.addEventListener("click", () => show(i)));
+    root.addEventListener("pointerenter", () => {
+      held = true;
+      sync();
+    });
+    // Keyboard focus holds the cycle; focus left behind by a mouse click does not.
+    const keyboardFocusInside = () => root.contains(document.activeElement) && document.activeElement?.matches(":focus-visible") === true;
+    root.addEventListener("pointerleave", () => {
+      held = keyboardFocusInside();
+      sync();
+    });
+    root.addEventListener("focusin", (e) => {
+      if ((e.target as Element).matches(":focus-visible")) {
+        held = true;
+        sync();
+      }
+    });
+    root.addEventListener("focusout", (e) => {
+      const next = e.relatedTarget as Element | null;
+      held = next !== null && root.contains(next) && next.matches(":focus-visible");
+      sync();
+    });
+    inView(
+      root,
+      () => {
+        onScreen = true;
+        sync();
+        return () => {
+          onScreen = false;
+          sync();
+        };
+      },
+      { amount: 0.35 },
+    );
+    runBar();
+  }
+</script>
+
