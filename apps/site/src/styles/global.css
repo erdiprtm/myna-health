@@ -236,6 +236,22 @@
     animation: hero-rise 700ms var(--ease-out-strong) 600ms both;
   }
 }
+/* Drifting brand capsules (P-017): only inside a section that is on screen ([data-play], set by
+   the page script) and only when motion is allowed; otherwise they rest where they are drawn. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-play] .drift {
+    animation: drift 7s ease-in-out infinite alternate;
+    animation-delay: var(--d, 0s);
+  }
+}
+@keyframes drift {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 12px -18px;
+  }
+}
 @keyframes hero-rise {
   from {
     opacity: 0;
