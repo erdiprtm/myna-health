@@ -15,9 +15,11 @@ interface Props {
   /** Standard analytics event fired on load (Section 9), e.g. "pricing_view". */
   event?: "site_view" | "pricing_view";
   noindex?: boolean;
+  /** "white": a white page ground instead of beige (the home, P-017). */
+  ground?: "beige" | "white";
 }
 
-const { title, description, og = "home", jsonLd = [], event = "site_view", noindex = false } =
+const { title, description, og = "home", jsonLd = [], event = "site_view", noindex = false, ground = "beige" } =
   Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(`/og/${og}.png`, Astro.site);
@@ -83,7 +85,7 @@ const footerGroups = [
     <!-- Light only, like the Lovable original (P-007): the site ignores the device's dark mode. -->
     <meta name="color-scheme" content="light" />
   </head>
-  <body class="flex min-h-screen flex-col" data-page-event={event} data-op-client={analyticsClientId}>
+  <body class:list={["flex min-h-screen flex-col", ground === "white" && "bg-white"]} data-page-event={event} data-op-client={analyticsClientId}>
     <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-card focus:p-2">Langsung ke konten</a>
     <!-- Floating pill navbar (P-016, Heva Health and Bevel): white pill over the page, never full-bleed. -->
     <header class="sticky top-0 z-50 px-3 pt-3 md:px-6 md:pt-4">

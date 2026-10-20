@@ -58,6 +58,7 @@ const privacy = [
   fullTitle="Myna Health — Aplikasi Gaya Hidup Sehat"
   description="Myna Health (PT Myna Bio Teknologi) membangun aplikasi wellness dan lifestyle: Myna Fit untuk pelacak kebugaran dan Myna Food untuk panduan makan sehat."
   jsonLd={[organizationLd(site)]}
+  ground="white"
 >
   <!-- 1. Hero: full-bleed photo, large white type, a capsule outline with real Myna Fit UI over the
        photo (Revolut's hero pattern, with the Myna capsule instead of a phone outline). -->
@@ -67,23 +68,23 @@ const privacy = [
       <img src="/images/hero-pagi-tall.jpg" alt="Perempuan berpakaian olahraga di taman pagi hari, melihat HP sebelum berlatih" width="1000" height="1333" fetchpriority="high" class="h-full w-full object-cover object-[60%_30%] md:object-[50%_35%]" />
     </picture>
     <div class="absolute inset-0 -z-10 bg-navy/50 md:bg-navy/25" aria-hidden="true"></div>
-    <div class="container-myna w-full pt-36 pb-14 md:pb-16">
+    <div class="container-home w-full pt-36 pb-14 md:pb-16">
       <div class="hero-rise">
-        <h1 id="hero-title" class="max-w-[13ch] text-[52px] leading-[0.98] font-bold tracking-[-0.045em] text-white sm:text-[76px] lg:max-w-none lg:text-[112px]">Kebiasaan kecil,<br class="hidden lg:block" /> setiap hari.</h1>
+        <h1 id="hero-title" class="rv-display max-w-[13ch] text-white lg:max-w-none">Kebiasaan kecil,<br class="hidden lg:block" /> setiap hari.</h1>
       </div>
       <div class="mt-8 grid gap-10 md:grid-cols-12 md:items-end">
         <div class="hero-rise md:col-span-6">
-          <p class="max-w-[38ch] text-[18px] leading-[1.6] text-white md:text-[20px]">Myna Health membuat aplikasi yang membantu Anda lebih rutin berolahraga dan makan lebih teratur.</p>
+          <p class="rv-lead max-w-[38ch] text-white">Myna Health membuat aplikasi yang membantu Anda lebih rutin berolahraga dan makan lebih teratur.</p>
           <div class="mt-8 flex flex-wrap gap-3">
             <a href={mynaFitUrl} class="btn-light">Jadi Sehat Bareng</a>
-            <a href="/tentang/" class="btn-quiet-light">Kenali Myna Health</a>
+            <a href="/tentang/" class="btn-glass-light">Kenali Myna Health</a>
           </div>
         </div>
         <!-- The capsule outline: the guideline's capsule drawn as a frame, holding Myna Fit's real text. -->
         <div class="hero-open hidden justify-self-end md:col-span-4 md:col-start-9 md:block" aria-hidden="true">
           <div class="flex h-[340px] w-[190px] flex-col items-center justify-end gap-2.5 rounded-full border-2 border-white/80 px-5 pb-12 text-center lg:h-[380px] lg:w-[210px]">
             <p class="text-[13px] text-white/90">Latihan hari ini</p>
-            <p class="text-[21px] leading-[1.15] font-bold">Dada, Punggung, Bahu</p>
+            <p class="text-[21px] leading-[1.15] font-semibold">Dada, Punggung, Bahu</p>
             <p class="rounded-full bg-white px-4 py-1.5 text-[13px] font-semibold text-navy">Myna Fit</p>
           </div>
         </div>
@@ -93,10 +94,10 @@ const privacy = [
 
   <!-- 2. Trust strip: short true claims, no numbers (Revolut's badge row, without awards). -->
   <section class="bg-white" aria-label="Sekilas Myna Health">
-    <ul class="container-myna grid grid-cols-2 gap-x-6 gap-y-6 py-10 md:grid-cols-4 md:py-12">
+    <ul class="container-home grid grid-cols-2 gap-x-6 gap-y-6 py-10 md:grid-cols-4 md:py-12">
       {
         trust.map((t) => (
-          <li class="flex flex-col items-center gap-3 text-center text-[15px] font-semibold text-navy">
+          <li class="flex flex-col items-center gap-3 text-center text-[15px] font-medium text-navy">
             <span class="flex h-12 w-12 items-center justify-center rounded-full bg-soft text-electric">
               <Icon name={t.icon} class="h-5 w-5" />
             </span>
@@ -110,9 +111,9 @@ const privacy = [
   <!-- 3. Life moments: full-bleed photos behind pill tabs. Without JS all three show in a stack. -->
   <section data-moments class="relative isolate overflow-hidden bg-navy text-white" aria-labelledby="moments-title">
     <div class="moments-head pointer-events-none relative z-20 pt-20 text-center md:pt-28">
-      <div class="container-myna">
-        <h2 id="moments-title" class="text-[36px] leading-[1.05] font-bold tracking-[-0.035em] text-white md:text-[60px]">Sehat terjadi di sela hari Anda.</h2>
-        <p class="mx-auto mt-4 max-w-[44ch] text-[17px] leading-[1.6] text-white/85 md:text-[19px]">Myna Fit hadir di momen kecil yang sudah ada dalam rutinitas Anda.</p>
+      <div class="container-home">
+        <h2 id="moments-title" class="rv-h2 text-white">Sehat di sela hari.</h2>
+        <p class="rv-lead mx-auto mt-4 max-w-[44ch] text-white/85">Myna Fit hadir di momen kecil yang sudah ada dalam rutinitas Anda.</p>
       </div>
     </div>
     <div class="moments-stack">
@@ -126,8 +127,8 @@ const privacy = [
                 <img src={m.ui.src} alt={m.ui.alt} width={m.ui.width} height={m.ui.height} loading="lazy" class={m.ui.height < 150 ? "rounded-[14px]" : undefined} />
               </figure>
             </div>
-            <h3 class="moment-title mt-6 text-[22px] font-bold text-white">{m.title}</h3>
-            <p class="mt-1 max-w-[34ch] text-center text-[16px] text-white/85">{m.body}</p>
+            <h3 class="moment-title rv-h3 mt-6 text-white">{m.title}</h3>
+            <p class="mt-1 max-w-[34ch] text-center text-[16px] leading-[1.55] text-white/85">{m.body}</p>
           </article>
         ))
       }
@@ -135,7 +136,7 @@ const privacy = [
     <div class="moments-tabs absolute inset-x-0 bottom-10 z-20 flex justify-center gap-3 px-4" role="tablist" aria-label="Momen" hidden>
       {
         moments.map((m, i) => (
-          <button type="button" role="tab" data-moment-tab={i} aria-controls={`momen-${m.id}`} aria-selected={i === 0 ? "true" : "false"} class="moment-tab min-h-12 cursor-pointer rounded-full px-5 text-[15px] font-semibold md:px-7">
+          <button type="button" role="tab" data-moment-tab={i} aria-controls={`momen-${m.id}`} aria-selected={i === 0 ? "true" : "false"} class="moment-tab min-h-12 cursor-pointer rounded-full px-5 text-[16px] font-medium md:px-7">
             {m.title}
           </button>
         ))
@@ -145,10 +146,11 @@ const privacy = [
 
   <!-- 4. Myna Fit on a navy band: headline centred, phone in the middle, pill tabs under it. -->
   <section id="produk" class="scroll-mt-24 bg-navy py-20 text-white md:py-28" aria-labelledby="products-title">
-    <div class="container-myna">
+    <div class="container-home">
       <div class="mx-auto max-w-[760px] text-center">
-        <h2 id="products-title" class="text-[36px] leading-[1.05] font-bold tracking-[-0.035em] text-white md:text-[60px]">Myna Fit, pelacak latihan dan catatan makan.</h2>
-        <p class="mx-auto mt-4 max-w-[46ch] text-[17px] leading-[1.6] text-white/80 md:text-[19px]">Catat set, repetisi, dan beban, lalu lihat perkembangannya dari minggu ke minggu.</p>
+        <p class="inline-block rounded-full bg-white px-3 py-1 text-xs font-semibold text-navy">Myna Fit</p>
+        <h2 id="products-title" class="rv-h2 mt-5 text-white">Latihan dan makan, tercatat.</h2>
+        <p class="rv-lead mx-auto mt-4 max-w-[46ch] text-white/80">Catat set, repetisi, dan beban, lalu lihat perkembangannya dari minggu ke minggu.</p>
       </div>
       <div class="mt-14"><FitShowcase /></div>
     </div>
@@ -156,11 +158,11 @@ const privacy = [
 
   <!-- 5. Myna Food: white split, text left and a big capsule photo right (Revolut's split pattern). -->
   <section id="myna-food" class="scroll-mt-24 bg-white py-20 md:py-28" aria-labelledby="food-title">
-    <div class="container-myna grid items-center gap-12 md:grid-cols-12 md:gap-8">
+    <div class="container-home grid items-center gap-12 md:grid-cols-12 md:gap-8">
       <div class="md:col-span-6">
         <p class="inline-block rounded-full bg-badge px-3 py-1 text-xs font-semibold text-white">Segera hadir</p>
-        <h2 id="food-title" class="mt-5 text-[36px] leading-[1.05] font-bold tracking-[-0.035em] md:text-[56px]">Myna Food</h2>
-        <p class="body-copy mt-5 max-w-[44ch] text-[17px]">Panduan makan sesuai tujuan, dengan menu yang mudah ditemukan di Indonesia.</p>
+        <h2 id="food-title" class="rv-h2 mt-5">Myna Food</h2>
+        <p class="mt-5 max-w-[44ch] text-[16px] leading-[1.55] text-muted-foreground">Panduan makan sesuai tujuan, dengan menu yang mudah ditemukan di Indonesia.</p>
         <p class="mt-8"><a href={foodMail} class="btn-primary">Kabari saya saat rilis</a></p>
       </div>
       <div class="md:col-span-5 md:col-start-8">
@@ -173,20 +175,20 @@ const privacy = [
 
   <!-- 6. Privacy as a feature, on navy with dark cards (Revolut's plan cards, without prices). -->
   <section class="bg-navy py-20 text-white md:py-28" aria-labelledby="privacy-title">
-    <div class="container-myna">
+    <div class="container-home">
       <div class="mx-auto max-w-[760px] text-center">
-        <h2 id="privacy-title" class="text-[36px] leading-[1.05] font-bold tracking-[-0.035em] text-white md:text-[60px]">Data Anda tetap milik Anda.</h2>
-        <p class="mx-auto mt-4 max-w-[52ch] text-[17px] leading-[1.6] text-white/80">Kami hanya menyimpan data yang Anda isi sendiri, tidak memperjualbelikannya, dan Anda dapat meminta salinan atau penghapusannya kapan saja.</p>
+        <h2 id="privacy-title" class="rv-h2 text-white">Data Anda, milik Anda.</h2>
+        <p class="rv-lead mx-auto mt-4 max-w-[52ch] text-white/80">Kami hanya menyimpan data yang Anda isi sendiri, tidak memperjualbelikannya, dan Anda dapat meminta salinan atau penghapusannya kapan saja.</p>
       </div>
       <ul class="mt-14 grid gap-4 md:grid-cols-3">
         {
           privacy.map((p) => (
-            <li class="rounded-[28px] bg-white/[0.07] p-8 md:p-10">
+            <li class="rv-card bg-white/[0.07]">
               <span class="flex h-12 w-12 items-center justify-center rounded-full bg-white text-electric">
                 <Icon name={p.icon} class="h-5 w-5" />
               </span>
-              <span class="mt-8 block text-[20px] font-bold text-white">{p.title}</span>
-              <span class="mt-2 block text-[15px] leading-relaxed text-white/75">{p.body}</span>
+              <span class="mt-6 block text-[20px] font-semibold text-white">{p.title}</span>
+              <span class="mt-2 block text-[15px] leading-[1.55] text-white/75">{p.body}</span>
             </li>
           ))
         }
@@ -197,24 +199,24 @@ const privacy = [
 
   <!-- 7. What Myna Health is and isn't: the disclaimer as an honest, visible section. -->
   <section class="bg-white py-20 md:py-28" aria-labelledby="clear-title">
-    <div class="container-myna grid gap-10 md:grid-cols-12 md:gap-8">
+    <div class="container-home grid gap-10 md:grid-cols-12 md:gap-8">
       <div class="md:col-span-5">
-        <h2 id="clear-title" class="text-[36px] leading-[1.05] font-bold tracking-[-0.035em] md:text-[56px]">Jelas sejak awal.</h2>
+        <h2 id="clear-title" class="rv-h2">Jelas sejak awal.</h2>
         <p class="mt-6 max-w-[44ch] text-sm text-muted-foreground">{disclaimer}</p>
       </div>
       <div class="grid gap-4 sm:grid-cols-2 md:col-span-7">
-        <div class="rounded-[28px] bg-soft p-7 md:p-8">
-          <h3 class="text-[18px] font-bold">Myna Health adalah</h3>
+        <div class="rv-card bg-soft">
+          <h3 class="text-[18px] font-semibold">Myna Health adalah</h3>
           <ul class="mt-5 flex flex-col gap-3.5">
-            <li class="flex gap-3 text-[16px] leading-relaxed text-foreground"><Icon name="check" class="mt-1 h-4 w-4 text-electric" />Aplikasi untuk membangun kebiasaan olahraga dan makan.</li>
-            <li class="flex gap-3 text-[16px] leading-relaxed text-foreground"><Icon name="check" class="mt-1 h-4 w-4 text-electric" />Informasi gaya hidup yang bersifat umum, dalam Bahasa Indonesia.</li>
+            <li class="flex gap-3 text-[16px] leading-[1.55] text-foreground"><Icon name="check" class="mt-1 h-4 w-4 text-electric" />Aplikasi untuk membangun kebiasaan olahraga dan makan.</li>
+            <li class="flex gap-3 text-[16px] leading-[1.55] text-foreground"><Icon name="check" class="mt-1 h-4 w-4 text-electric" />Informasi gaya hidup yang bersifat umum, dalam Bahasa Indonesia.</li>
           </ul>
         </div>
-        <div class="rounded-[28px] border border-navy/20 p-7 md:p-8">
-          <h3 class="text-[18px] font-bold">Myna Health bukan</h3>
+        <div class="rv-card bg-beige">
+          <h3 class="text-[18px] font-semibold">Myna Health bukan</h3>
           <ul class="mt-5 flex flex-col gap-3.5">
-            <li class="flex gap-3 text-[16px] leading-relaxed text-foreground"><Icon name="x" class="mt-1 h-4 w-4 text-navy/60" />Layanan medis.</li>
-            <li class="flex gap-3 text-[16px] leading-relaxed text-foreground"><Icon name="x" class="mt-1 h-4 w-4 text-navy/60" />Pengganti tenaga kesehatan profesional.</li>
+            <li class="flex gap-3 text-[16px] leading-[1.55] text-foreground"><Icon name="x" class="mt-1 h-4 w-4 text-navy/60" />Layanan medis.</li>
+            <li class="flex gap-3 text-[16px] leading-[1.55] text-foreground"><Icon name="x" class="mt-1 h-4 w-4 text-navy/60" />Pengganti tenaga kesehatan profesional.</li>
           </ul>
         </div>
       </div>
@@ -223,9 +225,9 @@ const privacy = [
 
   <!-- 8. Company identity (entity KYC): always fully visible, never animated. -->
   <section id="perusahaan" class="scroll-mt-24 py-20 md:py-24" aria-labelledby="identity-title">
-    <div class="container-myna grid gap-10 md:grid-cols-12 md:gap-8">
+    <div class="container-home grid gap-10 md:grid-cols-12 md:gap-8">
       <div class="md:col-span-4">
-        <h2 id="identity-title" class="h-section">Informasi perusahaan</h2>
+        <h2 id="identity-title" class="rv-h2">Informasi perusahaan</h2>
         <p class="body-copy mt-4 max-w-[36ch]">Myna Health adalah merek milik {company.name}, didirikan pada {foundedYear}.</p>
       </div>
       <div class="md:col-span-8"><CompanyIdentity /></div>
@@ -234,15 +236,15 @@ const privacy = [
 
   <!-- 9. Closing: one big photo card with the two next steps. -->
   <section class="pb-20 md:pb-24" aria-labelledby="cta-title">
-    <div class="container-myna">
-      <div data-cta class="relative isolate flex min-h-[520px] items-end overflow-hidden rounded-[40px] bg-navy p-8 text-white md:min-h-[560px] md:p-14">
+    <div class="container-home">
+      <div data-cta class="relative isolate flex min-h-[520px] items-end overflow-hidden rounded-[20px] bg-navy p-8 text-white md:min-h-[560px] md:p-14">
         <img src="/images/hero-jogging-pontianak.jpg" alt="Dua pelari tersenyum saat jogging pagi bersama di jalan kota" width="1120" height="1400" loading="lazy" class="absolute inset-0 -z-10 h-full w-full object-cover object-[50%_30%]" />
         <div class="absolute inset-0 -z-10 bg-navy/45" aria-hidden="true"></div>
         <div data-cta-item>
-          <h2 id="cta-title" class="max-w-[14ch] text-[40px] leading-[1.02] font-bold tracking-[-0.04em] text-white md:text-[72px]">Mulai dari satu kebiasaan.</h2>
+          <h2 id="cta-title" class="rv-display max-w-[14ch] text-white">Mulai dari satu kebiasaan.</h2>
           <div class="mt-8 flex flex-wrap gap-3">
             <a href={mynaFitUrl} class="btn-light">Jadi Sehat Bareng</a>
-            <a href={foodMail} class="btn-quiet-light">Kabari saya: Myna Food</a>
+            <a href={foodMail} class="btn-glass-light">Kabari saya: Myna Food</a>
           </div>
         </div>
       </div>

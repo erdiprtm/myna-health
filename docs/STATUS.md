@@ -9,6 +9,7 @@ Progress log, newest entry on top.
 - Erdi asked for a home as "cool as revolut.com" and went to sleep. Built from Erdi's screen recording of revolut.com: full-bleed photo hero, capsule outline with real Myna Fit text, photo tabs for the three moments, navy product band, split Myna Food, dark privacy cards, photo closing card, navy footer.
 - `reverse-brand` (separate tool, `~/reverse-brand`) is built and verified on mynahealth.id; on revolut.com it stopped at the bot check as designed. Measuring Revolut needs Erdi: `--headed` or the DevTools snippet.
 - PR opened for review only. **Not merged:** waits for Erdi's "approve".
+- 2026-10-21: Erdi measured revolut.com with `reverse-brand --headed`; revisions 1 to 4 from `research/revolut-measured.md` applied (lighter type, white ground, cards r20/p24, ~1040 px column, 16 px/500 buttons with a translucent pill on photos, shorter headlines). Video loop deferred.
 
 ## 2026-10-20: home redesign (branch `feat/landing-redesign`, P-016)
 

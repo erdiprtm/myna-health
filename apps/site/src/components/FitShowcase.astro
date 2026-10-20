@@ -72,7 +72,7 @@ const screens = [
             data-fit-step={i}
             aria-controls="fit-screen"
             aria-pressed={i === 0 ? "true" : "false"}
-            class="fit-pill relative inline-flex min-h-12 cursor-pointer items-center overflow-hidden rounded-full px-6 text-[15px] font-semibold"
+            class="fit-pill relative inline-flex min-h-12 cursor-pointer items-center overflow-hidden rounded-full px-6 text-[16px] font-medium"
           >
             {s.title}
             <span class="fit-bar" aria-hidden="true" />
@@ -82,7 +82,7 @@ const screens = [
     }
   </ol>
   <div class="fit-caps relative mx-auto mt-6 max-w-[46ch] text-center">
-    {screens.map((s, i) => <p class:list={["fit-cap text-[16px] leading-relaxed text-white/80", `fit-cap-${i + 1}`]}>{s.body}</p>)}
+    {screens.map((s, i) => <p class:list={["fit-cap text-[16px] leading-[1.55] text-white/80", `fit-cap-${i + 1}`]}>{s.body}</p>)}
   </div>
   <p class="mt-8 text-center"><a href={mynaFitUrl} class="btn-light">Jadi Sehat Bareng</a></p>
 </article>
