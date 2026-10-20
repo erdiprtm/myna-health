@@ -1,0 +1,370 @@
+---
+import { values } from "../lib/site";
+import Icon from "./Icon.astro";
+// "Janji kami untuk Anda" (P-017): five promises, each with a small live illustration in the
+// pattern of musimpanen.id's "The Machine" (status chips, filling bars, items that land in place).
+// The illustrations are decorative (aria-hidden): the title and sentence carry the meaning.
+// Motion rules: the resting state of every element IS the final frame, so without JS or with
+// reduced motion each card shows a finished, still picture. With JS, a loop runs only while the
+// card is on screen ([data-play], set by the script below) and stops when it leaves.
+// Numbers in the scan card are the real example on Myna Fit's scan screen (curated data).
+// Colour (Erdi, 2026-10-21): cyan and sky from the guideline are used here beyond the capsule
+// supergraphic, as solid fills only (no gradients, P-009).
+const [life, next, numbers, skip, data] = values;
+const plate = [
+  ["Urap sayur", 60],
+  ["Nasi putih", 195],
+  ["Ayam goreng", 260],
+  ["Sate lilit", 90],
+  ["Telur", 40],
+  ["Kacang & sambal", 150],
+] as const;
+const days = [
+  ["Sel", true],
+  ["Rab", true],
+  ["Kam", false],
+  ["Jum", true],
+  ["Sab", true],
+  ["Min", true],
+  ["Sen", true],
+] as const;
+const card = "rv-card flex flex-col gap-6 bg-white/[0.07]";
+const stage = "relative isolate flex h-[230px] flex-col justify-center overflow-hidden rounded-[14px] p-5 md:h-[250px] md:p-6";
+// Brand capsules drifting behind each illustration (guideline 2026 supergraphic: cyan, sky, electric).
+const deco = "m-deco pointer-events-none absolute -z-10 rounded-full";
+---
+
+<ul class="mt-12 grid gap-4 md:grid-cols-12">
+  <!-- 1. The workout finds a free slot in your day. -->
+  <li data-machine class:list={[card, "md:col-span-7"]}>
+    <div>
+      <h3 class="text-[20px] leading-[1.25] font-semibold text-white md:text-[22px]">{life?.title}</h3>
+      <p class="mt-2 max-w-[48ch] text-[15px] leading-[1.55] text-white/75">{life?.body}</p>
+    </div>
+    <div class:list={[stage, "bg-soft"]} aria-hidden="true">
+      <span class:list={[deco, "-bottom-10 -left-6 h-32 w-14 rotate-[28deg] bg-cyan"]} />
+      <span class:list={[deco, "-top-6 right-10 h-16 w-16 bg-sky"]} style="--d:-2s" />
+      <div class="m1 relative grid gap-2">
+        {
+          [
+            ["Pagi", "Antar anak"],
+            ["Siang", "Rapat"],
+            ["Malam", null],
+          ].map(([slot, busy]) => (
+            <div class="flex h-12 items-center gap-3">
+              <span class="w-12 shrink-0 text-[12px] font-medium text-navy/70">{slot}</span>
+              <span class="relative flex h-full flex-1 items-center rounded-full bg-white px-4 text-[13px] text-navy/60">{busy ?? "Kosong"}</span>
+            </div>
+          ))
+        }
+        <span class="m1-pill absolute right-2 bottom-1 flex h-10 items-center gap-2 rounded-full bg-electric px-3 shadow-[0_6px_18px_rgb(17_59_254/0.35)] text-[12px] font-semibold text-white sm:px-4 sm:text-[13px]">
+          <span class="sm:hidden">Latihan</span><span class="hidden sm:inline">Latihan 20 menit</span>
+          <span class="m1-ok flex h-5 w-5 items-center justify-center rounded-full bg-cyan text-navy"><Icon name="check" class="h-3 w-3" /></span>
+        </span>
+      </div>
+    </div>
+  </li>
+
+  <!-- 2. One clear next step: done, running, next. -->
+  <li data-machine class:list={[card, "md:col-span-5"]}>
+    <div>
+      <h3 class="text-[20px] leading-[1.25] font-semibold text-white md:text-[22px]">{next?.title}</h3>
+      <p class="mt-2 max-w-[48ch] text-[15px] leading-[1.55] text-white/75">{next?.body}</p>
+    </div>
+    <div class:list={[stage, "bg-white/[0.06]"]} aria-hidden="true">
+      <span class:list={[deco, "-right-8 -bottom-12 h-36 w-16 rotate-[-24deg] bg-sky/70"]} />
+      <span class:list={[deco, "top-4 -left-5 h-10 w-10 bg-cyan/80"]} style="--d:-3s" />
+      <div class="grid gap-4 text-[13px]">
+        <div class="grid grid-cols-[1fr_auto] items-center gap-x-3 gap-y-2">
+          <span class="text-white/85">Pemanasan</span>
+          <span class="rounded-full bg-cyan px-2.5 py-0.5 text-[11px] font-semibold text-navy">Selesai</span>
+          <span class="col-span-2 block h-1.5 rounded-full bg-cyan"></span>
+        </div>
+        <div class="grid grid-cols-[1fr_auto] items-center gap-x-3 gap-y-2">
+          <span class="text-white">Bench press, set 2</span>
+          <span class="m2-chips relative">
+            <span class="m2-run block rounded-full bg-electric px-2.5 py-0.5 text-[11px] font-semibold text-white">Berjalan</span>
+            <span class="m2-done absolute inset-0 rounded-full bg-cyan px-2.5 py-0.5 text-center text-[11px] font-semibold text-navy">Selesai</span>
+          </span>
+          <span class="col-span-2 block h-1.5 overflow-hidden rounded-full bg-white/[0.12]"><span class="m2-bar block h-full w-full origin-left rounded-full bg-sky"></span></span>
+        </div>
+        <div class="grid grid-cols-[1fr_auto] items-center gap-x-3 gap-y-2">
+          <span class="text-white/70">Istirahat 1:30</span>
+          <span class="rounded-full px-2.5 py-0.5 text-[11px] font-semibold text-white/80 shadow-[inset_0_0_0_1px_rgb(255_255_255/0.4)]">Berikutnya</span>
+          <span class="col-span-2 block h-1.5 rounded-full bg-white/[0.12]"></span>
+        </div>
+      </div>
+    </div>
+  </li>
+
+  <!-- 3. Every number is labelled for what it is: an estimate from curated data. -->
+  <li data-machine class:list={[card, "md:col-span-4"]}>
+    <div>
+      <h3 class="text-[20px] leading-[1.25] font-semibold text-white md:text-[22px]">{numbers?.title}</h3>
+      <p class="mt-2 max-w-[48ch] text-[15px] leading-[1.55] text-white/75">{numbers?.body}</p>
+    </div>
+    <div class:list={[stage, "bg-white/[0.06]"]} aria-hidden="true">
+      <span class:list={[deco, "-right-6 -bottom-10 h-32 w-14 rotate-[20deg] bg-electric"]} />
+      <p class="text-[11px] font-semibold tracking-[0.06em] text-white/55 uppercase">Contoh hasil scan</p>
+      <div class="mt-3 flex flex-wrap gap-1.5">
+        {
+          plate.map(([name, kcal], i) => (
+            <span class:list={["m3-chip rounded-full px-2.5 py-1 text-[11px] font-medium text-navy", ["bg-cyan", "bg-white", "bg-sky"][i % 3]]} style={`--i:${i}`}>
+              {name} <b class="font-semibold">{kcal} kkal</b>
+            </span>
+          ))
+        }
+      </div>
+      <p class="m3-total mt-4 flex flex-wrap items-baseline gap-x-2 text-white">
+        <span class="text-[11px] whitespace-nowrap text-white/60">Perkiraan</span>
+        <span class="text-[20px] font-semibold whitespace-nowrap text-cyan">795 kkal</span>
+        <span class="text-[13px] whitespace-nowrap text-white/70">44 g protein</span>
+      </p>
+    </div>
+  </li>
+
+  <!-- 4. A missed day stays empty, and the week carries on. -->
+  <li data-machine class:list={[card, "md:col-span-4"]}>
+    <div>
+      <h3 class="text-[20px] leading-[1.25] font-semibold text-white md:text-[22px]">{skip?.title}</h3>
+      <p class="mt-2 max-w-[48ch] text-[15px] leading-[1.55] text-white/75">{skip?.body}</p>
+    </div>
+    <div class:list={[stage, "bg-white/[0.06]"]} aria-hidden="true">
+      <span class:list={[deco, "-top-10 -right-4 h-28 w-12 rotate-[-30deg] bg-cyan/80"]} />
+      <span class:list={[deco, "-bottom-6 left-6 h-12 w-12 bg-sky/80"]} style="--d:-2.5s" />
+      <div class="grid grid-cols-7 gap-1.5">
+        {
+          days.map(([d, done], i) => (
+            <div class="flex flex-col items-center gap-2">
+              <span class="text-[11px] text-white/60">{d}</span>
+              {done ? (
+                <span class:list={["m4-day flex aspect-square w-full max-w-[34px] items-center justify-center rounded-full", ["bg-electric text-white", "bg-cyan text-navy", "bg-sky text-navy"][i % 3]]} style={`--i:${i}`}>
+                  <Icon name="check" class="h-3.5 w-3.5" />
+                </span>
+              ) : (
+                <span class="aspect-square w-full max-w-[34px] rounded-full border border-dashed border-white/40" />
+              )}
+            </div>
+          ))
+        }
+      </div>
+      <p class="m4-note mt-6 self-center rounded-full bg-cyan px-3 py-1 text-[12px] font-semibold text-navy">Lanjut lagi, tanpa mulai dari nol</p>
+    </div>
+  </li>
+
+  <!-- 5. Your data: what is kept, never sold, and yours to copy or delete. -->
+  <li data-machine class:list={[card, "md:col-span-4"]}>
+    <div>
+      <h3 class="text-[20px] leading-[1.25] font-semibold text-white md:text-[22px]">{data?.title}</h3>
+      <p class="mt-2 max-w-[48ch] text-[15px] leading-[1.55] text-white/75">{data?.body}</p>
+    </div>
+    <div class:list={[stage, "bg-white/[0.06]"]} aria-hidden="true">
+      <span class:list={[deco, "-bottom-12 -left-6 h-36 w-16 rotate-[26deg] bg-electric"]} />
+      <span class="m5-lock absolute top-5 right-5 flex h-11 w-11 items-center justify-center rounded-full bg-cyan text-navy"><Icon name="lock" class="h-5 w-5" /></span>
+      <div class="grid gap-3 text-[13px]">
+        {
+          [
+            ["Yang Anda isi", "Disimpan"],
+            ["Dijual ke pihak lain", "Tidak pernah"],
+            ["Salinan atau hapus", "Kapan saja"],
+          ].map(([k, v], i) => (
+            <div class="flex items-center justify-between gap-3 border-b border-white/10 pb-3 last:border-0 last:pb-0">
+              <span class="text-white/80">{k}</span>
+              <span class:list={["m5-chip rounded-full px-2.5 py-0.5 text-[11px] font-semibold text-navy", ["bg-sky", "bg-cyan", "bg-white"][i]]} style={`--i:${i}`}>{v}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </li>
+</ul>
+
+<style>
+  /* Every rule below only runs while the card is on screen ([data-play]) and motion is allowed. */
+  @media (prefers-reduced-motion: no-preference) {
+    [data-play] .m1-pill {
+      animation: m1-move 8s var(--ease-out-strong) infinite;
+    }
+    [data-play] .m1-ok {
+      animation: m1-ok 8s ease infinite;
+    }
+    [data-play] .m2-bar {
+      animation: m2-bar 8s linear infinite;
+    }
+    [data-play] .m2-done {
+      animation: m2-done 8s ease infinite;
+    }
+    [data-play] .m3-chip {
+      animation: m3-in 8s var(--ease-out-strong) infinite;
+      animation-delay: calc(var(--i) * 0.35s);
+    }
+    [data-play] .m3-total {
+      animation: m3-total 8s var(--ease-out-strong) infinite;
+    }
+    [data-play] .m4-day {
+      animation: m4-fill 8s var(--ease-out-strong) infinite;
+      animation-delay: calc(var(--i) * 0.4s);
+    }
+    [data-play] .m4-note {
+      animation: m4-note 8s var(--ease-out-strong) infinite;
+    }
+    [data-play] .m5-chip {
+      animation: m3-in 8s var(--ease-out-strong) infinite;
+      animation-delay: calc(var(--i) * 0.5s);
+    }
+    [data-play] .m5-lock {
+      animation: m5-breathe 2.4s ease-in-out infinite;
+    }
+    [data-play] .m-deco {
+      animation: m-drift 7s ease-in-out infinite alternate;
+      animation-delay: var(--d, 0s);
+    }
+  }
+  /* The pill tries the busy morning and noon slots (dimmed), then settles in the free evening. */
+  @keyframes m1-move {
+    0%,
+    12% {
+      transform: translateY(-112px);
+      opacity: 0.45;
+    }
+    28%,
+    40% {
+      transform: translateY(-56px);
+      opacity: 0.45;
+    }
+    56%,
+    100% {
+      transform: none;
+      opacity: 1;
+    }
+  }
+  @keyframes m1-ok {
+    0%,
+    58% {
+      transform: scale(0);
+    }
+    66%,
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes m2-bar {
+    0% {
+      transform: scaleX(0.05);
+    }
+    70%,
+    100% {
+      transform: scaleX(1);
+    }
+  }
+  @keyframes m2-done {
+    0%,
+    70% {
+      opacity: 0;
+    }
+    76%,
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes m3-in {
+    0% {
+      opacity: 0;
+      transform: translateY(8px) scale(0.96);
+    }
+    8%,
+    88% {
+      opacity: 1;
+      transform: none;
+    }
+    96%,
+    100% {
+      opacity: 0;
+      transform: none;
+    }
+  }
+  @keyframes m3-total {
+    0%,
+    34% {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    42%,
+    88% {
+      opacity: 1;
+      transform: none;
+    }
+    96%,
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes m4-fill {
+    0% {
+      transform: scale(0.2);
+      opacity: 0;
+    }
+    8%,
+    90% {
+      transform: none;
+      opacity: 1;
+    }
+    98%,
+    100% {
+      transform: scale(0.2);
+      opacity: 0;
+    }
+  }
+  @keyframes m4-note {
+    0%,
+    44% {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    52%,
+    90% {
+      opacity: 1;
+      transform: none;
+    }
+    98%,
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes m-drift {
+    from {
+      translate: 0 0;
+    }
+    to {
+      translate: 10px -14px;
+    }
+  }
+  @keyframes m5-breathe {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.07);
+    }
+  }
+</style>
+
+<script>
+  // Runs each card's loop only while it is on screen (P-015 amended by P-017): enter sets
+  // [data-play], leave removes it. Reduced motion: never set, so every card stays on its final frame.
+  import { inView, motionOk } from "../scripts/motion";
+
+  if (motionOk()) {
+    for (const el of document.querySelectorAll<HTMLElement>("[data-machine]")) {
+      inView(
+        el,
+        () => {
+          el.dataset.play = "";
+          return () => delete el.dataset.play;
+        },
+        { amount: 0.4 },
+      );
+    }
+  }
+</script>

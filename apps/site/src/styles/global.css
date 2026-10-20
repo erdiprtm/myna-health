@@ -73,7 +73,7 @@
 }
 /* Pill buttons, like the guideline's badge. Press feedback is a small scale. */
 @utility btn {
-  @apply inline-flex min-h-12 items-center justify-center rounded-full px-6 text-[15px] font-semibold transition-[background-color,color,border-color,transform] duration-150 ease-out active:scale-[0.97];
+  @apply inline-flex min-h-12 items-center justify-center rounded-full px-6 text-[16px] font-medium transition-[background-color,color,border-color,transform] duration-150 ease-out active:scale-[0.97];
 }
 @utility btn-primary {
   @apply btn bg-electric text-white hover:bg-navy;
@@ -86,6 +86,31 @@
 }
 @utility btn-quiet-light {
   @apply btn border border-white/40 text-white hover:border-white;
+}
+/* Translucent pill for photos (P-017, measured on revolut.com): flat white at 20%, no blur (P-009). */
+@utility btn-glass-light {
+  @apply btn bg-white/20 text-white hover:bg-white/30;
+}
+/* Home type and layout (P-017), proportioned on the measured revolut.com scale: lighter weights,
+   line-height near 1, display 48 to 88 px, section heads 32 to 48 px, cards radius 20 and padding 24,
+   text and cards inside a ~1040 px column while photos stay full-bleed. */
+@utility container-home {
+  @apply mx-auto w-full max-w-[1104px] px-4 md:px-8;
+}
+@utility rv-display {
+  @apply text-[48px] leading-[1] font-semibold tracking-[-0.025em] md:text-[72px] lg:text-[88px];
+}
+@utility rv-h2 {
+  @apply text-[32px] leading-[1.05] font-semibold tracking-[-0.025em] md:text-[48px];
+}
+@utility rv-h3 {
+  @apply text-[20px] leading-[1.2] font-semibold tracking-[-0.01em] md:text-[24px];
+}
+@utility rv-lead {
+  @apply text-[18px] leading-[1.4];
+}
+@utility rv-card {
+  @apply rounded-[20px] p-6;
 }
 /* Links read in navy (electric blue is for buttons and icons only; it is too bright for text). */
 @utility text-link {
@@ -190,23 +215,6 @@
   height: 100%;
   object-fit: cover;
 }
-/* Home hero (P-016): capsule photos set inside the headline (Loff Wellness pattern). Each one opens
-   once on load; Motion runs it when the page script is on time (index.astro), and this CSS copy is
-   the fallback 600 ms later when JS is late or off. Reduced motion shows them at rest. */
-.inline-capsule {
-  display: inline-block;
-  width: 1.55em;
-  height: 0.74em;
-  vertical-align: -0.04em;
-  border-radius: 9999px;
-  overflow: hidden;
-  background: var(--color-soft);
-}
-.inline-capsule img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
 /* Cards of the real Myna Fit interface laid over photos: white, soft lift, the app's own radius. */
 .ui-card {
   border-radius: 22px;
@@ -221,29 +229,33 @@
   width: 100%;
   height: auto;
 }
+/* Home (P-017): the hero copy settles in once; Motion runs it when the page script is on time
+   (index.astro), and this CSS copy is the fallback 600 ms later. */
 @media (prefers-reduced-motion: no-preference) {
-  .hero-open {
-    animation: hero-open 700ms var(--ease-out-strong) 600ms both;
-  }
-  .hero-open-2 {
-    animation-delay: 680ms;
-  }
   .hero-rise {
-    animation: hero-rise 620ms var(--ease-out-strong) 820ms both;
+    animation: hero-rise 700ms var(--ease-out-strong) 600ms both;
   }
 }
-@keyframes hero-open {
+/* Drifting brand capsules (P-017): only inside a section that is on screen ([data-play], set by
+   the page script) and only when motion is allowed; otherwise they rest where they are drawn. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-play] .drift {
+    animation: drift 7s ease-in-out infinite alternate;
+    animation-delay: var(--d, 0s);
+  }
+}
+@keyframes drift {
   from {
-    clip-path: inset(0 50% 0 50% round 9999px);
+    translate: 0 0;
   }
   to {
-    clip-path: inset(0 0 0 0 round 9999px);
+    translate: 12px -18px;
   }
 }
 @keyframes hero-rise {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(24px);
   }
   to {
     opacity: 1;

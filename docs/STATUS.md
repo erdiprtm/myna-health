@@ -4,6 +4,15 @@ Progress log, newest entry on top.
 
 ---
 
+## 2026-10-21: company home approved (branch `feat/landing-revolut`, PR #12, P-017)
+
+- Erdi asked for a home as "cool as revolut.com" and went to sleep. Built from Erdi's screen recording of revolut.com: full-bleed photo hero, capsule outline with real Myna Fit text, photo tabs for the three moments, navy product band, split Myna Food, dark privacy cards, photo closing card, navy footer.
+- `reverse-brand` (separate tool, `~/reverse-brand`) is built and verified on mynahealth.id; on revolut.com it stopped at the bot check as designed. Measuring Revolut needs Erdi: `--headed` or the DevTools snippet.
+- Erdi approved on 2026-10-21; merged through CI (auto-merge after verify and preview).
+- 2026-10-21: Erdi measured revolut.com with `reverse-brand --headed`; revisions 1 to 4 from `research/revolut-measured.md` applied (lighter type, white ground, cards r20/p24, ~1040 px column, 16 px/500 buttons with a translucent pill on photos, shorter headlines). Video loop deferred.
+- 2026-10-21: home reworked as the company site (Erdi, musimpanen.id as reference): mission, vision, five user-centric promises with visuals, portfolio cards, closing email card; NIB in every footer; identity table only on Tentang Kami; no "Indonesia" framing in copy.
+- 2026-10-21: promises get live CSS illustrations (run only on screen, still under reduced motion or without JS); hero line and closing card simplified.
+
 ## 2026-10-20: home redesign (branch `feat/landing-redesign`, P-016)
 
 - New home from the approved research direction: capsule photos inside the hero headline, floating pill navbar, Myna Fit cards over people photos, privacy and "Jelas sejak awal" sections, split closing card, wordmark footer.

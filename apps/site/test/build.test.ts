@@ -136,11 +136,21 @@ describe("built site", () => {
     }
   });
 
-  it("home and Tentang Kami show the company identity block (entity KYC)", () => {
-    for (const path of ["index.html", "tentang/index.html"]) {
-      const html = page(path);
-      expect(html, path).toContain('data-testid="company-identity"');
-      expect(html, path).toContain("Nama badan usaha");
+  // P-017 (Erdi, 2026-10-21): the home is the company story; the full identity table lives on
+  // Tentang Kami, and every page's footer carries the name, NIB, address and email.
+  it("Tentang Kami shows the company identity block; every footer has name, NIB, address and email (entity KYC)", () => {
+    const tentang = page("tentang/index.html");
+    expect(tentang).toContain('data-testid="company-identity"');
+    expect(tentang).toContain("Nama badan usaha");
+    for (const path of [...PAGES, "404.html"]) {
+      const footer = page(path).match(/<footer[\s\S]*?<\/footer>/)?.[0] ?? "";
+      for (const fact of [
+        "PT Myna Bio Teknologi",
+        "2605260050475",
+        "Kota Depok, Jawa Barat 16417",
+        "halo@mynahealth.id",
+      ])
+        expect(footer, `${path}: ${fact}`).toContain(fact);
     }
   });
 
@@ -168,6 +178,22 @@ describe("built site", () => {
       .join("");
     expect(sitemap).toContain("/refund/");
     expect(sitemap).not.toContain("/harga/");
+  });
+
+  // P-017: the promise illustrations loop only while on screen and never under reduced motion.
+  it("promise illustrations: five cards, loops gated by [data-play] and no-preference", () => {
+    expect(page("index.html").match(/data-machine/g)?.length).toBe(5);
+    const assets = new URL("_astro/", dist);
+    const css = readdirSync(assets)
+      .filter((f) => f.endsWith(".css"))
+      .map((f) => readFileSync(new URL(f, assets), "utf8"))
+      .join("");
+    const loops = [...css.matchAll(/animation:\s*m[1-5]-[\w-]+[^;}]*infinite/g)];
+    expect(loops.length).toBeGreaterThanOrEqual(5);
+    for (const m of css.matchAll(/@media\s*\(prefers-reduced-motion:\s*no-preference\)\s*\{([\s\S]*?)\}\s*\}/g)) {
+      if (/m[1-5]-/.test(m[1] as string)) expect(m[1]).toContain("[data-play]");
+    }
+    expect(css).not.toMatch(/(^|[},])\s*\.m[1-5]-[\w-]+[^{]*\{[^}]*animation:\s*m[1-5]-/);
   });
 
   // Erdi, 2026-10-12: the NIB is public, and marketing copy never mentions the city.
@@ -207,9 +233,9 @@ describe("built site", () => {
       expect(scriptsOf(path).some(importsMotion), path).toBe(false);
   });
 
-  // P-016: the redesigned home stays light (extra JS under ~6 KB gzip) and keeps the company
-  // identity block still, with no animation hooks anywhere inside it.
-  it("home page JS stays within the P-016 budget and the identity block never animates", async () => {
+  // P-016/P-017: the home stays light (extra JS under ~6 KB gzip) and the identity block on
+  // Tentang Kami never animates.
+  it("home page JS stays within budget and the identity block never animates", async () => {
     const { gzipSync } = await import("node:zlib");
     const astroDir = new URL("_astro/", dist);
     const html = page("index.html");
@@ -227,10 +253,27 @@ describe("built site", () => {
     const bytes = [...seen].reduce((n, f) => n + gzipSync(readFileSync(new URL(f, astroDir))).length, 0);
     expect(bytes).toBeLessThan(6144);
 
-    const identity = html.match(/<section id="perusahaan"[\s\S]*?<\/section>/)?.[0] ?? "";
+    const identity = page("tentang/index.html").match(/<section id="perusahaan"[\s\S]*?<\/section>/)?.[0] ?? "";
     expect(identity).toContain('data-testid="company-identity"');
     expect(identity).toContain("2605260050475");
     expect(identity).not.toMatch(/data-(moment|cta|fit)|hero-(open|rise)|style="/);
+  });
+
+  // Erdi, 2026-10-21: the brand is not framed by country, and the home leads with the company
+  // (mission, vision, promises) before the products.
+  it("home leads with mission and vision, and its marketing copy never says Indonesia", () => {
+    const html = page("index.html");
+    const copy = html
+      .replace(/<(script|style|title)[\s\S]*?<\/\1>/g, "")
+      .replace(/<footer[\s\S]*?<\/footer>/, "")
+      .replace(/<[^>]+>/g, " ");
+    expect(copy).not.toMatch(/Indonesia/);
+    const order = ["mission-title", "vision-title", "promises-title", "products-title"].map((id) =>
+      html.indexOf(`id="${id}"`),
+    );
+    expect(order.every((n) => n > 0)).toBe(true);
+    expect([...order].sort((x, y) => x - y)).toEqual(order);
+    for (const t of ["Visi", "Misi kami", "Janji kami untuk Anda", "Produk kami"]) expect(copy).toContain(t);
   });
 
   it("Myna Food asks for launch news by email, with a preset subject", () => {

@@ -6,7 +6,8 @@ import { mynaFitUrl } from "../lib/site";
 // line is a button that opens its screen. Without JS a CSS loop does the same; with reduced
 // motion nothing moves and the buttons switch screens instantly. Each screen has one short note
 // beside the phone (P-016, Bevel), saying only what that screen visibly shows. Phones too narrow
-// to fit a note beside the frame skip them rather than cover the screen.
+// to fit a note beside the frame skip them rather than cover the screen. P-017: set on the navy
+// band, the phone sits centred with pill tabs under it (Revolut's card switcher pattern).
 const screens = [
   {
     src: "/images/fit-layar-latihan.webp",
@@ -35,57 +36,55 @@ const screens = [
 ];
 ---
 
-<article id="myna-fit" data-fit class="scroll-mt-24 overflow-hidden rounded-md border border-border bg-card">
-  <div class="grid md:grid-cols-12">
-    <div class="flex flex-col justify-center p-6 sm:p-10 md:col-span-6 md:p-12 lg:col-span-5">
-      <h3 class="sr-only">Myna Fit</h3>
-      <ol class="border-t border-border">
+<article id="myna-fit" data-fit class="scroll-mt-24">
+  <div class="flex justify-center">
+    <div class="fit-phone relative">
+      <div class="fit-screen" id="fit-screen" aria-live="polite">
         {
           screens.map((s, i) => (
-            <li class:list={["fit-step relative border-b border-border transition-opacity duration-200", `fit-step-${i + 1}`]}>
-              <button
-                type="button"
-                data-fit-step={i}
-                aria-controls="fit-screen"
-                aria-pressed={i === 0 ? "true" : "false"}
-                class="block w-full cursor-pointer py-4 text-left"
-              >
-                <span class="block text-[16px] font-semibold">{s.title}</span>
-                <span class="mt-1 block text-[15px] leading-relaxed text-muted-foreground">{s.body}</span>
-              </button>
-              <span class="fit-bar" aria-hidden="true" />
-            </li>
-          ))
-        }
-      </ol>
-      <p class="mt-8"><a href={mynaFitUrl} class="btn-primary">Jadi Sehat Bareng</a> <span class="ml-2 text-sm text-muted-foreground">fit.mynahealth.id</span></p>
-    </div>
-    <div class="order-first flex items-center justify-center bg-secondary px-6 py-10 md:order-none md:col-span-6 md:py-16 lg:col-span-7">
-      <div class="fit-phone relative">
-        <div class="fit-screen" id="fit-screen" aria-live="polite">
-          {
-            screens.map((s, i) => (
-              <img
-                src={s.src}
-                alt={s.alt}
-                width="600"
-                height="1032"
-                loading="lazy"
-                class:list={["fit-slide", `fit-slide-${i + 1}`]}
-              />
-            ))
-          }
-        </div>
-        {
-          screens.map((s, i) => (
-            <p class:list={["fit-note absolute z-10 hidden rounded-full sm:block bg-white px-4 py-2 text-[13px] font-semibold whitespace-nowrap text-navy", `fit-note-${i + 1}`, s.notePos]} aria-hidden="true">
-              {s.note}
-            </p>
+            <img
+              src={s.src}
+              alt={s.alt}
+              width="600"
+              height="1032"
+              loading="lazy"
+              class:list={["fit-slide", `fit-slide-${i + 1}`]}
+            />
           ))
         }
       </div>
+      {
+        screens.map((s, i) => (
+          <p class:list={["fit-note absolute z-10 hidden rounded-full bg-white px-4 py-2 text-[13px] font-semibold whitespace-nowrap text-navy sm:block", `fit-note-${i + 1}`, s.notePos]} aria-hidden="true">
+            {s.note}
+          </p>
+        ))
+      }
     </div>
   </div>
+  <h3 class="sr-only">Myna Fit</h3>
+  <ol class="mt-10 flex flex-wrap justify-center gap-3">
+    {
+      screens.map((s, i) => (
+        <li class:list={["fit-step relative", `fit-step-${i + 1}`]}>
+          <button
+            type="button"
+            data-fit-step={i}
+            aria-controls="fit-screen"
+            aria-pressed={i === 0 ? "true" : "false"}
+            class="fit-pill relative inline-flex min-h-12 cursor-pointer items-center overflow-hidden rounded-full px-6 text-[16px] font-medium"
+          >
+            {s.title}
+            <span class="fit-bar" aria-hidden="true" />
+          </button>
+        </li>
+      ))
+    }
+  </ol>
+  <div class="fit-caps relative mx-auto mt-6 max-w-[46ch] text-center">
+    {screens.map((s, i) => <p class:list={["fit-cap text-[16px] leading-[1.55] text-white/80", `fit-cap-${i + 1}`]}>{s.body}</p>)}
+  </div>
+  <p class="mt-8 text-center"><a href={mynaFitUrl} class="btn-light">Jadi Sehat Bareng</a></p>
 </article>
 
 <style>
@@ -95,7 +94,7 @@ const screens = [
     padding: 9px;
     border-radius: 46px;
     background: #131c31;
-    box-shadow: 0 1px 2px rgb(19 28 49 / 0.08), 0 12px 32px rgb(19 28 49 / 0.12);
+    box-shadow: 0 0 0 1px rgb(255 255 255 / 0.14), 0 24px 60px rgb(0 0 0 / 0.35);
   }
   .fit-screen {
     position: relative;
@@ -122,25 +121,44 @@ const screens = [
   .fit-note-1 {
     opacity: 1;
   }
+  /* Pills on navy, like the guideline badge: outline when idle, white when open. */
+  .fit-pill {
+    color: #fff;
+    box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / 0.4);
+    transition-property: background-color, color, box-shadow;
+    transition-duration: 200ms;
+  }
+  .fit-pill[aria-pressed="true"] {
+    background: #fff;
+    color: var(--color-navy);
+    box-shadow: none;
+  }
+  .fit-caps {
+    display: grid;
+  }
+  .fit-cap {
+    grid-area: 1 / 1;
+    opacity: 0;
+  }
+  .fit-cap-1 {
+    opacity: 1;
+  }
   .fit-bar {
     position: absolute;
     left: 0;
-    bottom: -1px;
-    height: 2px;
+    bottom: 0;
+    height: 3px;
     width: 100%;
-    background: var(--color-primary);
+    background: var(--color-electric);
     transform: scaleX(0);
     transform-origin: left;
   }
 
   /* 12 s loop, 4 s per screen. Negative delays put screens 2 and 3 later in the same cycle. */
-  /* Enhanced (JS): the script drives slides and bars; inactive lines are dimmed. */
-  [data-enhanced] .fit-step:has([aria-pressed="false"]) {
-    opacity: 0.55;
-  }
+  /* Enhanced (JS): the script drives slides, captions and bars; the pill shows which is open. */
   @media (hover: hover) and (pointer: fine) {
-    [data-enhanced] .fit-step:has([aria-pressed="false"]):hover {
-      opacity: 0.85;
+    .fit-pill[aria-pressed="false"]:hover {
+      box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / 0.8);
     }
   }
 
@@ -148,6 +166,7 @@ const screens = [
   @media (prefers-reduced-motion: no-preference) {
     article:not([data-enhanced]) .fit-slide,
     article:not([data-enhanced]) .fit-note,
+    article:not([data-enhanced]) .fit-cap,
     article:not([data-enhanced]) .fit-step,
     article:not([data-enhanced]) .fit-bar {
       animation-duration: 12s;
@@ -155,7 +174,8 @@ const screens = [
       animation-timing-function: linear;
     }
     article:not([data-enhanced]) .fit-slide,
-    article:not([data-enhanced]) .fit-note {
+    article:not([data-enhanced]) .fit-note,
+    article:not([data-enhanced]) .fit-cap {
       animation-name: fit-slide;
     }
     article:not([data-enhanced]) .fit-step {
@@ -166,12 +186,14 @@ const screens = [
     }
     article:not([data-enhanced]) .fit-slide-2,
     article:not([data-enhanced]) .fit-note-2,
+    article:not([data-enhanced]) .fit-cap-2,
     article:not([data-enhanced]) .fit-step-2,
     article:not([data-enhanced]) .fit-step-2 .fit-bar {
       animation-delay: -8s;
     }
     article:not([data-enhanced]) .fit-slide-3,
     article:not([data-enhanced]) .fit-note-3,
+    article:not([data-enhanced]) .fit-cap-3,
     article:not([data-enhanced]) .fit-step-3,
     article:not([data-enhanced]) .fit-step-3 .fit-bar {
       animation-delay: -4s;
@@ -225,6 +247,7 @@ const screens = [
     root.dataset.enhanced = "";
     const slides = [...root.querySelectorAll<HTMLElement>(".fit-slide")];
     const notes = [...root.querySelectorAll<HTMLElement>(".fit-note")];
+    const caps = [...root.querySelectorAll<HTMLElement>(".fit-cap")];
     const steps = [...root.querySelectorAll<HTMLButtonElement>("[data-fit-step]")];
     const bars = steps.map((b) => b.parentElement?.querySelector<HTMLElement>(".fit-bar") ?? null);
     const moving = motionOk();
@@ -260,7 +283,7 @@ const screens = [
       current = next;
       steps.forEach((b, i) => b.setAttribute("aria-pressed", i === next ? "true" : "false"));
       if (next !== prev) {
-        for (const list of [slides, notes]) {
+        for (const list of [slides, notes, caps]) {
           const from = list[prev];
           const to = list[next];
           if (!from || !to) continue;
