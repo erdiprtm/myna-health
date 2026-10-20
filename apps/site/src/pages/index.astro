@@ -1,55 +1,45 @@
 ---
-import CompanyIdentity from "../components/CompanyIdentity.astro";
-import FitShowcase from "../components/FitShowcase.astro";
 import Icon from "../components/Icon.astro";
 import Base from "../layouts/Base.astro";
 import { organizationLd } from "../lib/jsonld";
-import { company, disclaimer, foundedYear, mynaFitUrl } from "../lib/site";
+import { company, mynaFitUrl, values } from "../lib/site";
 
 const site = Astro.site as URL;
-// PRODUCT-OWNED copy (specs/myna-health.md, P-008, P-016, P-017). Corporate voice: calm, plain, "Anda".
-// P-017: the Revolut pattern set, in the Myna brand. Full-bleed people photos with large white type,
-// a capsule outline over the photo holding real Myna Fit UI, pill tabs that switch the photo, navy
-// bands for the product, white split sections, dark cards. No medical claims, prices or stats.
+// PRODUCT-OWNED copy (specs/myna-health.md, P-008, P-017). This is the company site: mission and
+// vision first, the promises behind every product, then the portfolio. Each product has its own
+// landing page, so product detail stays in the portfolio cards. Plain, human Bahasa Indonesia with
+// "Anda"; no country framing (Erdi, 2026-10-21), no medical claims, prices or stats.
 const foodMail = `mailto:${company.email}?subject=${encodeURIComponent("Kabari saya: Myna Food")}`;
+const hello = `mailto:${company.email}`;
 
-const trust = [
-  { icon: "check", text: "Berbahasa Indonesia" },
-  { icon: "smartphone", text: "Langsung dari browser" },
-  { icon: "shield-check", text: "Data dilindungi UU PDP" },
-  { icon: "info", text: "Bukan layanan medis" },
+// One visual per promise, so the section is not text-heavy: a people photo, real Myna Fit screens,
+// and the capsule supergraphic for the privacy promise (there is no UI to show for it).
+const visuals = [
+  { kind: "photo", src: "/images/momen-makan-wide.jpg", width: 2400, height: 1350, alt: "Tangan memegang HP di depan semangkuk mi dan nasi gulung", pos: "object-[50%_45%]" },
+  { kind: "ui", src: "/images/fit-crop-hari-ini.webp", width: 600, height: 288, alt: "Kartu Myna Fit: latihan hari ini, Upper A, dada, punggung, dan bahu" },
+  { kind: "ui", src: "/images/fit-crop-gizi.webp", width: 520, height: 110, alt: "Contoh hasil scan Myna Fit: perkiraan 44 gram protein dan 795 kkal", pad: true },
+  { kind: "ui", src: "/images/fit-kartu-7-hari.webp", width: 1050, height: 486, alt: "Kartu Myna Fit: 7 hari terakhir, 3 latihan dan 6 hari catat makan, dengan hari kosong di antaranya" },
+  { kind: "capsules" },
 ] as const;
+const promises = values.map((v, i) => ({ ...v, visual: visuals[i] }));
 
-// Three life moments behind pill tabs (Revolut's "Adventure / Wedding / Moving"), each a full-bleed
-// people photo with one real Myna Fit card inside the capsule outline.
-const moments = [
+const portfolio = [
   {
-    id: "pagi",
-    title: "Pagi",
-    body: "Lihat latihan hari ini sebelum berangkat.",
-    photo: { src: "/images/momen-stretching-wide.jpg", alt: "Dua orang melakukan peregangan lengan bersama di luar ruangan", pos: "object-[50%_40%]" },
-    ui: { src: "/images/fit-crop-hari-ini.webp", width: 600, height: 288, alt: "Kartu Myna Fit: latihan hari ini, Upper A, dada, punggung, dan bahu" },
+    id: "myna-fit",
+    name: "Myna Fit",
+    status: "Tersedia",
+    body: "Catat latihan dan makan Anda, lalu lihat perkembangannya dari minggu ke minggu.",
+    photo: { src: "/images/gym-cek-hp.jpg", width: 1600, height: 1067, alt: "Perempuan duduk di gym sambil melihat HP", pos: "object-[45%_40%]" },
+    cta: { href: mynaFitUrl, label: "Jadi Sehat Bareng", primary: true },
   },
   {
-    id: "gym",
-    title: "Di gym",
-    body: "Catat set, repetisi, dan beban tanpa kertas.",
-    photo: { src: "/images/gym-cek-hp.jpg", alt: "Perempuan duduk di gym sambil melihat HP", pos: "object-[45%_40%]" },
-    ui: { src: "/images/fit-crop-set.webp", width: 540, height: 306, alt: "Kartu Myna Fit: Bench Press Barbell, set 1 dan set 2 sudah dicatat" },
+    id: "myna-food",
+    name: "Myna Food",
+    status: "Segera hadir",
+    body: "Panduan makan sesuai tujuan Anda, dengan menu yang gampang dicari.",
+    photo: { src: "/images/food-dapur.jpg", width: 1400, height: 1120, alt: "Pasangan menyiapkan sayur dan buah segar bersama di dapur", pos: "object-[42%_45%]" },
+    cta: { href: foodMail, label: "Kabari saya saat rilis", primary: false },
   },
-  {
-    id: "makan",
-    title: "Saat makan",
-    body: "Foto piring Anda untuk perkiraan kalori dan protein.",
-    photo: { src: "/images/momen-makan-wide.jpg", alt: "Tangan memegang HP di depan semangkuk mi dan nasi gulung", pos: "object-[50%_45%]" },
-    ui: { src: "/images/fit-crop-gizi.webp", width: 520, height: 110, alt: "Contoh hasil scan Myna Fit: perkiraan 44 gram protein dan 795 kkal" },
-  },
-];
-
-const privacy = [
-  { icon: "shield-check", title: "Dilindungi UU PDP", body: "Data pribadi Anda dikelola sesuai UU Pelindungan Data Pribadi." },
-  { icon: "lock", title: "Tidak diperjualbelikan", body: "Kami tidak menjual data Anda kepada siapa pun." },
-  { icon: "mail", title: "Salin atau hapus", body: `Minta salinan atau penghapusan data kapan saja lewat ${company.email}.` },
 ] as const;
 ---
 
@@ -60,191 +50,127 @@ const privacy = [
   jsonLd={[organizationLd(site)]}
   ground="white"
 >
-  <!-- 1. Hero: full-bleed photo, large white type, a capsule outline with real Myna Fit UI over the
-       photo (Revolut's hero pattern, with the Myna capsule instead of a phone outline). -->
+  <!-- 1. Hero: full-bleed photo, large white type, pill CTAs. -->
   <section class="relative isolate -mt-[68px] flex min-h-[640px] items-end overflow-hidden bg-navy text-white md:-mt-[80px] md:min-h-[min(100svh,900px)]" aria-labelledby="hero-title">
     <picture class="absolute inset-0 -z-10">
       <source media="(min-width: 768px)" srcset="/images/hero-pagi-wide.jpg" width="2400" height="1350" />
       <img src="/images/hero-pagi-tall.jpg" alt="Perempuan berpakaian olahraga di taman pagi hari, melihat HP sebelum berlatih" width="1000" height="1333" fetchpriority="high" class="h-full w-full object-cover object-[60%_30%] md:object-[50%_35%]" />
     </picture>
     <div class="absolute inset-0 -z-10 bg-navy/50 md:bg-navy/25" aria-hidden="true"></div>
-    <div class="container-home w-full pt-36 pb-14 md:pb-16">
+    <div class="container-home w-full pt-36 pb-14 md:pb-20">
       <div class="hero-rise">
         <h1 id="hero-title" class="rv-display max-w-[13ch] text-white lg:max-w-none">Kebiasaan kecil,<br class="hidden lg:block" /> setiap hari.</h1>
-      </div>
-      <div class="mt-8 grid gap-10 md:grid-cols-12 md:items-end">
-        <div class="hero-rise md:col-span-6">
-          <p class="rv-lead max-w-[38ch] text-white">Myna Health membuat aplikasi yang membantu Anda lebih rutin berolahraga dan makan lebih teratur.</p>
-          <div class="mt-8 flex flex-wrap gap-3">
-            <a href={mynaFitUrl} class="btn-light">Jadi Sehat Bareng</a>
-            <a href="/tentang/" class="btn-glass-light">Kenali Myna Health</a>
-          </div>
-        </div>
-        <!-- The capsule outline: the guideline's capsule drawn as a frame, holding Myna Fit's real text. -->
-        <div class="hero-open hidden justify-self-end md:col-span-4 md:col-start-9 md:block" aria-hidden="true">
-          <div class="flex h-[340px] w-[190px] flex-col items-center justify-end gap-2.5 rounded-full border-2 border-white/80 px-5 pb-12 text-center lg:h-[380px] lg:w-[210px]">
-            <p class="text-[13px] text-white/90">Latihan hari ini</p>
-            <p class="text-[21px] leading-[1.15] font-semibold">Dada, Punggung, Bahu</p>
-            <p class="rounded-full bg-white px-4 py-1.5 text-[13px] font-semibold text-navy">Myna Fit</p>
-          </div>
+        <p class="rv-lead mt-6 max-w-[34ch] text-white">Kami membuat aplikasi yang membantu Anda hidup lebih sehat, sedikit demi sedikit.</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="#produk" class="btn-light">Lihat produk kami</a>
+          <a href="/tentang/" class="btn-glass-light">Tentang kami</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 2. Trust strip: short true claims, no numbers (Revolut's badge row, without awards). -->
-  <section class="bg-white" aria-label="Sekilas Myna Health">
-    <ul class="container-home grid grid-cols-2 gap-x-6 gap-y-6 py-10 md:grid-cols-4 md:py-12">
-      {
-        trust.map((t) => (
-          <li class="flex flex-col items-center gap-3 text-center text-[15px] font-medium text-navy">
-            <span class="flex h-12 w-12 items-center justify-center rounded-full bg-soft text-electric">
-              <Icon name={t.icon} class="h-5 w-5" />
-            </span>
-            {t.text}
-          </li>
-        ))
-      }
-    </ul>
-  </section>
-
-  <!-- 3. Life moments: full-bleed photos behind pill tabs. Without JS all three show in a stack. -->
-  <section data-moments class="relative isolate overflow-hidden bg-navy text-white" aria-labelledby="moments-title">
-    <div class="moments-head pointer-events-none relative z-20 pt-20 text-center md:pt-28">
-      <div class="container-home">
-        <h2 id="moments-title" class="rv-h2 text-white">Sehat di sela hari.</h2>
-        <p class="rv-lead mx-auto mt-4 max-w-[44ch] text-white/85">Myna Fit hadir di momen kecil yang sudah ada dalam rutinitas Anda.</p>
-      </div>
-    </div>
-    <div class="moments-stack">
-      {
-        moments.map((m, i) => (
-          <article data-moment-panel={i} id={`momen-${m.id}`} class="moment-panel relative isolate flex min-h-[620px] flex-col items-center justify-end overflow-hidden px-4 pb-32 md:min-h-[760px]" aria-label={m.title}>
-            <img src={m.photo.src} alt={m.photo.alt} width="2400" height="1350" loading="lazy" class:list={["absolute inset-0 -z-10 h-full w-full object-cover", m.photo.pos]} />
-            <div class="absolute inset-0 -z-10 bg-navy/40" aria-hidden="true" />
-            <div class="flex w-[min(100%,300px)] flex-col items-center gap-4 rounded-[56px] border-2 border-white/70 px-4 pt-16 pb-5">
-              <figure class:list={["ui-card w-full", m.ui.height < 150 && "p-2"]}>
-                <img src={m.ui.src} alt={m.ui.alt} width={m.ui.width} height={m.ui.height} loading="lazy" class={m.ui.height < 150 ? "rounded-[14px]" : undefined} />
-              </figure>
-            </div>
-            <h3 class="moment-title rv-h3 mt-6 text-white">{m.title}</h3>
-            <p class="mt-1 max-w-[34ch] text-center text-[16px] leading-[1.55] text-white/85">{m.body}</p>
-          </article>
-        ))
-      }
-    </div>
-    <div class="moments-tabs absolute inset-x-0 bottom-10 z-20 flex justify-center gap-3 px-4" role="tablist" aria-label="Momen" hidden>
-      {
-        moments.map((m, i) => (
-          <button type="button" role="tab" data-moment-tab={i} aria-controls={`momen-${m.id}`} aria-selected={i === 0 ? "true" : "false"} class="moment-tab min-h-12 cursor-pointer rounded-full px-5 text-[16px] font-medium md:px-7">
-            {m.title}
-          </button>
-        ))
-      }
-    </div>
-  </section>
-
-  <!-- 4. Myna Fit on a navy band: headline centred, phone in the middle, pill tabs under it. -->
-  <section id="produk" class="scroll-mt-24 bg-navy py-20 text-white md:py-28" aria-labelledby="products-title">
+  <!-- 2. Mission, set like a thesis: one large statement and one paragraph. -->
+  <section class="py-20 md:py-32" aria-labelledby="mission-title">
     <div class="container-home">
-      <div class="mx-auto max-w-[760px] text-center">
-        <p class="inline-block rounded-full bg-white px-3 py-1 text-xs font-semibold text-navy">Myna Fit</p>
-        <h2 id="products-title" class="rv-h2 mt-5 text-white">Latihan dan makan, tercatat.</h2>
-        <p class="rv-lead mx-auto mt-4 max-w-[46ch] text-white/80">Catat set, repetisi, dan beban, lalu lihat perkembangannya dari minggu ke minggu.</p>
-      </div>
-      <div class="mt-14"><FitShowcase /></div>
+      <p class="text-[13px] font-semibold tracking-[0.08em] text-electric uppercase">Misi kami</p>
+      <h2 id="mission-title" class="mt-5 max-w-[18ch] text-[34px] leading-[1.05] font-semibold tracking-[-0.025em] md:text-[60px]">Kebanyakan orang berhenti bukan karena malas.</h2>
+      <p class="rv-lead mt-8 max-w-[52ch] text-muted-foreground md:text-[20px]">Programnya saja yang terlalu berat. Makanya kami mulai dari langkah kecil yang bisa Anda lakukan hari ini, dan gampang diulang besok.</p>
     </div>
   </section>
 
-  <!-- 5. Myna Food: white split, text left and a big capsule photo right (Revolut's split pattern). -->
-  <section id="myna-food" class="scroll-mt-24 bg-white py-20 md:py-28" aria-labelledby="food-title">
-    <div class="container-home grid items-center gap-12 md:grid-cols-12 md:gap-8">
-      <div class="md:col-span-6">
-        <p class="inline-block rounded-full bg-badge px-3 py-1 text-xs font-semibold text-white">Segera hadir</p>
-        <h2 id="food-title" class="rv-h2 mt-5">Myna Food</h2>
-        <p class="mt-5 max-w-[44ch] text-[16px] leading-[1.55] text-muted-foreground">Panduan makan sesuai tujuan, dengan menu yang mudah ditemukan di Indonesia.</p>
-        <p class="mt-8"><a href={foodMail} class="btn-primary">Kabari saya saat rilis</a></p>
-      </div>
-      <div class="md:col-span-5 md:col-start-8">
-        <div class="capsule mx-auto aspect-[3/4] w-full max-w-[380px] bg-soft">
-          <img src="/images/food-dapur.jpg" alt="Pasangan menyiapkan sayur dan buah segar bersama di dapur" width="1400" height="1120" loading="lazy" class="object-[42%_45%]" />
-        </div>
-      </div>
+  <!-- 3. Vision on a full-bleed photo. -->
+  <section class="relative isolate flex min-h-[520px] items-center overflow-hidden bg-navy text-white md:min-h-[640px]" aria-labelledby="vision-title">
+    <img src="/images/momen-stretching-wide.jpg" alt="Dua orang melakukan peregangan lengan bersama di luar ruangan" width="2400" height="1350" loading="lazy" class="absolute inset-0 -z-10 h-full w-full object-cover object-[50%_40%]" />
+    <div class="absolute inset-0 -z-10 bg-navy/50" aria-hidden="true"></div>
+    <div class="container-home py-20 text-center">
+      <p class="text-[13px] font-semibold tracking-[0.08em] text-white/80 uppercase">Visi</p>
+      <h2 id="vision-title" class="rv-h2 mx-auto mt-5 max-w-[22ch] text-white">Setiap orang punya cara yang mudah untuk hidup lebih sehat, kapan pun dan di mana pun.</h2>
     </div>
   </section>
 
-  <!-- 6. Privacy as a feature, on navy with dark cards (Revolut's plan cards, without prices). -->
-  <section class="bg-navy py-20 text-white md:py-28" aria-labelledby="privacy-title">
+  <!-- 4. Promises behind every product, each with a visual (bento on navy). -->
+  <section class="bg-navy py-20 text-white md:py-28" aria-labelledby="promises-title">
     <div class="container-home">
-      <div class="mx-auto max-w-[760px] text-center">
-        <h2 id="privacy-title" class="rv-h2 text-white">Data Anda, milik Anda.</h2>
-        <p class="rv-lead mx-auto mt-4 max-w-[52ch] text-white/80">Kami hanya menyimpan data yang Anda isi sendiri, tidak memperjualbelikannya, dan Anda dapat meminta salinan atau penghapusannya kapan saja.</p>
-      </div>
-      <ul class="mt-14 grid gap-4 md:grid-cols-3">
+      <h2 id="promises-title" class="rv-h2 max-w-[16ch] text-white">Janji kami untuk Anda</h2>
+      <ul class="mt-12 grid gap-4 md:grid-cols-12">
         {
-          privacy.map((p) => (
-            <li class="rv-card bg-white/[0.07]">
-              <span class="flex h-12 w-12 items-center justify-center rounded-full bg-white text-electric">
-                <Icon name={p.icon} class="h-5 w-5" />
-              </span>
-              <span class="mt-6 block text-[20px] font-semibold text-white">{p.title}</span>
-              <span class="mt-2 block text-[15px] leading-[1.55] text-white/75">{p.body}</span>
+          promises.map((p, i) => (
+            <li class:list={["rv-card flex flex-col gap-6 bg-white/[0.07]", i === 0 ? "md:col-span-7" : i === 1 ? "md:col-span-5" : "md:col-span-4"]}>
+              <div class:list={["flex h-[200px] items-center justify-center overflow-hidden rounded-[14px] md:h-[240px]", p.visual.kind === "photo" ? "bg-navy" : "bg-soft"]}>
+                {p.visual.kind === "photo" && <img src={p.visual.src} alt={p.visual.alt} width={p.visual.width} height={p.visual.height} loading="lazy" class:list={["h-full w-full object-cover", p.visual.pos]} />}
+                {p.visual.kind === "ui" && (
+                  <figure class:list={["ui-card w-[86%] max-w-[360px]", "pad" in p.visual && "p-2"]}>
+                    <img src={p.visual.src} alt={p.visual.alt} width={p.visual.width} height={p.visual.height} loading="lazy" class={"pad" in p.visual ? "rounded-[12px]" : undefined} />
+                  </figure>
+                )}
+                {p.visual.kind === "capsules" && (
+                  <div class="flex items-end gap-3" aria-hidden="true">
+                    <span class="capsule block h-36 w-14 bg-electric" />
+                    <span class="flex h-20 w-20 items-center justify-center rounded-full bg-white text-electric">
+                      <Icon name="lock" class="h-8 w-8" />
+                    </span>
+                    <span class="capsule block h-28 w-14 bg-cyan" />
+                    <span class="capsule block h-14 w-14 bg-sky" />
+                  </div>
+                )}
+              </div>
+              <div>
+                <h3 class="text-[20px] leading-[1.25] font-semibold text-white md:text-[22px]">{p.title}</h3>
+                <p class="mt-2 max-w-[48ch] text-[15px] leading-[1.55] text-white/75">{p.body}</p>
+              </div>
             </li>
           ))
         }
       </ul>
-      <p class="mt-10 text-center"><a href="/privasi/" class="btn-quiet-light">Kebijakan Privasi</a></p>
     </div>
   </section>
 
-  <!-- 7. What Myna Health is and isn't: the disclaimer as an honest, visible section. -->
-  <section class="bg-white py-20 md:py-28" aria-labelledby="clear-title">
-    <div class="container-home grid gap-10 md:grid-cols-12 md:gap-8">
-      <div class="md:col-span-5">
-        <h2 id="clear-title" class="rv-h2">Jelas sejak awal.</h2>
-        <p class="mt-6 max-w-[44ch] text-sm text-muted-foreground">{disclaimer}</p>
-      </div>
-      <div class="grid gap-4 sm:grid-cols-2 md:col-span-7">
-        <div class="rv-card bg-soft">
-          <h3 class="text-[18px] font-semibold">Myna Health adalah</h3>
-          <ul class="mt-5 flex flex-col gap-3.5">
-            <li class="flex gap-3 text-[16px] leading-[1.55] text-foreground"><Icon name="check" class="mt-1 h-4 w-4 text-electric" />Aplikasi untuk membangun kebiasaan olahraga dan makan.</li>
-            <li class="flex gap-3 text-[16px] leading-[1.55] text-foreground"><Icon name="check" class="mt-1 h-4 w-4 text-electric" />Informasi gaya hidup yang bersifat umum, dalam Bahasa Indonesia.</li>
-          </ul>
-        </div>
-        <div class="rv-card bg-beige">
-          <h3 class="text-[18px] font-semibold">Myna Health bukan</h3>
-          <ul class="mt-5 flex flex-col gap-3.5">
-            <li class="flex gap-3 text-[16px] leading-[1.55] text-foreground"><Icon name="x" class="mt-1 h-4 w-4 text-navy/60" />Layanan medis.</li>
-            <li class="flex gap-3 text-[16px] leading-[1.55] text-foreground"><Icon name="x" class="mt-1 h-4 w-4 text-navy/60" />Pengganti tenaga kesehatan profesional.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 8. Company identity (entity KYC): always fully visible, never animated. -->
-  <section id="perusahaan" class="scroll-mt-24 py-20 md:py-24" aria-labelledby="identity-title">
-    <div class="container-home grid gap-10 md:grid-cols-12 md:gap-8">
-      <div class="md:col-span-4">
-        <h2 id="identity-title" class="rv-h2">Informasi perusahaan</h2>
-        <p class="body-copy mt-4 max-w-[36ch]">Myna Health adalah merek milik {company.name}, didirikan pada {foundedYear}.</p>
-      </div>
-      <div class="md:col-span-8"><CompanyIdentity /></div>
-    </div>
-  </section>
-
-  <!-- 9. Closing: one big photo card with the two next steps. -->
-  <section class="pb-20 md:pb-24" aria-labelledby="cta-title">
+  <!-- 5. Portfolio: products are part of the company, each with its own landing page. -->
+  <section id="produk" class="scroll-mt-24 py-20 md:py-28" aria-labelledby="products-title">
     <div class="container-home">
-      <div data-cta class="relative isolate flex min-h-[520px] items-end overflow-hidden rounded-[20px] bg-navy p-8 text-white md:min-h-[560px] md:p-14">
+      <h2 id="products-title" class="rv-h2">Produk kami</h2>
+      <p class="rv-lead mt-4 max-w-[44ch] text-muted-foreground">Tiap produk fokus pada satu kebiasaan, dan punya halamannya sendiri.</p>
+      <ul class="mt-12 grid gap-6 md:grid-cols-3">
+        {
+          portfolio.map((p) => (
+            <li id={p.id} class="flex scroll-mt-24 flex-col">
+              <div class="aspect-[4/3] overflow-hidden rounded-[20px] bg-soft">
+                <img src={p.photo.src} alt={p.photo.alt} width={p.photo.width} height={p.photo.height} loading="lazy" class:list={["h-full w-full object-cover", p.photo.pos]} />
+              </div>
+              <div class="mt-5 flex flex-wrap items-center gap-3">
+                <h3 class="rv-h3">{p.name}</h3>
+                <p class:list={["rounded-full px-3 py-1 text-xs font-semibold", p.status === "Tersedia" ? "bg-soft text-navy" : "bg-badge text-white"]}>{p.status}</p>
+              </div>
+              <p class="mt-2 text-[16px] leading-[1.55] text-muted-foreground">{p.body}</p>
+              <p class="mt-5">{p.cta.primary ? <a href={p.cta.href} class="btn-primary">{p.cta.label}</a> : <a href={p.cta.href} class="text-link">{p.cta.label}</a>}</p>
+            </li>
+          ))
+        }
+        <li class="flex flex-col">
+          <div class="flex aspect-[4/3] items-center justify-center gap-3 overflow-hidden rounded-[20px] bg-soft" aria-hidden="true">
+            <span class="capsule block h-32 w-14 bg-sky" />
+            <span class="capsule mt-12 block h-32 w-14 bg-electric" />
+            <span class="capsule block h-14 w-14 bg-cyan" />
+          </div>
+          <h3 class="rv-h3 mt-5">Berikutnya</h3>
+          <p class="mt-2 text-[16px] leading-[1.55] text-muted-foreground">Produk baru sedang kami kembangkan.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 6. Closing: one photo card, partnership and questions by email. -->
+  <section class="pb-20 md:pb-28" aria-labelledby="cta-title">
+    <div class="container-home">
+      <div data-cta class="relative isolate flex min-h-[480px] items-end overflow-hidden rounded-[20px] bg-navy p-8 text-white md:min-h-[520px] md:p-14">
         <img src="/images/hero-jogging-pontianak.jpg" alt="Dua pelari tersenyum saat jogging pagi bersama di jalan kota" width="1120" height="1400" loading="lazy" class="absolute inset-0 -z-10 h-full w-full object-cover object-[50%_30%]" />
-        <div class="absolute inset-0 -z-10 bg-navy/45" aria-hidden="true"></div>
+        <div class="absolute inset-0 -z-10 bg-navy/50" aria-hidden="true"></div>
         <div data-cta-item>
-          <h2 id="cta-title" class="rv-display max-w-[14ch] text-white">Mulai dari satu kebiasaan.</h2>
+          <h2 id="cta-title" class="rv-h2 max-w-[16ch] text-white">Punya ide atau ajakan kerja sama?</h2>
+          <p class="rv-lead mt-4 text-white/90">Tulis ke kami di {company.email}.</p>
           <div class="mt-8 flex flex-wrap gap-3">
-            <a href={mynaFitUrl} class="btn-light">Jadi Sehat Bareng</a>
-            <a href={foodMail} class="btn-glass-light">Kabari saya: Myna Food</a>
+            <a href={hello} class="btn-light">Kirim email</a>
+            <a href="/tentang/" class="btn-glass-light">Profil perusahaan</a>
           </div>
         </div>
       </div>
@@ -253,84 +179,35 @@ const privacy = [
 </Base>
 
 <script>
-  // P-015/P-017 (Motion). The hero copy and capsule settle in on load; the moment tabs crossfade the
-  // photos; the closing card's copy rises once in view. Company identity, headings and body text in
-  // the rest of the page never move. Without JS or with reduced motion everything is at rest.
+  // P-015/P-017 (Motion). The hero copy settles in on load and the closing card's copy rises once
+  // in view. Nothing else moves. Without JS or with reduced motion everything is at rest.
   import { animate, EASE, inView, motionOk } from "../scripts/motion";
 
-  const moving = motionOk();
-
-  if (moving && performance.now() < 550) {
-    // Hero: take over from the delayed CSS fallback while it is still waiting.
-    document.querySelectorAll<HTMLElement>(".hero-rise").forEach((el, i) => {
-      el.style.animation = "none";
-      animate(el, { opacity: [0, 1], transform: ["translateY(24px)", "translateY(0px)"] }, { duration: 0.7, delay: 0.05 + i * 0.1, ease: EASE });
-    });
-    const cap = document.querySelector<HTMLElement>(".hero-open");
-    if (cap) {
-      cap.style.animation = "none";
-      animate(cap, { opacity: [0, 1], transform: ["translateY(32px) scale(0.96)", "translateY(0px) scale(1)"] }, { duration: 0.8, delay: 0.2, ease: EASE });
+  if (motionOk()) {
+    if (performance.now() < 550) {
+      // Hero: take over from the delayed CSS fallback while it is still waiting.
+      document.querySelectorAll<HTMLElement>(".hero-rise").forEach((el) => {
+        el.style.animation = "none";
+        animate(el, { opacity: [0, 1], transform: ["translateY(24px)", "translateY(0px)"] }, { duration: 0.7, delay: 0.05, ease: EASE });
+      });
     }
-  }
 
-  // Moments: with JS the three panels stack in one frame and the pill tabs switch them.
-  const moments = document.querySelector<HTMLElement>("[data-moments]");
-  if (moments) {
-    const panels = [...moments.querySelectorAll<HTMLElement>("[data-moment-panel]")];
-    const tabs = [...moments.querySelectorAll<HTMLButtonElement>("[data-moment-tab]")];
-    const bar = moments.querySelector<HTMLElement>(".moments-tabs");
-    moments.dataset.enhanced = "";
-    bar?.removeAttribute("hidden");
-    let current = 0;
-    panels.forEach((p, i) => {
-      p.setAttribute("role", "tabpanel");
-      if (i !== current) {
-        p.style.opacity = "0";
-        p.inert = true;
+    // Closing card: rises once, only if it starts below the fold.
+    const panel = document.querySelector<HTMLElement>("[data-cta]");
+    if (panel && panel.getBoundingClientRect().top > window.innerHeight) {
+      const items = [...panel.querySelectorAll<HTMLElement>("[data-cta-item]")];
+      for (const el of items) {
+        el.style.opacity = "0";
+        el.style.transform = "translateY(18px)";
       }
-    });
-    const select = (next: number) => {
-      if (next === current) return;
-      const from = panels[current];
-      const to = panels[next];
-      if (!from || !to) return;
-      tabs.forEach((t, i) => t.setAttribute("aria-selected", i === next ? "true" : "false"));
-      from.inert = true;
-      to.inert = false;
-      to.querySelectorAll<HTMLImageElement>("img[loading=lazy]").forEach((img) => (img.loading = "eager"));
-      if (moving) {
-        animate(from, { opacity: [1, 0] }, { duration: 0.45, ease: EASE });
-        animate(to, { opacity: [0, 1] }, { duration: 0.45, ease: EASE });
-      } else {
-        from.style.opacity = "0";
-        to.style.opacity = "1";
-      }
-      current = next;
-    };
-    tabs.forEach((t, i) => t.addEventListener("click", () => select(i)));
-    bar?.addEventListener("keydown", (e) => {
-      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
-      const next = (current + (e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length;
-      select(next);
-      tabs[next]?.focus();
-    });
-  }
-
-  // Closing card: rises once, only if it starts below the fold.
-  const panel = document.querySelector<HTMLElement>("[data-cta]");
-  if (moving && panel && panel.getBoundingClientRect().top > window.innerHeight) {
-    const items = [...panel.querySelectorAll<HTMLElement>("[data-cta-item]")];
-    for (const el of items) {
-      el.style.opacity = "0";
-      el.style.transform = "translateY(18px)";
+      const stop = inView(
+        panel,
+        () => {
+          items.forEach((el, i) => animate(el, { opacity: [0, 1], transform: ["translateY(18px)", "translateY(0px)"] }, { duration: 0.6, delay: i * 0.08, ease: EASE }));
+          stop();
+        },
+        { amount: 0.3 },
+      );
     }
-    const stop = inView(
-      panel,
-      () => {
-        items.forEach((el, i) => animate(el, { opacity: [0, 1], transform: ["translateY(18px)", "translateY(0px)"] }, { duration: 0.6, delay: i * 0.08, ease: EASE }));
-        stop();
-      },
-      { amount: 0.3 },
-    );
   }
 </script>

@@ -229,14 +229,11 @@
   width: 100%;
   height: auto;
 }
-/* Home (P-017): hero copy and the capsule outline settle in once; Motion runs it when the page
-   script is on time (index.astro), and this CSS copy is the fallback 600 ms later. */
+/* Home (P-017): the hero copy settles in once; Motion runs it when the page script is on time
+   (index.astro), and this CSS copy is the fallback 600 ms later. */
 @media (prefers-reduced-motion: no-preference) {
   .hero-rise {
     animation: hero-rise 700ms var(--ease-out-strong) 600ms both;
-  }
-  .hero-open {
-    animation: hero-rise 800ms var(--ease-out-strong) 750ms both;
   }
 }
 @keyframes hero-rise {
@@ -247,42 +244,5 @@
   to {
     opacity: 1;
     transform: none;
-  }
-}
-/* Moments (P-017): without JS the panels stack; with JS they share one frame behind pill tabs. */
-[data-moments][data-enhanced] .moments-head {
-  position: absolute;
-  inset: 0 0 auto 0;
-}
-[data-moments][data-enhanced] .moments-stack {
-  display: grid;
-}
-[data-moments][data-enhanced] .moment-panel {
-  grid-area: 1 / 1;
-  padding-bottom: 8.5rem;
-}
-[data-moments][data-enhanced] .moment-title {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-}
-.moment-tab {
-  color: #fff;
-  box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / 0.55);
-  transition:
-    background-color 200ms ease,
-    color 200ms ease,
-    box-shadow 200ms ease;
-}
-.moment-tab[aria-selected="true"] {
-  background: #fff;
-  color: var(--color-navy);
-  box-shadow: none;
-}
-@media (hover: hover) and (pointer: fine) {
-  .moment-tab[aria-selected="false"]:hover {
-    box-shadow: inset 0 0 0 1.5px #fff;
   }
 }

@@ -2,7 +2,7 @@
 import "../styles/global.css";
 import Icon from "../components/Icon.astro";
 import SocialLinks from "../components/SocialLinks.astro";
-import { analyticsClientId, company, disclaimer, mynaFitUrl, product } from "../lib/site";
+import { analyticsClientId, company, disclaimer, mynaFitUrl, nib, product } from "../lib/site";
 
 interface Props {
   title: string;
@@ -29,7 +29,7 @@ const year = new Date().getFullYear();
 const links = [
   { href: "/tentang/", label: "Tentang Kami" },
   { href: "/#produk", label: "Produk" },
-  { href: "/#perusahaan", label: "Perusahaan" },
+  { href: "/tentang/#perusahaan", label: "Perusahaan" },
 ];
 const here = Astro.url.pathname;
 const footerGroups = [
@@ -37,7 +37,7 @@ const footerGroups = [
     title: "Perusahaan",
     links: [
       { href: "/tentang/", label: "Tentang Kami" },
-      { href: "/#perusahaan", label: "Informasi perusahaan" },
+      { href: "/tentang/#perusahaan", label: "Informasi perusahaan" },
       { href: "/kontak/", label: "Kontak" },
     ],
   },
@@ -130,7 +130,7 @@ const footerGroups = [
         <div class="md:col-span-5">
           <img src="/logo.png" alt={product.name} width="480" height="197" loading="lazy" class="h-9 w-auto brightness-0 invert" />
           <address class="mt-6 text-sm leading-relaxed text-white/75 not-italic" data-testid="company">
-            <span class="font-medium text-white">{company.name}</span><br />
+            <span class="font-medium text-white">{company.name}</span> · NIB {nib}<br />
             {company.addressLines.join(", ")}<br />
             <a href={`mailto:${company.email}`} class="text-white underline decoration-white/40 underline-offset-[5px] transition-colors duration-150 hover:decoration-white">{company.email}</a>
           </address>

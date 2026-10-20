@@ -64,27 +64,32 @@ export const nib = "2605260050475";
 /** Myna Fit runs on its own domain (Lovable) for now. */
 export const mynaFitUrl = "https://fit.mynahealth.id";
 
-/** Company principles: shown on the home page and Tentang Kami. */
+/** Promises to the user ("Janji kami untuk Anda", P-017): concrete and user-centric. Home and Tentang Kami. */
 export const values = [
   {
     icon: "sparkles",
-    title: "Sederhana",
-    body: "Setiap produk dirancang agar mudah dipahami dan nyaman digunakan setiap hari.",
+    title: "Mulai dari hidup Anda, bukan dari program kami.",
+    body: "Produk kami menyesuaikan jadwal, tujuan, dan kebiasaan Anda.",
+  },
+  {
+    icon: "arrow-right",
+    title: "Selalu tahu langkah berikutnya.",
+    body: "Setiap kali membuka aplikasi, ada satu hal yang jelas untuk dilakukan, bukan dasbor yang membingungkan.",
   },
   {
     icon: "info",
-    title: "Bertanggung jawab",
-    body: "Informasi gaya hidup yang kami sajikan bersifat umum dan jelas, tanpa klaim medis.",
+    title: "Angka yang bisa Anda pegang.",
+    body: "Data dari sumber yang kami kurasi, bukan tebakan. Kalau sesuatu hanya perkiraan, kami bilang perkiraan.",
+  },
+  {
+    icon: "check",
+    title: "Terlewat sehari bukan berarti gagal.",
+    body: "Tanpa omelan soal makan atau tubuh Anda. Besok, mulai lagi dari langkah kecil.",
   },
   {
     icon: "lock",
-    title: "Menjaga privasi",
-    body: "Kami hanya menyimpan data yang diisi sendiri oleh pengguna. Data itu dilindungi sesuai UU Pelindungan Data Pribadi, tidak diperjualbelikan, dan dapat diminta salinan atau penghapusannya kapan saja.",
-  },
-  {
-    icon: "map-pin",
-    title: "Relevan untuk Indonesia",
-    body: "Bahasa, kebiasaan, dan pilihan makanan disesuaikan dengan keseharian di Indonesia.",
+    title: "Data Anda, kendali Anda.",
+    body: "Kami hanya menyimpan yang perlu, tidak menjualnya, dan Anda bisa meminta salinan atau penghapusan kapan saja.",
   },
 ] as const;
 
