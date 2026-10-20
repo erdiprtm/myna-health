@@ -122,25 +122,26 @@ const footerGroups = [
     <main id="main" class="flex-1">
       <slot />
     </main>
-    <footer class="mt-auto border-t border-border bg-card">
+    <!-- Navy footer (P-017, Revolut's dark footer), with the company records in full. -->
+    <footer class="mt-auto bg-navy text-white/75">
       <div class="container-myna grid gap-12 py-14 md:grid-cols-12 md:py-16">
         <div class="md:col-span-5">
-          <img src="/logo.png" alt={product.name} width="480" height="197" loading="lazy" class="h-9 w-auto" />
-          <address class="mt-6 text-sm leading-relaxed text-muted-foreground not-italic" data-testid="company">
-            <span class="font-medium text-foreground">{company.name}</span><br />
+          <img src="/logo.png" alt={product.name} width="480" height="197" loading="lazy" class="h-9 w-auto brightness-0 invert" />
+          <address class="mt-6 text-sm leading-relaxed text-white/75 not-italic" data-testid="company">
+            <span class="font-medium text-white">{company.name}</span><br />
             {company.addressLines.join(", ")}<br />
-            <a href={`mailto:${company.email}`} class="text-link font-normal">{company.email}</a>
+            <a href={`mailto:${company.email}`} class="text-white underline decoration-white/40 underline-offset-[5px] transition-colors duration-150 hover:decoration-white">{company.email}</a>
           </address>
-          <div class="mt-6"><SocialLinks /></div>
+          <div class="mt-6"><SocialLinks tone="dark" /></div>
         </div>
         <div class="grid grid-cols-2 gap-8 sm:grid-cols-3 md:col-span-7">
           {
             footerGroups.map((g) => (
               <div>
-                <h2 class="mb-3 text-sm font-semibold text-foreground">{g.title}</h2>
+                <h2 class="mb-3 text-sm font-semibold text-white">{g.title}</h2>
                 <ul class="flex flex-col gap-2.5 text-sm">
                   {g.links.map((l) => (
-                    <li><a href={l.href} class="text-muted-foreground transition-colors duration-150 hover:text-foreground">{l.label}</a></li>
+                    <li><a href={l.href} class="text-white/70 transition-colors duration-150 hover:text-white">{l.label}</a></li>
                   ))}
                 </ul>
               </div>
@@ -148,15 +149,15 @@ const footerGroups = [
           }
         </div>
       </div>
-      <div class="border-t border-border">
-        <div class="container-myna flex flex-col gap-3 py-6 text-xs leading-relaxed text-muted-foreground md:flex-row md:justify-between md:gap-10">
+      <div class="border-t border-white/15">
+        <div class="container-myna flex flex-col gap-3 py-6 text-xs leading-relaxed text-white/60 md:flex-row md:justify-between md:gap-10">
           <p>&copy; {year} {company.name}. Myna Health adalah merek milik {company.name}.</p>
           <p class="max-w-md md:text-right" data-testid="disclaimer">{disclaimer}</p>
         </div>
       </div>
       <!-- Oversized wordmark bleeding off the bottom edge (P-016). Decorative: the logo above names the brand. -->
       <div class="overflow-hidden" aria-hidden="true">
-        <p class="container-myna -mb-[0.2em] text-center text-[15.5vw] leading-[0.9] font-extrabold tracking-[-0.055em] whitespace-nowrap text-navy select-none xl:text-[188px]">myna health</p>
+        <p class="container-myna -mb-[0.2em] text-center text-[15.5vw] leading-[0.9] font-extrabold tracking-[-0.055em] whitespace-nowrap text-white select-none xl:text-[188px]">myna health</p>
       </div>
     </footer>
     <script>

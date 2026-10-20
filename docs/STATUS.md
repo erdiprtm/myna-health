@@ -4,6 +4,12 @@ Progress log, newest entry on top.
 
 ---
 
+## 2026-10-20 (night): home in the Revolut pattern set (branch `feat/landing-revolut`, P-017, proposed)
+
+- Erdi asked for a home as "cool as revolut.com" and went to sleep. Built from Erdi's screen recording of revolut.com: full-bleed photo hero, capsule outline with real Myna Fit text, photo tabs for the three moments, navy product band, split Myna Food, dark privacy cards, photo closing card, navy footer.
+- `reverse-brand` (separate tool, `~/reverse-brand`) is built and verified on mynahealth.id; on revolut.com it stopped at the bot check as designed. Measuring Revolut needs Erdi: `--headed` or the DevTools snippet.
+- PR opened for review only. **Not merged:** waits for Erdi's "approve".
+
 ## 2026-10-20: home redesign (branch `feat/landing-redesign`, P-016)
 
 - New home from the approved research direction: capsule photos inside the hero headline, floating pill navbar, Myna Fit cards over people photos, privacy and "Jelas sejak awal" sections, split closing card, wordmark footer.

@@ -233,6 +233,15 @@ describe("built site", () => {
     expect(identity).not.toMatch(/data-(moment|cta|fit)|hero-(open|rise)|style="/);
   });
 
+  // P-017: the moment tabs are an enhancement. The built HTML ships every panel and keeps the tab
+  // bar hidden, so all three moments read in a stack without JavaScript.
+  it("home moments work without JS: all panels in the HTML, tab bar hidden until enhanced", () => {
+    const html = page("index.html");
+    expect(html.match(/data-moment-panel=/g)?.length).toBe(3);
+    expect(html).toMatch(/class="moments-tabs[^"]*"[^>]*role="tablist"[^>]*hidden/);
+    expect(html.match(/hero-[\w-]+\.jpg|momen-[\w-]+\.jpg/g)?.length).toBeGreaterThanOrEqual(4);
+  });
+
   it("Myna Food asks for launch news by email, with a preset subject", () => {
     expect(page("index.html")).toContain('href="mailto:halo@mynahealth.id?subject=Kabari%20saya%3A%20Myna%20Food"');
   });
