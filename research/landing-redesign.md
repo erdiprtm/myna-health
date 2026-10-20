@@ -40,13 +40,31 @@ Caveat: no gallery listing could be confirmed for these brands; WebFetch sees te
 **Premium patterns:** one emotional thesis driving every section; real UI in context (on people photos or cropped to one card), not generic mockups; one idea per section; a brand device used as a system (Myna's capsule); trust without numbers (privacy, how it works, what it is/isn't); a low-commitment first step.
 **Anti-patterns:** repeating hero/feature blocks as filler; screenshot collages with no story; commerce before the idea; logo walls and inflated stats.
 
+## Round 3: visual check of gallery winners (2026-10-20, built-in browser)
+
+Erdi pointed out that mkdir.directory's galleries hold the actual examples. All 34 are listed at https://mkdir.directory/ (Awwwards 413 votes … loadmo.re). Relevant to us: Awwwards, Inspora, Recent, A1 Gallery, Maxibestof, Land-book, Saaspo, Minimal Gallery, Siteinspire, Daily Delights. Skipped: 404s, Brutal Web, Brutalist Websites, Dark Mode Design, Storefolio (e-commerce), Navbar/Footer-only galleries.
+
+Awwwards search pages `/websites/health|wellness|fitness|nutrition|habit/` list dozens of nominees. Checked (award status read from each Awwwards site page; confidence medium, the text match may include sidebar mentions):
+
+| Site (Awwwards) | Award | What we saw | Take for Myna |
+|---|---|---|---|
+| Bevel https://www.bevel.health | Honorable Mention | soft pastel hero, centred headline, phone + watch stack; a row of real user photos with the app's cards on top | **app cards over people photos** in capsule tiles |
+| Loff Wellness https://www.loff-wellness.nl | Honorable Mention | serif headline with **pill-shaped photos set inline inside the sentence** | **signature hero move:** capsule photos inside the headline |
+| Mave https://www.mavehealth.com | Nominee | editorial headline left, short quote with an avatar row right, one wide rounded photo with a pill badge below | editorial split + one big capsule photo |
+| Heva Health https://www.hevahealth.com | Site of the Day | calm nature photo full-bleed, **floating pill navbar** | pill navbar (content is functional medicine: not for us) |
+| More Nutrition https://more-nutrition.webflow.io, Vibrant Wellness https://vibrant.noomoagency.com | Site of the Day | WebGL/3D experiences behind a preloader; Vibrant still loading after 8 s | **anti-pattern for us:** heavy preloaders, slow first paint |
+| Health by Habit https://us.byhabit.com | Site of the Day | now redirects to a supplements shop; the awarded version is gone | n/a |
+
+Not reachable: Saaspo (Cloudflare bot challenge, not bypassed), Land-book and One Page Love tag pages (filters are client-side; nothing usable without heavy browsing). Cookie banners were never accepted.
+
 ## Proposed redesign (for Erdi's approval, 2026-10-20)
 
 Thesis: **kebiasaan kecil, setiap hari** (small habits, every day). Every section serves it; the capsule is the system that frames photos and real UI.
 
-1. **Hero:** editorial headline left; right, the capsule frame with a person photo and one real Myna Fit card overlapping the capsule edge. CTAs: "Jadi Sehat Bareng" (Myna Fit) and "Kenali Myna Health".
+0. **Navbar:** a floating pill (Heva, Bevel) in white on the page, logo left, "Hubungi kami" right.
+1. **Hero:** editorial headline with **capsule photos set inline in the sentence** (Loff), e.g. "Kebiasaan [capsule photo] kecil, setiap [capsule photo] hari."; below it one wide capsule photo with a real Myna Fit card overlapping its edge (Mave + Bevel). CTAs: "Jadi Sehat Bareng" (Myna Fit) and "Kenali Myna Health". No preloader, no WebGL.
 2. **Trust strip** of short true claims, no stats: berbahasa Indonesia · langsung dari browser · data dilindungi UU PDP · bukan layanan medis.
-3. **Three life moments** (Oura): pagi, di gym, saat makan; each one sentence and one large real UI crop in a capsule tile (bento).
+3. **Three life moments** (Oura): pagi, di gym, saat makan; each a people photo in a capsule tile with a real Myna Fit card on top (Bevel's pattern), one sentence each.
 4. **Myna Fit walkthrough:** the existing interactive switcher, with short annotation bubbles over the real screens (Bevel).
 5. **Myna Food teaser:** sibling card, muted, "Segera hadir", `mailto:` with subject "Kabari saya: Myna Food".
 6. **Privacy as a feature** (Gentler): what is stored, not sold, export/delete.
