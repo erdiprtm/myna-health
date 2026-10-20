@@ -1,8 +1,8 @@
 ---
-import Icon from "../components/Icon.astro";
+import Promises from "../components/Promises.astro";
 import Base from "../layouts/Base.astro";
 import { organizationLd } from "../lib/jsonld";
-import { company, mynaFitUrl, values } from "../lib/site";
+import { company, mynaFitUrl } from "../lib/site";
 
 const site = Astro.site as URL;
 // PRODUCT-OWNED copy (specs/myna-health.md, P-008, P-017). This is the company site: mission and
@@ -11,17 +11,6 @@ const site = Astro.site as URL;
 // "Anda"; no country framing (Erdi, 2026-10-21), no medical claims, prices or stats.
 const foodMail = `mailto:${company.email}?subject=${encodeURIComponent("Kabari saya: Myna Food")}`;
 const hello = `mailto:${company.email}`;
-
-// One visual per promise, so the section is not text-heavy: a people photo, real Myna Fit screens,
-// and the capsule supergraphic for the privacy promise (there is no UI to show for it).
-const visuals = [
-  { kind: "photo", src: "/images/momen-makan-wide.jpg", width: 2400, height: 1350, alt: "Tangan memegang HP di depan semangkuk mi dan nasi gulung", pos: "object-[50%_45%]" },
-  { kind: "ui", src: "/images/fit-crop-hari-ini.webp", width: 600, height: 288, alt: "Kartu Myna Fit: latihan hari ini, Upper A, dada, punggung, dan bahu" },
-  { kind: "ui", src: "/images/fit-crop-gizi.webp", width: 520, height: 110, alt: "Contoh hasil scan Myna Fit: perkiraan 44 gram protein dan 795 kkal", pad: true },
-  { kind: "ui", src: "/images/fit-kartu-7-hari.webp", width: 1050, height: 486, alt: "Kartu Myna Fit: 7 hari terakhir, 3 latihan dan 6 hari catat makan, dengan hari kosong di antaranya" },
-  { kind: "capsules" },
-] as const;
-const promises = values.map((v, i) => ({ ...v, visual: visuals[i] }));
 
 const portfolio = [
   {
@@ -60,7 +49,7 @@ const portfolio = [
     <div class="container-home w-full pt-36 pb-14 md:pb-20">
       <div class="hero-rise">
         <h1 id="hero-title" class="rv-display max-w-[13ch] text-white lg:max-w-none">Kebiasaan kecil,<br class="hidden lg:block" /> setiap hari.</h1>
-        <p class="rv-lead mt-6 max-w-[34ch] text-white">Kami membuat aplikasi yang membantu Anda hidup lebih sehat, sedikit demi sedikit.</p>
+        <p class="rv-lead mt-6 max-w-[34ch] text-white">Kami merancang aplikasi yang membuat hidup sehat lebih gampang dijalani.</p>
         <div class="mt-8 flex flex-wrap gap-3">
           <a href="#produk" class="btn-light">Lihat produk kami</a>
           <a href="/tentang/" class="btn-glass-light">Tentang kami</a>
@@ -88,40 +77,11 @@ const portfolio = [
     </div>
   </section>
 
-  <!-- 4. Promises behind every product, each with a visual (bento on navy). -->
+  <!-- 4. Promises behind every product, each with a small live illustration (bento on navy). -->
   <section class="bg-navy py-20 text-white md:py-28" aria-labelledby="promises-title">
     <div class="container-home">
       <h2 id="promises-title" class="rv-h2 max-w-[16ch] text-white">Janji kami untuk Anda</h2>
-      <ul class="mt-12 grid gap-4 md:grid-cols-12">
-        {
-          promises.map((p, i) => (
-            <li class:list={["rv-card flex flex-col gap-6 bg-white/[0.07]", i === 0 ? "md:col-span-7" : i === 1 ? "md:col-span-5" : "md:col-span-4"]}>
-              <div class:list={["flex h-[200px] items-center justify-center overflow-hidden rounded-[14px] md:h-[240px]", p.visual.kind === "photo" ? "bg-navy" : "bg-soft"]}>
-                {p.visual.kind === "photo" && <img src={p.visual.src} alt={p.visual.alt} width={p.visual.width} height={p.visual.height} loading="lazy" class:list={["h-full w-full object-cover", p.visual.pos]} />}
-                {p.visual.kind === "ui" && (
-                  <figure class:list={["ui-card w-[86%] max-w-[360px]", "pad" in p.visual && "p-2"]}>
-                    <img src={p.visual.src} alt={p.visual.alt} width={p.visual.width} height={p.visual.height} loading="lazy" class={"pad" in p.visual ? "rounded-[12px]" : undefined} />
-                  </figure>
-                )}
-                {p.visual.kind === "capsules" && (
-                  <div class="flex items-end gap-3" aria-hidden="true">
-                    <span class="capsule block h-36 w-14 bg-electric" />
-                    <span class="flex h-20 w-20 items-center justify-center rounded-full bg-white text-electric">
-                      <Icon name="lock" class="h-8 w-8" />
-                    </span>
-                    <span class="capsule block h-28 w-14 bg-cyan" />
-                    <span class="capsule block h-14 w-14 bg-sky" />
-                  </div>
-                )}
-              </div>
-              <div>
-                <h3 class="text-[20px] leading-[1.25] font-semibold text-white md:text-[22px]">{p.title}</h3>
-                <p class="mt-2 max-w-[48ch] text-[15px] leading-[1.55] text-white/75">{p.body}</p>
-              </div>
-            </li>
-          ))
-        }
-      </ul>
+      <Promises />
     </div>
   </section>
 
@@ -159,19 +119,15 @@ const portfolio = [
     </div>
   </section>
 
-  <!-- 6. Closing: one photo card, partnership and questions by email. -->
+  <!-- 6. Closing: one photo card and one line, partnership by email. -->
   <section class="pb-20 md:pb-28" aria-labelledby="cta-title">
     <div class="container-home">
-      <div data-cta class="relative isolate flex min-h-[480px] items-end overflow-hidden rounded-[20px] bg-navy p-8 text-white md:min-h-[520px] md:p-14">
+      <div data-cta class="relative isolate flex min-h-[420px] items-end overflow-hidden rounded-[20px] bg-navy p-8 text-white md:min-h-[460px] md:p-14">
         <img src="/images/hero-jogging-pontianak.jpg" alt="Dua pelari tersenyum saat jogging pagi bersama di jalan kota" width="1120" height="1400" loading="lazy" class="absolute inset-0 -z-10 h-full w-full object-cover object-[50%_30%]" />
         <div class="absolute inset-0 -z-10 bg-navy/50" aria-hidden="true"></div>
         <div data-cta-item>
-          <h2 id="cta-title" class="rv-h2 max-w-[16ch] text-white">Punya ide atau ajakan kerja sama?</h2>
-          <p class="rv-lead mt-4 text-white/90">Tulis ke kami di {company.email}.</p>
-          <div class="mt-8 flex flex-wrap gap-3">
-            <a href={hello} class="btn-light">Kirim email</a>
-            <a href="/tentang/" class="btn-glass-light">Profil perusahaan</a>
-          </div>
+          <h2 id="cta-title" class="rv-h2 max-w-[14ch] text-white">Hubungi kami untuk kerja sama.</h2>
+          <p class="mt-8"><a href={hello} class="btn-light">{company.email}</a></p>
         </div>
       </div>
     </div>

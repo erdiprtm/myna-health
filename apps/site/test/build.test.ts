@@ -180,6 +180,22 @@ describe("built site", () => {
     expect(sitemap).not.toContain("/harga/");
   });
 
+  // P-017: the promise illustrations loop only while on screen and never under reduced motion.
+  it("promise illustrations: five cards, loops gated by [data-play] and no-preference", () => {
+    expect(page("index.html").match(/data-machine/g)?.length).toBe(5);
+    const assets = new URL("_astro/", dist);
+    const css = readdirSync(assets)
+      .filter((f) => f.endsWith(".css"))
+      .map((f) => readFileSync(new URL(f, assets), "utf8"))
+      .join("");
+    const loops = [...css.matchAll(/animation:\s*m[1-5]-[\w-]+[^;}]*infinite/g)];
+    expect(loops.length).toBeGreaterThanOrEqual(5);
+    for (const m of css.matchAll(/@media\s*\(prefers-reduced-motion:\s*no-preference\)\s*\{([\s\S]*?)\}\s*\}/g)) {
+      if (/m[1-5]-/.test(m[1] as string)) expect(m[1]).toContain("[data-play]");
+    }
+    expect(css).not.toMatch(/(^|[},])\s*\.m[1-5]-[\w-]+[^{]*\{[^}]*animation:\s*m[1-5]-/);
+  });
+
   // Erdi, 2026-10-12: the NIB is public, and marketing copy never mentions the city.
   it("shows the NIB and keeps the city to the address only", () => {
     for (const path of ["index.html", "tentang/index.html"]) expect(page(path)).toContain("2605260050475");

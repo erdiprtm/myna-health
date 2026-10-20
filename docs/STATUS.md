@@ -11,6 +11,7 @@ Progress log, newest entry on top.
 - PR opened for review only. **Not merged:** waits for Erdi's "approve".
 - 2026-10-21: Erdi measured revolut.com with `reverse-brand --headed`; revisions 1 to 4 from `research/revolut-measured.md` applied (lighter type, white ground, cards r20/p24, ~1040 px column, 16 px/500 buttons with a translucent pill on photos, shorter headlines). Video loop deferred.
 - 2026-10-21: home reworked as the company site (Erdi, musimpanen.id as reference): mission, vision, five user-centric promises with visuals, portfolio cards, closing email card; NIB in every footer; identity table only on Tentang Kami; no "Indonesia" framing in copy.
+- 2026-10-21: promises get live CSS illustrations (run only on screen, still under reduced motion or without JS); hero line and closing card simplified.
 
 ## 2026-10-20: home redesign (branch `feat/landing-redesign`, P-016)
 
