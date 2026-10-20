@@ -45,6 +45,13 @@ const portfolio = [
       <source media="(min-width: 768px)" srcset="/images/hero-pagi-wide.jpg" width="2400" height="1350" />
       <img src="/images/hero-pagi-tall.jpg" alt="Perempuan berpakaian olahraga di taman pagi hari, melihat HP sebelum berlatih" width="1000" height="1333" fetchpriority="high" class="h-full w-full object-cover object-[60%_30%] md:object-[50%_35%]" />
     </picture>
+    <!-- P-018: a short muted loop of the same runner (Pexels 4458240). It has no src in the HTML:
+         the script attaches it only on wide screens, with motion allowed and no Save-Data, and plays
+         it only while the hero is on screen. Otherwise the photo above stays. -->
+    <video data-hero-video class="absolute inset-0 -z-10 h-full w-full object-cover opacity-0 transition-opacity duration-700" muted loop playsinline preload="none" poster="/videos/hero-pagi-loop-poster.jpg" aria-hidden="true">
+      <source data-src="/videos/hero-pagi-loop.webm" type="video/webm" />
+      <source data-src="/videos/hero-pagi-loop.mp4" type="video/mp4" />
+    </video>
     <div class="absolute inset-0 -z-10 bg-navy/50 md:bg-navy/25" aria-hidden="true"></div>
     <!-- Brand capsule cluster (guideline cover) with one Myna Fit chip, drifting slowly. Decorative. -->
     <div class="hero-rise pointer-events-none absolute right-[-48px] bottom-[-40px] flex items-end gap-3 md:right-[4%] md:bottom-[-24px] md:gap-4" aria-hidden="true">
@@ -164,6 +171,22 @@ const portfolio = [
         el.style.animation = "none";
         animate(el, { opacity: [0, 1], transform: ["translateY(24px)", "translateY(0px)"] }, { duration: 0.7, delay: 0.05, ease: EASE });
       });
+    }
+
+    // Hero video (P-018): only on wide screens and without Save-Data; plays while the hero is on
+    // screen and pauses when it leaves. It fades in over the photo once it is actually playing.
+    const video = document.querySelector<HTMLVideoElement>("[data-hero-video]");
+    const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true;
+    if (video && matchMedia("(min-width: 768px)").matches && !saveData) {
+      for (const source of video.querySelectorAll<HTMLSourceElement>("source[data-src]")) source.src = source.dataset.src ?? "";
+      video.load();
+      video.addEventListener("playing", () => video.classList.remove("opacity-0"), { once: true });
+      const hero = video.closest("section");
+      if (hero)
+        inView(hero, () => {
+          video.play().catch(() => {});
+          return () => video.pause();
+        });
     }
 
     // Drifting brand capsules (hero, vision): move only while their section is on screen.

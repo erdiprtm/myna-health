@@ -4,6 +4,11 @@ Progress log, newest entry on top.
 
 ---
 
+## 2026-10-21: hero video loop (branch `feat/hero-video`, P-018)
+
+- Pexels 4458240 (same runner as the hero photo) as an 8.2 s seamless muted loop on desktop; phones, reduced motion and no-JS keep the photo. WebM 1.1 MB / MP4 1.3 MB.
+- Waits for Erdi's "approve" on the preview before merging.
+
 ## 2026-10-21: company home approved (branch `feat/landing-revolut`, PR #12, P-017)
 
 - Erdi asked for a home as "cool as revolut.com" and went to sleep. Built from Erdi's screen recording of revolut.com: full-bleed photo hero, capsule outline with real Myna Fit text, photo tabs for the three moments, navy product band, split Myna Food, dark privacy cards, photo closing card, navy footer.

@@ -196,6 +196,24 @@ describe("built site", () => {
     expect(css).not.toMatch(/(^|[},])\s*\.m[1-5]-[\w-]+[^{]*\{[^}]*animation:\s*m[1-5]-/);
   });
 
+  // P-018 (Erdi, 2026-10-21): one hero video loop, muted, attached by JS only, light enough.
+  it("hero video: muted inline loop, no src in the HTML, poster present, each file under 1.5 MB", () => {
+    const html = page("index.html");
+    const video = html.match(/<video[^>]*data-hero-video[^>]*>[\s\S]*?<\/video>/)?.[0] ?? "";
+    expect(video).toMatch(/\bmuted\b/);
+    expect(video).toMatch(/\bloop\b/);
+    expect(video).toMatch(/\bplaysinline\b/);
+    expect(video).toContain('preload="none"');
+    expect(video).not.toMatch(/\bautoplay\b/);
+    expect(video).not.toMatch(/<source[^>]*\ssrc=/);
+    expect(html.match(/<video\b/g)?.length).toBe(1);
+    for (const f of ["hero-pagi-loop.webm", "hero-pagi-loop.mp4", "hero-pagi-loop-poster.jpg"]) {
+      const url = new URL(`videos/${f}`, dist);
+      expect(existsSync(url), f).toBe(true);
+      expect(readFileSync(url).length, f).toBeLessThan(1.5 * 1024 * 1024);
+    }
+  });
+
   // Erdi, 2026-10-12: the NIB is public, and marketing copy never mentions the city.
   it("shows the NIB and keeps the city to the address only", () => {
     for (const path of ["index.html", "tentang/index.html"]) expect(page(path)).toContain("2605260050475");
