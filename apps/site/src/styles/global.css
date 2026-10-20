@@ -180,8 +180,7 @@
   @apply block;
 }
 
-/* Capsule supergraphic (P-011): one orchestrated entrance on load, then still.
-   Tiles rise and unmask in sequence; reduced motion shows them at rest. */
+/* Capsule supergraphic (P-011): pills and circles that frame photos and the real Myna Fit UI. */
 .capsule {
   border-radius: 9999px;
   overflow: hidden;
@@ -191,40 +190,63 @@
   height: 100%;
   object-fit: cover;
 }
-/* P-015: Motion runs this entrance as soon as the page script loads (index.astro). This CSS copy
-   is the fallback when JS is late or off: the same rise, 600 ms later, so content never waits on JS. */
+/* Home hero (P-016): capsule photos set inside the headline (Loff Wellness pattern). Each one opens
+   once on load; Motion runs it when the page script is on time (index.astro), and this CSS copy is
+   the fallback 600 ms later when JS is late or off. Reduced motion shows them at rest. */
+.inline-capsule {
+  display: inline-block;
+  width: 1.55em;
+  height: 0.74em;
+  vertical-align: -0.04em;
+  border-radius: 9999px;
+  overflow: hidden;
+  background: var(--color-soft);
+}
+.inline-capsule img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* Cards of the real Myna Fit interface laid over photos: white, soft lift, the app's own radius. */
+.ui-card {
+  border-radius: 22px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow:
+    0 1px 2px rgb(3 43 132 / 0.06),
+    0 14px 36px rgb(3 43 132 / 0.14);
+}
+.ui-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
 @media (prefers-reduced-motion: no-preference) {
-  .capsule-rise {
-    animation: capsule-rise 620ms var(--ease-out-strong) 600ms both;
+  .hero-open {
+    animation: hero-open 700ms var(--ease-out-strong) 600ms both;
   }
-  .rise-2 {
-    animation-delay: 670ms;
+  .hero-open-2 {
+    animation-delay: 680ms;
   }
-  .rise-3 {
-    animation-delay: 740ms;
-  }
-  .rise-4 {
-    animation-delay: 810ms;
-  }
-  .rise-5 {
-    animation-delay: 880ms;
-  }
-  .rise-6 {
-    animation-delay: 950ms;
-  }
-  .rise-7 {
-    animation-delay: 1020ms;
+  .hero-rise {
+    animation: hero-rise 620ms var(--ease-out-strong) 820ms both;
   }
 }
-@keyframes capsule-rise {
+@keyframes hero-open {
+  from {
+    clip-path: inset(0 50% 0 50% round 9999px);
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 9999px);
+  }
+}
+@keyframes hero-rise {
   from {
     opacity: 0;
-    transform: translateY(28px) scale(0.96);
-    clip-path: inset(30% 0 0 0 round 9999px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
     transform: none;
-    clip-path: inset(0 0 0 0 round 9999px);
   }
 }

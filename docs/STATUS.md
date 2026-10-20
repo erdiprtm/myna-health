@@ -4,6 +4,12 @@ Progress log, newest entry on top.
 
 ---
 
+## 2026-10-20: home redesign (branch `feat/landing-redesign`, P-016)
+
+- New home from the approved research direction: capsule photos inside the hero headline, floating pill navbar, Myna Fit cards over people photos, privacy and "Jelas sejak awal" sections, split closing card, wordmark footer.
+- Two new Pexels photos (approved by Erdi) and three crops of the real Myna Fit screens. Home extra JS 5.0 KB gzip.
+- Checked at 1440px and 375px in the built-in browser. Waits for Erdi's "approve" on the preview before merging.
+
 ## 2026-10-19: Motion on the brand site (branch `feat/motion`, P-015)
 
 - Interactive Myna Fit showcase, smooth FAQ, closing-panel reveal, Motion hero entrance; CTA "Jadi Sehat Bareng". Home +4.9 KB gzip JS, other pages unchanged.

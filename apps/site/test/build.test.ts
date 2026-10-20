@@ -207,6 +207,36 @@ describe("built site", () => {
       expect(scriptsOf(path).some(importsMotion), path).toBe(false);
   });
 
+  // P-016: the redesigned home stays light (extra JS under ~6 KB gzip) and keeps the company
+  // identity block still, with no animation hooks anywhere inside it.
+  it("home page JS stays within the P-016 budget and the identity block never animates", async () => {
+    const { gzipSync } = await import("node:zlib");
+    const astroDir = new URL("_astro/", dist);
+    const html = page("index.html");
+    const seen = new Set<string>();
+    const walk = (file: string) => {
+      if (seen.has(file)) return;
+      seen.add(file);
+      const js = readFileSync(new URL(file, astroDir), "utf8");
+      for (const m of js.matchAll(/from\s*"\.\/([^"]+\.js)"/g)) walk(m[1] as string);
+    };
+    for (const m of html.matchAll(/<script type="module" src="\/_astro\/([^"]+)"/g)) {
+      const file = m[1] as string;
+      if (!file.startsWith("Base.astro")) walk(file); // Base = analytics, shipped on every page
+    }
+    const bytes = [...seen].reduce((n, f) => n + gzipSync(readFileSync(new URL(f, astroDir))).length, 0);
+    expect(bytes).toBeLessThan(6144);
+
+    const identity = html.match(/<section id="perusahaan"[\s\S]*?<\/section>/)?.[0] ?? "";
+    expect(identity).toContain('data-testid="company-identity"');
+    expect(identity).toContain("2605260050475");
+    expect(identity).not.toMatch(/data-(moment|cta|fit)|hero-(open|rise)|style="/);
+  });
+
+  it("Myna Food asks for launch news by email, with a preset subject", () => {
+    expect(page("index.html")).toContain('href="mailto:halo@mynahealth.id?subject=Kabari%20saya%3A%20Myna%20Food"');
+  });
+
   it("the Myna Fit call to action reads Jadi Sehat Bareng", () => {
     for (const path of ["index.html", "tentang/index.html"]) {
       expect(page(path), path).toContain("Jadi Sehat Bareng");

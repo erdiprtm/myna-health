@@ -57,7 +57,7 @@ Awwwards search pages `/websites/health|wellness|fitness|nutrition|habit/` list 
 
 Not reachable: Saaspo (Cloudflare bot challenge, not bypassed), Land-book and One Page Love tag pages (filters are client-side; nothing usable without heavy browsing). Cookie banners were never accepted.
 
-## Proposed redesign (for Erdi's approval, 2026-10-20)
+## Proposed redesign (approved by Erdi 2026-10-20, built in P-016)
 
 Thesis: **kebiasaan kecil, setiap hari** (small habits, every day). Every section serves it; the capsule is the system that frames photos and real UI.
 
