@@ -4,6 +4,10 @@ Progress log, newest entry on top.
 
 ---
 
+## 2026-10-21: Cloudflare Web Analytics allowed (branch `feat/cloudflare-web-analytics`, P-021)
+
+- The CSP blocked the Web Analytics beacon that Cloudflare injects. `script-src` now allows that one host, and the rest of the CSP is unchanged. OpenPanel is not active yet: its client ID is still unset.
+
 ## 2026-10-21: home without inline styles (branch `fix/csp-inline-style`)
 
 - The drifting capsules and the Promises stagger set `--d` / `--i` through `style="…"`, which the CSP blocks (about 25 console errors on load, delays lost). They are now Tailwind arbitrary-property classes (`[--d:-2s]`, `[--i:3]`); the CSP is unchanged.

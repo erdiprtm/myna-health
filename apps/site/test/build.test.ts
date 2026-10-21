@@ -56,6 +56,12 @@ describe("built site", () => {
       const csp = html.match(/<meta http-equiv="content-security-policy" content="([^"]+)"/)?.[1];
       expect(csp, path).toContain("default-src 'self'");
       expect(csp, path).not.toContain("unsafe-inline");
+      // Scripts: our own files plus the Cloudflare Web Analytics beacon (P-021), nothing else.
+      const scriptSrc = csp
+        ?.match(/script-src ([^;]+)/)?.[1]
+        .split(" ")
+        .filter((s) => !s.startsWith("'sha"));
+      expect(scriptSrc, path).toEqual(["'self'", "https://static.cloudflareinsights.com"]);
       // No inline executable scripts at all (JSON-LD data blocks are fine): nothing to hash.
       const inline = [...html.matchAll(/<script(?![^>]*\bsrc=)(?![^>]*application\/ld\+json)[^>]*>/g)];
       expect(inline, path).toEqual([]);
