@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Myna mascot sheet</title>
+<title>Mina mascot sheet</title>
 <style>
   *{box-sizing:border-box}html,body{margin:0}
   body{font-family:Montserrat,system-ui,-apple-system,"Segoe UI",sans-serif;background:#eceef3;color:#11163a;line-height:1.5}
@@ -49,15 +49,15 @@
 </head>
 <body>
 <div class="wrap">
-  <h1>Myna buddy: mascot sheet</h1>
-  <p class="lede">The live mascot made from the Myna Health icon (lengkung m, variant "Paruh"): eyes on the arches, and the logo's cyan dot flies up to become a small pill beak. Its name is still to be picked (Mina, Kedip or Jali). The still icon stays the brand mark; the buddy only appears in live moments. One file, no dependencies: <code>lab/brand/myna-buddy.js</code>.</p>
+  <h1>Mina: the Myna Health mascot</h1>
+  <p class="lede">The live mascot made from the Myna Health icon (lengkung m, variant "Paruh"): eyes on the arches, and the logo's cyan dot flies up to become a small pill beak. Her name is Mina (from myna; chosen by Erdi). The web component is <code>&lt;myna-buddy&gt;</code>. The still icon stays the brand mark; the buddy only appears in live moments. One file, no dependencies: <code>lab/brand/myna-buddy.js</code>.</p>
 
   <section class="hero">
-    <myna-buddy id="hero" intro size="220" label="Myna buddy"></myna-buddy>
+    <myna-buddy id="hero" intro size="220" label="Mina"></myna-buddy>
     <div>
       <h2>The transformation</h2>
       <p>Frame 0 is the still icon, pixel for pixel. Then: an anticipation squash, a leap with squash and stretch, a flash and a cyan shock ring, confetti in brand colours from behind the mark. The dot flies up and becomes the beak, the eyes pop open with overshoot, and it lands. About 1.5 s.</p>
-      <div class="row"><button class="btn" id="replay">Putar ulang</button><button class="btn ghost" id="poke">Colek</button></div>
+      <div class="row"><button type="button" class="btn" id="replay">Putar ulang</button><button type="button" class="btn ghost" id="poke">Colek</button></div>
     </div>
   </section>
 
@@ -91,7 +91,7 @@
       <myna-buddy id="flowbuddy" state="idle" size="140" nopoke></myna-buddy>
       <div>
         <p class="status" id="status">Siap.</p>
-        <div class="row"><button class="btn" data-flow="ok">Simpan latihan</button><button class="btn ghost" data-flow="fail">Simpan (versi gagal)</button></div>
+        <div class="row"><button type="button" class="btn" data-flow="ok">Simpan latihan</button><button type="button" class="btn ghost" data-flow="fail">Simpan (versi gagal)</button></div>
       </div>
     </div>
   </section>
@@ -169,22 +169,22 @@
 </div>
 <script>
   // Sheet controls (local lab page only).
-  addEventListener("load", function () {
+  addEventListener("load", () => {
     var hero = document.getElementById("hero");
-    document.getElementById("replay").addEventListener("click", function () { hero.transform(); });
-    document.getElementById("poke").addEventListener("click", function (e) { hero.poke(e); });
+    document.getElementById("replay").addEventListener("click", () => { hero.transform(); });
+    document.getElementById("poke").addEventListener("click", (e) => { hero.poke(e); });
     var b = document.getElementById("flowbuddy"), st = document.getElementById("status"), busy = false;
-    document.querySelectorAll("[data-flow]").forEach(function (btn) {
-      btn.addEventListener("click", function () {
+    document.querySelectorAll("[data-flow]").forEach((btn) => {
+      btn.addEventListener("click", () => {
         if (busy) return; busy = true;
         var ok = btn.dataset.flow === "ok";
         b.setAttribute("state", "kerja"); b.setAttribute("intro", ""); b._played = false; b.transform();
         st.textContent = "Lagi disiapkan…";
-        setTimeout(function () {
+        setTimeout(() => {
           b.removeAttribute("intro");
           b.setAttribute("state", ok ? "sukses" : "gagal");
           st.textContent = ok ? "Mantap, tercatat!" : "Tidak apa-apa, coba lagi, ya.";
-          setTimeout(function () { b.setAttribute("state", "idle"); st.textContent = "Siap."; busy = false; }, 2600);
+          setTimeout(() => { b.setAttribute("state", "idle"); st.textContent = "Siap."; busy = false; }, 2600);
         }, 3000);
       });
     });

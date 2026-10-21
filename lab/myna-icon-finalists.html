@@ -160,13 +160,13 @@
 </section></div>
 <script>
 // Rasterise each tile at a true 16x16 to judge the favicon, then show it ×4 with nearest-neighbour.
-document.querySelectorAll("canvas[data-px]").forEach(function (cv) {
+document.querySelectorAll("canvas[data-px]").forEach((cv) => {
   var sec = document.getElementById("concept-" + cv.dataset.px);
   var svg = sec.querySelector(".sizes figure svg").cloneNode(true);
   svg.setAttribute("width", "16"); svg.setAttribute("height", "16");
   svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
   var img = new Image();
-  img.onload = function () { var x = cv.getContext("2d"); x.clearRect(0, 0, 16, 16); x.drawImage(img, 0, 0, 16, 16); };
+  img.onload = () => { var x = cv.getContext("2d"); x.clearRect(0, 0, 16, 16); x.drawImage(img, 0, 0, 16, 16); };
   img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg.outerHTML.replace(/var\(--ink\)/g, "#ffffff").replace(/var\(--a1\)/g, "#24dde2").replace(/var\(--a2\)/g, "#5a9bff").replace(/var\(--a3\)/g, "#5a9bff"));
 });
 </script>

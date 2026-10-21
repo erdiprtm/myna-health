@@ -30,15 +30,28 @@ const svg = (viewBox, body, title, w, h) =>
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}"${w ? ` width="${w}" height="${h}"` : ""} role="img" aria-label="${title}"><title>${title}</title>${body}</svg>\n`;
 
 // Mark centred in a 64 tile at 62% (same proportion as the concept sheets).
-const inTile = (ink) => `<g transform="translate(32 32) scale(.62) translate(${-CENTER.x} ${-CENTER.y})">${markG(ink)}</g>`;
+const inTile = (ink) =>
+  `<g transform="translate(32 32) scale(.62) translate(${-CENTER.x} ${-CENTER.y})">${markG(ink)}</g>`;
 
 const files = {
   "logo-mark.svg": svg(`${BOX.x} ${BOX.y} ${BOX.w} ${BOX.h}`, markG(NAVY), "Myna Health"),
   "logo-mark-white.svg": svg(`${BOX.x} ${BOX.y} ${BOX.w} ${BOX.h}`, markG(WHITE), "Myna Health"),
   // Rounded tile for display (web, docs). Platforms that mask icons get the square version.
-  "app-icon.svg": svg("0 0 64 64", `<rect width="64" height="64" rx="14.4" fill="${NAVY}"/>${inTile(WHITE)}`, "Myna Health"),
-  "app-icon-square.svg": svg("0 0 64 64", `<rect width="64" height="64" fill="${NAVY}"/>${inTile(WHITE)}`, "Myna Health"),
-  "favicon.svg": svg("0 0 64 64", `<rect width="64" height="64" rx="14.4" fill="${NAVY}"/>${inTile(WHITE)}`, "Myna Health"),
+  "app-icon.svg": svg(
+    "0 0 64 64",
+    `<rect width="64" height="64" rx="14.4" fill="${NAVY}"/>${inTile(WHITE)}`,
+    "Myna Health",
+  ),
+  "app-icon-square.svg": svg(
+    "0 0 64 64",
+    `<rect width="64" height="64" fill="${NAVY}"/>${inTile(WHITE)}`,
+    "Myna Health",
+  ),
+  "favicon.svg": svg(
+    "0 0 64 64",
+    `<rect width="64" height="64" rx="14.4" fill="${NAVY}"/>${inTile(WHITE)}`,
+    "Myna Health",
+  ),
 };
 
 // Horizontal lockup: the mark's arches match the wordmark's "m" (rows 34 to 118 of the 480x197
@@ -65,7 +78,10 @@ for (const [name, text] of Object.entries(files)) writeFileSync(join(out, name),
 
 // PNG exports.
 const png = async (svgName, file, w, h, bg) => {
-  let img = sharp(Buffer.from(files[svgName]), { density: 600 }).resize(w, h, { fit: "contain", background: bg ?? { r: 0, g: 0, b: 0, alpha: 0 } });
+  const img = sharp(Buffer.from(files[svgName]), { density: 600 }).resize(w, h, {
+    fit: "contain",
+    background: bg ?? { r: 0, g: 0, b: 0, alpha: 0 },
+  });
   await img.png().toFile(join(out, file));
 };
 await png("app-icon-square.svg", "app-icon-180.png", 180, 180); // apple-touch-icon: full bleed, iOS rounds it
@@ -77,4 +93,24 @@ await png("logo-mark.svg", "logo-mark-512.png", 512, Math.round((512 * BOX.h) / 
 await png("lockup-horizontal.svg", "lockup-horizontal-1200.png", 1200, Math.round((1200 * lockH) / lockW));
 await png("lockup-horizontal-white.svg", "lockup-horizontal-white-1200.png", 1200, Math.round((1200 * lockH) / lockW));
 
-console.log(Object.keys(files).concat(["app-icon-180.png", "app-icon-512.png", "app-icon-rounded-512.png", "favicon-32.png", "favicon-16.png", "logo-mark-512.png", "lockup-horizontal-1200.png", "lockup-horizontal-white-1200.png"]).join("\n"));
+// Site copies (apps/site/public). lab/brand stays the source of truth; never edit the copies.
+const site = join(pub, "brand");
+mkdirSync(site, { recursive: true });
+for (const f of ["logo-mark.svg", "logo-mark-white.svg", "app-icon-180.png", "app-icon-512.png", "myna-buddy.js"])
+  writeFileSync(join(site, f), readFileSync(join(out, f)));
+writeFileSync(join(pub, "favicon.svg"), files["favicon.svg"]);
+
+console.log(
+  Object.keys(files)
+    .concat([
+      "app-icon-180.png",
+      "app-icon-512.png",
+      "app-icon-rounded-512.png",
+      "favicon-32.png",
+      "favicon-16.png",
+      "logo-mark-512.png",
+      "lockup-horizontal-1200.png",
+      "lockup-horizontal-white-1200.png",
+    ])
+    .join("\n"),
+);

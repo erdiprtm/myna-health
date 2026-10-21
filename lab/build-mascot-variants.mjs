@@ -7,22 +7,28 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
-const NAVY = "#032b84", CYAN = "#24dde2";
+const NAVY = "#032b84",
+  CYAN = "#24dde2";
 const M = "M9 50V30A9 9 0 0 1 27 30V50M27 30A9 9 0 0 1 45 30V50";
-const stroke = (ink) => `<path d="${M}" fill="none" stroke="${ink}" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>`;
+const stroke = (ink) =>
+  `<path d="${M}" fill="none" stroke="${ink}" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>`;
 const dot = `<circle cx="54.5" cy="45.5" r="5.5" fill="${CYAN}"/>`;
 
 // Eyes on the arch tops (the stroke is 8.5 thick there, room for a 3.4 × 5.4 eye). Slightly right of
 // centre, so the character faces the way the dot points.
 const eyesTop = (c, pose) => {
-  if (pose === "sukses") return `<path d="M16.4 22.4 Q18.6 18.6 20.8 22.4 M34.4 22.4 Q36.6 18.6 38.8 22.4" stroke="${c}" stroke-width="1.9" fill="none" stroke-linecap="round"/>`;
-  if (pose === "gagal") return `<rect x="16.9" y="20.6" width="3.4" height="3" rx="1.5" fill="${c}"/><rect x="34.9" y="20.6" width="3.4" height="3" rx="1.5" fill="${c}"/>`;
+  if (pose === "sukses")
+    return `<path d="M16.4 22.4 Q18.6 18.6 20.8 22.4 M34.4 22.4 Q36.6 18.6 38.8 22.4" stroke="${c}" stroke-width="1.9" fill="none" stroke-linecap="round"/>`;
+  if (pose === "gagal")
+    return `<rect x="16.9" y="20.6" width="3.4" height="3" rx="1.5" fill="${c}"/><rect x="34.9" y="20.6" width="3.4" height="3" rx="1.5" fill="${c}"/>`;
   return `<rect x="16.9" y="18.3" width="3.4" height="5.4" rx="1.7" fill="${c}"/><rect x="34.9" y="18.3" width="3.4" height="5.4" rx="1.7" fill="${c}"/>`;
 };
 // Pupils inside the two arch windows (the background shows through there).
 const eyesIn = (c, pose) => {
-  if (pose === "sukses") return `<path d="M16.2 33.4 Q18.6 29.6 21 33.4 M34.2 33.4 Q36.6 29.6 39 33.4" stroke="${c}" stroke-width="2" fill="none" stroke-linecap="round"/>`;
-  if (pose === "gagal") return `<rect x="17" y="33.2" width="3.4" height="3" rx="1.5" fill="${c}"/><rect x="35" y="33.2" width="3.4" height="3" rx="1.5" fill="${c}"/>`;
+  if (pose === "sukses")
+    return `<path d="M16.2 33.4 Q18.6 29.6 21 33.4 M34.2 33.4 Q36.6 29.6 39 33.4" stroke="${c}" stroke-width="2" fill="none" stroke-linecap="round"/>`;
+  if (pose === "gagal")
+    return `<rect x="17" y="33.2" width="3.4" height="3" rx="1.5" fill="${c}"/><rect x="35" y="33.2" width="3.4" height="3" rx="1.5" fill="${c}"/>`;
   return `<rect x="17" y="29.4" width="3.6" height="6" rx="1.8" fill="${c}"/><rect x="35" y="29.4" width="3.6" height="6" rx="1.8" fill="${c}"/>`;
 };
 const crest = `<path d="M13.6 18.2 C12.4 12.6 15.4 8.6 20.6 8.8 C18.2 10.8 17.9 13.8 19.2 17 Z" fill="${CYAN}"/>`;
@@ -37,19 +43,22 @@ const variants = [
     id: "intip",
     name: "Intip",
     note: "Only pupils are added, in the two windows under the arches: the m peeks out at you. The dot stays where the logo has it and hops in sukses. Signature motion: the arches squash in a slow blink.",
-    draw: (pose, dark) => `${stroke(dark ? "#fff" : NAVY)}${eyesIn(dark ? "#fff" : NAVY, pose)}${dot}${pose === "sukses" ? sparkles : ""}`,
+    draw: (pose, dark) =>
+      `${stroke(dark ? "#fff" : NAVY)}${eyesIn(dark ? "#fff" : NAVY, pose)}${dot}${pose === "sukses" ? sparkles : ""}`,
   },
   {
     id: "jambul",
     name: "Jambul",
     note: "White eyes on the arch tops (like Padi's eyes on the sun) and one cyan crest feather, the myna's tuft, sprouting from the first arch. Signature motion: a crest flick with a little head tilt.",
-    draw: (pose, dark) => `${crest}${stroke(dark ? "#fff" : NAVY)}${eyesTop(dark ? NAVY : "#fff", pose)}${dot}${pose === "sukses" ? sparkles : ""}`,
+    draw: (pose, dark) =>
+      `${crest}${stroke(dark ? "#fff" : NAVY)}${eyesTop(dark ? NAVY : "#fff", pose)}${dot}${pose === "sukses" ? sparkles : ""}`,
   },
   {
     id: "paruh",
     name: "Paruh",
     note: "Eyes on the arch tops, and the logo's cyan dot flies up to become a small pill beak: the dot's leap is the WOW moment of the transformation. Signature motion: the beak opens to talk.",
-    draw: (pose, dark) => `${stroke(dark ? "#fff" : NAVY)}${eyesTop(dark ? NAVY : "#fff", pose)}${beak(pose === "sukses")}${pose === "sukses" ? sparkles : ""}`,
+    draw: (pose, dark) =>
+      `${stroke(dark ? "#fff" : NAVY)}${eyesTop(dark ? NAVY : "#fff", pose)}${beak(pose === "sukses")}${pose === "sukses" ? sparkles : ""}`,
   },
 ];
 const poses = [
@@ -57,7 +66,8 @@ const poses = [
   ["sukses", "sukses"],
   ["gagal", "gagal (gentle)"],
 ];
-const pic = (v, pose, dark, size) => `<svg width="${size}" height="${size}" viewBox="0 2 64 56" role="img" aria-label="${v.name}, ${pose}">${v.draw(pose, dark)}</svg>`;
+const pic = (v, pose, dark, size) =>
+  `<svg width="${size}" height="${size}" viewBox="0 2 64 56" role="img" aria-label="${v.name}, ${pose}">${v.draw(pose, dark)}</svg>`;
 
 const names = [
   ["Mina", "From myna: short, warm, easy to say in Indonesian and English. Risk: it is also a common given name."],

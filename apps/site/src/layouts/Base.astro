@@ -70,6 +70,7 @@ const footerGroups = [
     <link rel="canonical" href={canonical} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="icon" href={product.brand.favicon} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/brand/app-icon-180.png" />
     <meta name="theme-color" content="#f7f8fa" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={product.name} />
@@ -90,8 +91,11 @@ const footerGroups = [
     <!-- Floating pill navbar (P-016, Heva Health and Bevel): white pill over the page, never full-bleed. -->
     <header class="sticky top-0 z-50 px-3 pt-3 md:px-6 md:pt-4">
       <nav class="relative mx-auto flex h-14 max-w-[1200px] items-center justify-between rounded-full border border-navy/10 bg-white pr-2 pl-5 shadow-[0_1px_2px_rgb(3_43_132/0.05),0_8px_24px_rgb(3_43_132/0.08)] md:h-16 md:pr-2.5 md:pl-7" aria-label="Utama">
-        <a href="/" class="flex items-center" aria-label={`${product.name}, ke beranda`}>
-          <img src="/logo.png" alt={product.name} width="480" height="197" class="h-7 w-auto md:h-8" />
+        <!-- Lockup (P-019): the icon's arches match the wordmark's "m" (rows 34 to 118 of the 197 px tall
+             PNG), with a gap of two stem widths. After 5 s of visible time the icon wakes up as Mina. -->
+        <a href="/" class="flex items-start" aria-label={`${product.name}, ke beranda`}>
+          <img src="/brand/logo-mark.svg" alt="" width="55" height="38" class="nav-mark mt-[6.21px] h-[15.35px] w-auto md:mt-[6.9px] md:h-[17.06px]" />
+          <img src="/logo.png" alt={product.name} width="480" height="197" class="ml-[1.1px] h-9 w-auto md:ml-[1.22px] md:h-10" />
         </a>
         <div class="hidden items-center gap-8 md:flex">
           {
@@ -128,7 +132,10 @@ const footerGroups = [
     <footer class="mt-auto bg-navy text-white/75">
       <div class="container-myna grid gap-12 py-14 md:grid-cols-12 md:py-16">
         <div class="md:col-span-5">
-          <img src="/logo.png" alt={product.name} width="480" height="197" loading="lazy" class="h-9 w-auto brightness-0 invert" />
+          <span class="flex items-start">
+            <img src="/brand/logo-mark-white.svg" alt="" width="55" height="38" class="mt-[6.21px] h-[15.35px] w-auto" />
+            <img src="/logo.png" alt={product.name} width="480" height="197" loading="lazy" class="ml-[1.1px] h-9 w-auto brightness-0 invert" />
+          </span>
           <address class="mt-6 text-sm leading-relaxed text-white/75 not-italic" data-testid="company">
             <span class="font-medium text-white">{company.name}</span> · NIB {nib}<br />
             {company.addressLines.join(", ")}<br />
@@ -162,6 +169,9 @@ const footerGroups = [
         <p class="container-myna -mb-[0.2em] text-center text-[15.5vw] leading-[0.9] font-extrabold tracking-[-0.055em] whitespace-nowrap text-white select-none xl:text-[188px]">myna health</p>
       </div>
     </footer>
+    <!-- Mina (P-019): the live mascot. A same-origin file (CSP script-src 'self'), deferred; it wakes the
+         nav icon after 5 s of visible time and does nothing under prefers-reduced-motion. -->
+    <script is:inline src="/brand/myna-buddy.js" data-awaken=".nav-mark" data-after="5" defer></script>
     <script>
       // Standard events (Section 9) to OpenPanel. Bundled by Astro into a file (CSP: script-src 'self').
       // data-op-client is set only on production builds with a client ID; otherwise this is a no-op.
