@@ -196,6 +196,35 @@ describe("built site", () => {
     expect(css).not.toMatch(/(^|[},])\s*\.m[1-5]-[\w-]+[^{]*\{[^}]*animation:\s*m[1-5]-/);
   });
 
+  // P-019 (Erdi, 2026-10-21): the "lengkung m" icon and Mina, the live mascot.
+  it("every page carries the new icon (favicon, apple-touch-icon, nav and footer) and Mina wakes the nav icon", async () => {
+    const { gzipSync } = await import("node:zlib");
+    const M = "M9 50V30A9 9 0 0 1 27 30V50M27 30A9 9 0 0 1 45 30V50";
+    expect(page("favicon.svg")).toContain(M);
+    expect(page("brand/logo-mark.svg")).toContain(M);
+    expect(page("brand/logo-mark-white.svg")).toContain(M);
+    expect(readFileSync(new URL("brand/app-icon-180.png", dist)).subarray(1, 4).toString()).toBe("PNG");
+    for (const path of [...PAGES, "404.html"]) {
+      const html = page(path);
+      expect(html, path).toContain('<link rel="apple-touch-icon" href="/brand/app-icon-180.png">');
+      expect(html, path).toMatch(/<img src="\/brand\/logo-mark\.svg" alt="" [^>]*class="nav-mark /);
+      expect(html, path).toContain('src="/brand/logo-mark-white.svg"');
+      expect(html, path).toContain('<script src="/brand/myna-buddy.js" data-awaken=".nav-mark" data-after="5" defer>');
+    }
+    const js = readFileSync(new URL("brand/myna-buddy.js", dist));
+    expect(gzipSync(js).length).toBeLessThan(10 * 1024);
+    const src = js.toString();
+    expect(src).toContain("prefers-reduced-motion");
+    expect(src).toContain('customElements.define("myna-buddy"');
+    expect(src).toContain('"Mina, "');
+    // The site CSP has no 'unsafe-inline' for styles: the component must style itself through a
+    // constructed stylesheet and CSSOM, never a <style> it depends on or a style attribute.
+    expect(src).toContain("adoptedStyleSheets");
+    expect(src).not.toMatch(/\bstyle:\s*"/);
+    // Bubbles stay kind: no body, weight or medical words, no guilt.
+    expect(src).not.toMatch(/berat|gemuk|kurus|diet|sakit|dokter|obat|gagal total|malas/i);
+  });
+
   // Erdi, 2026-10-12: the NIB is public, and marketing copy never mentions the city.
   it("shows the NIB and keeps the city to the address only", () => {
     for (const path of ["index.html", "tentang/index.html"]) expect(page(path)).toContain("2605260050475");
