@@ -4,6 +4,11 @@ Progress log, newest entry on top.
 
 ---
 
+## 2026-10-21: Myna icon and live mascot in the lab (branch `feat/myna-icon`, P-019)
+
+- Icon "lengkung m" chosen; deliverables in `lab/brand/`. Mascot variant "Paruh" built as `<myna-buddy>` with a sheet at `lab/myna-mascot.html` and QA in `lab/brand/qa/`.
+- Name still open (Mina, Kedip, Jali). The live site is unchanged.
+
 ## 2026-10-21: company home approved (branch `feat/landing-revolut`, PR #12, P-017)
 
 - Erdi asked for a home as "cool as revolut.com" and went to sleep. Built from Erdi's screen recording of revolut.com: full-bleed photo hero, capsule outline with real Myna Fit text, photo tabs for the three moments, navy product band, split Myna Food, dark privacy cards, photo closing card, navy footer.

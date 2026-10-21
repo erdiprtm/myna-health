@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Myna mascot sheet</title>
+<style>
+  *{box-sizing:border-box}html,body{margin:0}
+  body{font-family:Montserrat,system-ui,-apple-system,"Segoe UI",sans-serif;background:#eceef3;color:#11163a;line-height:1.5}
+  .wrap{max-width:1200px;margin:0 auto;padding:32px 20px 64px}
+  h1{margin:0;font-size:32px;letter-spacing:-.02em;color:#032b84}
+  h2{margin:0 0 6px;font-size:22px;letter-spacing:-.015em;color:#032b84}
+  p{margin:0;color:#555c67}
+  section{background:#fff;border-radius:20px;padding:24px;margin-top:20px}
+  .lede{max-width:80ch;margin-top:8px}
+  .hero{display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:center;background:#fbf6f0}
+  .btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 20px;border-radius:999px;border:0;font:600 15px Montserrat,system-ui,sans-serif;background:#113bfe;color:#fff;cursor:pointer}
+  .btn.ghost{background:transparent;color:#032b84;box-shadow:inset 0 0 0 1.5px rgba(3,43,132,.35)}
+  .row{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-end;margin-top:16px}
+  figure{margin:0;display:grid;justify-items:center;gap:6px}
+  figcaption{font-size:12px;color:#555c67;text-align:center;max-width:22ch}
+  .grid6{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-top:16px}
+  .grid6 figure{background:#fbf6f0;border-radius:16px;padding:16px 8px 12px}
+  .say{font-size:12px;font-weight:600;color:#032b84;background:#fff;border-radius:999px;padding:4px 10px;box-shadow:0 2px 8px rgba(3,43,132,.12);text-align:center}
+  .grounds{display:grid;grid-template-columns:1fr 1fr;border-radius:16px;overflow:hidden;margin-top:16px}
+  .grounds>div{display:flex;gap:22px;align-items:flex-end;justify-content:center;padding:24px 12px;flex-wrap:wrap}
+  .light{background:#fbf6f0}.dark{background:#11163a;--myna-ink:#fff;--myna-face:#032b84}
+  .dark figcaption{color:#dae7fc}
+  .flow{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center;margin-top:16px;background:#fbf6f0;border-radius:16px;padding:20px}
+  .flow .status{font-weight:600;color:#032b84;min-height:1.5em}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 20px;margin-top:16px;border-radius:999px;background:#fff;box-shadow:0 8px 24px rgba(3,43,132,.1)}
+  .nav .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .nav .demo-mark{height:20px;width:auto;display:block}
+  .nav .word{height:30px;width:auto;display:block}
+  .nav .links{display:flex;gap:20px;font-size:14px;color:#555c67}
+  table{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px}
+  th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #e4ddd1;vertical-align:top}
+  th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#555c67}
+  .dd{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px}
+  .dd ul{margin:6px 0 0;padding-left:18px}.dd li{margin:4px 0}
+  .do h3{color:#0f7a4f}.dont h3{color:#b42318}
+  h3{margin:0;font-size:16px}
+  code{font:500 13px ui-monospace,Menlo,monospace;background:#f1ece4;border-radius:6px;padding:1px 6px}
+  .frames img{width:100%;border-radius:12px;margin-top:12px;display:block}
+  @media (max-width:860px){.hero,.flow{grid-template-columns:1fr;justify-items:center;text-align:center}.grid6{grid-template-columns:repeat(3,minmax(0,1fr))}.grounds,.dd{grid-template-columns:1fr}.nav .links{display:none}}
+  @media (max-width:420px){.grid6{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+<script src="brand/myna-buddy.js" data-awaken=".demo-mark" data-after="5" defer></script>
+</head>
+<body>
+<div class="wrap">
+  <h1>Myna buddy: mascot sheet</h1>
+  <p class="lede">The live mascot made from the Myna Health icon (lengkung m, variant "Paruh"): eyes on the arches, and the logo's cyan dot flies up to become a small pill beak. Its name is still to be picked (Mina, Kedip or Jali). The still icon stays the brand mark; the buddy only appears in live moments. One file, no dependencies: <code>lab/brand/myna-buddy.js</code>.</p>
+
+  <section class="hero">
+    <myna-buddy id="hero" intro size="220" label="Myna buddy"></myna-buddy>
+    <div>
+      <h2>The transformation</h2>
+      <p>Frame 0 is the still icon, pixel for pixel. Then: an anticipation squash, a leap with squash and stretch, a flash and a cyan shock ring, confetti in brand colours from behind the mark. The dot flies up and becomes the beak, the eyes pop open with overshoot, and it lands. About 1.5 s.</p>
+      <div class="row"><button class="btn" id="replay">Putar ulang</button><button class="btn ghost" id="poke">Colek</button></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Still icon next to frame 0</h2>
+    <p>Left: <code>logo-mark.svg</code> as an image. Right: the buddy before it transforms. They must look identical.</p>
+    <div class="row">
+      <figure><img src="brand/logo-mark.svg" alt="Myna Health icon" width="152" height="103" style="display:block;margin:68px 0 49px"><figcaption>logo-mark.svg</figcaption></figure>
+      <figure><myna-buddy id="frame0" intro="manual" size="220" label="Frame 0"></myna-buddy><figcaption>buddy, frame 0 (tap to play)</figcaption></figure>
+    </div>
+    <div class="frames"><img src="brand/qa/transform-frames.png" alt="Transformation frames at 0, 160, 330, 450, 560, 680, 800, 950, 1150 and 1600 ms" onerror="this.remove()"></div>
+  </section>
+
+  <section>
+    <h2>Expressions</h2>
+    <p>Six states, one API (<code>state</code> attribute). <b>gagal</b> is gentle on purpose: calm, lowered eyes and a small head tilt, never a frown. <b>semangat</b> is for coming back after a missed day.</p>
+    <div class="grid6">
+      <figure><myna-buddy state="idle" size="96"></myna-buddy><figcaption><b>idle</b></figcaption><span class="say">(no bubble)</span></figure>
+      <figure><myna-buddy state="mikir" size="96"></myna-buddy><figcaption><b>mikir</b></figcaption><span class="say">Sebentar, ya…</span></figure>
+      <figure><myna-buddy state="kerja" size="96"></myna-buddy><figcaption><b>kerja</b></figcaption><span class="say">Lagi disiapkan…</span></figure>
+      <figure><myna-buddy state="sukses" size="96"></myna-buddy><figcaption><b>sukses</b></figcaption><span class="say">Mantap, tercatat!</span></figure>
+      <figure><myna-buddy state="gagal" size="96"></myna-buddy><figcaption><b>gagal</b></figcaption><span class="say">Tidak apa-apa, coba lagi, ya.</span></figure>
+      <figure><myna-buddy state="semangat" size="96"></myna-buddy><figcaption><b>semangat</b></figcaption><span class="say">Senang ketemu lagi!</span></figure>
+    </div>
+  </section>
+
+  <section>
+    <h2>Live demo: saving a workout</h2>
+    <p>Transformation, then <b>kerja</b> while it saves, then <b>sukses</b>, or the gentle <b>gagal</b> when it fails.</p>
+    <div class="flow">
+      <myna-buddy id="flowbuddy" state="idle" size="140" nopoke></myna-buddy>
+      <div>
+        <p class="status" id="status">Siap.</p>
+        <div class="row"><button class="btn" data-flow="ok">Simpan latihan</button><button class="btn ghost" data-flow="fail">Simpan (versi gagal)</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Poke</h2>
+    <p>Tap or click: boing (happy eyes), wiggle (wink), spin (happy eyes), wow (round eyes), in turn. Five quick taps make it dizzy (X eyes, a double spin). Every tap pops 8 small particles, shows a short bubble (below it when it sits near the top of the screen) and vibrates 12 ms on phones.</p>
+    <div class="row"><myna-buddy size="120"></myna-buddy>
+      <table style="max-width:520px"><thead><tr><th>Reaction</th><th>Bubble (id)</th><th>Bubble (en)</th></tr></thead><tbody>
+        <tr><td>boing</td><td>Hehe, hai!</td><td>Hehe, hi!</td></tr>
+        <tr><td>wiggle</td><td>Geli, ah!</td><td>That tickles!</td></tr>
+        <tr><td>spin</td><td>Wiii!</td><td>Wheee!</td></tr>
+        <tr><td>wow</td><td>Eh, halo!</td><td>Oh, hello!</td></tr>
+        <tr><td>dizzy</td><td>Pusing… pelan-pelan, ya</td><td>So dizzy… easy now</td></tr>
+      </tbody></table></div>
+  </section>
+
+  <section>
+    <h2>Sizes on light and dark</h2>
+    <p>Minimum 24 px; below that use the still icon. Under 64 px the m fills its box and the eyes are drawn bigger, so the face survives. On dark grounds set <code>--myna-ink:#fff; --myna-face:#032b84</code>.</p>
+    <div class="grounds">
+      <div class="light">
+        <figure><myna-buddy size="24"></myna-buddy><figcaption>24</figcaption></figure>
+        <figure><myna-buddy size="44"></myna-buddy><figcaption>44</figcaption></figure>
+        <figure><myna-buddy size="96"></myna-buddy><figcaption>96</figcaption></figure>
+        <figure><myna-buddy size="200"></myna-buddy><figcaption>200</figcaption></figure>
+      </div>
+      <div class="dark">
+        <figure><myna-buddy size="24"></myna-buddy><figcaption>24</figcaption></figure>
+        <figure><myna-buddy size="44"></myna-buddy><figcaption>44</figcaption></figure>
+        <figure><myna-buddy size="96"></myna-buddy><figcaption>96</figcaption></figure>
+        <figure><myna-buddy size="200"></myna-buddy><figcaption>200</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Awaken in the navbar</h2>
+    <p>This bar uses the still icon. After 5 seconds of visible time it turns into the buddy in place and stays alive for this page view. Tap it: it reacts, and the logo link does not navigate.</p>
+    <nav class="nav" aria-label="Demo">
+      <a class="brand" href="#top" aria-label="Myna Health, beranda"><img class="demo-mark" src="brand/logo-mark.svg" alt="" width="30" height="20"><img class="word" src="../apps/site/public/logo.png" alt="Myna Health" width="73" height="30"></a>
+      <span class="links"><span>Tentang Kami</span><span>Produk</span><span>Perusahaan</span></span>
+    </nav>
+  </section>
+
+  <section>
+    <h2>Where it is used</h2>
+    <table><thead><tr><th>Place</th><th>What the buddy does</th><th>Size</th></tr></thead><tbody>
+      <tr><td>Every mynahealth.id page, navbar</td><td>The still icon awakens after 5 s; tap to poke</td><td>Icon about 30 × 20 px → buddy box about 32 px (under 64 px the m fills its box)</td></tr>
+      <tr><td>Loading in Myna Fit / Myna Food web views</td><td>Transformation → <code>kerja</code> → <code>sukses</code> → fades into the app</td><td>96–140 px, centred</td></tr>
+      <tr><td>Habit done, streak kept, meal logged</td><td><code>sukses</code> with "Mantap, tercatat!"</td><td>44–64 px next to the confirmation</td></tr>
+      <tr><td>Missed a day, welcome back</td><td><code>semangat</code> with "Senang ketemu lagi! Mulai dari langkah kecil."</td><td>64–96 px</td></tr>
+      <tr><td>Errors and empty states</td><td>Gentle <code>gagal</code> with "Tidak apa-apa, coba lagi, ya."</td><td>64–96 px above the message</td></tr>
+      <tr><td>Content</td><td>Myna Health's own social accounts only</td><td>Rendered stills or short clips</td></tr>
+    </tbody></table>
+  </section>
+
+  <section>
+    <h2>Do / don't</h2>
+    <div class="dd">
+      <div class="do"><h3>Do</h3><ul>
+        <li>Use the still icon as the brand mark; bring the buddy in only for live moments.</li>
+        <li>Keep the bubbles short, warm and plain Indonesian.</li>
+        <li>Use <code>gagal</code> and <code>semangat</code> to reassure: missing a day is fine.</li>
+        <li>Respect reduced motion; the component does it for you.</li>
+      </ul></div>
+      <div class="dont"><h3>Don't</h3><ul>
+        <li>Don't make it a doctor or nurse, or promise health results.</li>
+        <li>Don't mention weight, bodies or food guilt in any bubble.</li>
+        <li>Don't put eyes on the still icon, or use the buddy below 24 px.</li>
+        <li>Don't add arms, legs or clothes, or recolour the beak.</li>
+      </ul></div>
+    </div>
+  </section>
+</div>
+<script>
+  // Sheet controls (local lab page only).
+  addEventListener("load", function () {
+    var hero = document.getElementById("hero");
+    document.getElementById("replay").addEventListener("click", function () { hero.transform(); });
+    document.getElementById("poke").addEventListener("click", function (e) { hero.poke(e); });
+    var b = document.getElementById("flowbuddy"), st = document.getElementById("status"), busy = false;
+    document.querySelectorAll("[data-flow]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        if (busy) return; busy = true;
+        var ok = btn.dataset.flow === "ok";
+        b.setAttribute("state", "kerja"); b.setAttribute("intro", ""); b._played = false; b.transform();
+        st.textContent = "Lagi disiapkan…";
+        setTimeout(function () {
+          b.removeAttribute("intro");
+          b.setAttribute("state", ok ? "sukses" : "gagal");
+          st.textContent = ok ? "Mantap, tercatat!" : "Tidak apa-apa, coba lagi, ya.";
+          setTimeout(function () { b.setAttribute("state", "idle"); st.textContent = "Siap."; busy = false; }, 2600);
+        }, 3000);
+      });
+    });
+  });
+</script>
+</body>
+</html>
