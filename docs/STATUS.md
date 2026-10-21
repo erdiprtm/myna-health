@@ -8,7 +8,7 @@ Progress log, newest entry on top.
 
 - Icon "lengkung m" chosen; deliverables in `lab/brand/`. Mascot variant "Paruh" built as `<myna-buddy>` with a sheet at `lab/myna-mascot.html` and QA in `lab/brand/qa/`.
 - The mascot is named **Mina**.
-- PR: new favicon, apple-touch-icon, icon + wordmark lockup in nav and footer, Mina wakes the nav icon after 5 s. Not merged: waits for Erdi's "approve".
+- PR: new favicon, apple-touch-icon, icon + wordmark lockup in nav and footer, Mina wakes the nav icon after 5 s. Approved by Erdi on 2026-10-21; merged through CI.
 
 ## 2026-10-21: company home approved (branch `feat/landing-revolut`, PR #12, P-017)
 
