@@ -61,8 +61,9 @@ const top = comps.filter((c) => c.y0 < 100 * K).sort((a, b) => a.x0 - b.x0); // 
 const low = comps.filter((c) => c.y0 >= 100 * K).sort((a, b) => a.x0 - b.x0); // H E A L T H
 if (top.length !== 4 || low.length !== 6) throw new Error(`expected 4 + 6 glyphs, got ${top.length} + ${low.length}`);
 
-// Trace one glyph mask (optionally with a keep(x, y) filter in component-local px at 8x).
-const trace = (c, name, keep = () => true) => {
+// Trace one glyph: by default its own component; `inside(x, y)` (glyph-local px at 8x) can build a new
+// letter from parts of others.
+const trace = (c, name, inside = (x, y) => label[(c.y0 + y) * W + c.x0 + x] === c.id) => {
   const w = c.x1 - c.x0 + 1,
     h = c.y1 - c.y0 + 1,
     pad = 8;
@@ -71,9 +72,7 @@ const trace = (c, name, keep = () => true) => {
     rb = Math.ceil(pw / 8);
   const bits = Buffer.alloc(rb * ph);
   for (let y = 0; y < h; y++)
-    for (let x = 0; x < w; x++)
-      if (label[(c.y0 + y) * W + c.x0 + x] === c.id && keep(x, y))
-        bits[(y + pad) * rb + ((x + pad) >> 3)] |= 0x80 >> ((x + pad) & 7);
+    for (let x = 0; x < w; x++) if (inside(x, y)) bits[(y + pad) * rb + ((x + pad) >> 3)] |= 0x80 >> ((x + pad) & 7);
   const pbm = join(tmp, `${name}.pbm`),
     out = join(tmp, `${name}.svg`);
   writeFileSync(pbm, Buffer.concat([Buffer.from(`P4\n${pw} ${ph}\n`), bits]));
@@ -90,29 +89,36 @@ const myna = top.map((c, i) => trace(c, `myna-${i}`));
 const [h1, e, a, l, t, h2] = low;
 const HEALTH = [h1, e, a, l, t, h2].map((c, i) => trace(c, `health-${i}`));
 
-// Measure the E and the L: stem width = the ink run from the left on a row between the arms; the E's
-// bottom arm starts where a row's ink run gets long again below the middle.
+// Measure stems: the ink run from a glyph's left edge on a row between its arms.
 const run = (c, y) => {
   let x = 0;
   while (x < c.x1 - c.x0 && label[(c.y0 + y) * W + c.x0 + x] !== c.id) x++;
-  const start = x;
   while (label[(c.y0 + y) * W + c.x0 + x] === c.id) x++;
   return x; // where the first ink run ends, from the glyph's left edge
 };
+const own = (c) => (x, y) => label[(c.y0 + y) * W + c.x0 + x] === c.id;
 const eh = e.y1 - e.y0 + 1,
   stemE = run(e, Math.round(eh * 0.3));
-let armTop = eh - 1 - 2 * K;
-while (armTop > eh / 2 && run(e, armTop) > stemE * 1.5) armTop--;
-const F = trace(e, "F", (x, y) => x < stemE || y <= armTop - 0);
-const lh = l.y1 - l.y0 + 1,
-  stemL = run(l, lh >> 2);
-const I = trace(l, "I", (x) => x < stemL);
+// The E's middle arm ends and its bottom arm starts somewhere below the middle; cut halfway between,
+// where the E is only its stem, and finish the F with the H's stem end (rounded on both sides).
+let mid = eh >> 1;
+while (mid < eh && run(e, mid) > stemE * 1.5) mid++;
+let bot = mid;
+while (bot < eh && run(e, bot) <= stemE * 1.5) bot++;
+const cut = (mid + bot) >> 1;
+const hh = h1.y1 - h1.y0 + 1,
+  stemH = run(h1, Math.round(hh * 0.2));
+const F = trace(e, "F", (x, y) =>
+  y < cut ? own(e)(x, y) : x < stemH && own(h1)(x, Math.round(((y + 0.5) * hh) / eh - 0.5)),
+);
+// The I is the H's left stem: both ends rounded, cut flush where the bar joins.
+const I = trace(h1, "I", (x, y) => x < stemH && own(h1)(x, y));
 const T = trace(t, "T");
 
 // FIT keeps HEALTH's letter spacing (the E→A gap as the tracking) and ends where HEALTH ends.
 const gap = (a.x0 - e.x1 - 1) / K;
 const right = HEALTH[5].x1;
-const widths = [F.w, stemL / K, T.w];
+const widths = [F.w, stemH / K, T.w];
 const total = widths[0] + widths[1] + widths[2] + gap * 2;
 let x = right - total;
 const fit = [F, I, T].map((g, i) => {
@@ -121,8 +127,13 @@ const fit = [F, I, T].map((g, i) => {
   return out;
 });
 
-// Ink bounds in logo px: x 32–457, y 34–169 (as measured in P-019).
-const VB = "32 34 426 136";
+// The viewBox is the glyphs' own ink bounds (at 8x, so a hair wider than the 1x measurement).
+const all = [...top, ...low];
+const bx0 = Math.min(...all.map((c) => c.x0)) / K,
+  by0 = Math.min(...all.map((c) => c.y0)) / K;
+const bx1 = (Math.max(...all.map((c) => c.x1)) + 1) / K,
+  by1 = (Math.max(...all.map((c) => c.y1)) + 1) / K;
+const VB = [bx0, by0, bx1 - bx0, by1 - by0].map((v) => +v.toFixed(3)).join(" ");
 const wordmark = (glyphs, fill, title) =>
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${VB}" role="img" aria-label="${title}"><title>${title}</title><g fill="${fill}">${glyphs.join("")}</g></svg>\n`;
 const out = join(here, "..", "brand");
@@ -148,4 +159,4 @@ const files = {
 };
 for (const [n, s] of Object.entries(files)) writeFileSync(join(out, n), s);
 rmSync(tmp, { recursive: true });
-console.log(Object.keys(files).join("\n"), { stemE: stemE / K, armTop: armTop / K, stemL: stemL / K, gap });
+console.log(Object.keys(files).join("\n"), { VB, stemE: stemE / K, stemH: stemH / K, cut: cut / K, gap });

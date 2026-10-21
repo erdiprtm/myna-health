@@ -4,6 +4,11 @@ Progress log, newest entry on top.
 
 ---
 
+## 2026-10-22: vector wordmarks and the Myna Fit logo (branch `feat/myna-fit-wordmark`, P-022)
+
+- "myna HEALTH" is now a vector (traced), and "myna FIT" is built from its letters. Erdi chose option C for Myna Fit: an electric circle with a navy wordmark.
+- Myna Fit's files are in `lab/brand/myna-fit/`, and the brief for the Myna Fit repo is `lab/brand/prompt-myna-fit.md`. Lab only; the site is unchanged.
+
 ## 2026-10-21: Cloudflare Web Analytics allowed (branch `feat/cloudflare-web-analytics`, P-021)
 
 - The CSP blocked the Web Analytics beacon that Cloudflare injects. `script-src` now allows that one host, and the rest of the CSP is unchanged. OpenPanel is not active yet: its client ID is still unset.
