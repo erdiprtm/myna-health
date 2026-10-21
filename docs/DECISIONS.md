@@ -754,3 +754,12 @@ Numbered P-xxx so they never collide with template decisions pulled by `/sync-te
   - **Mina's script:** `/brand/myna-buddy.js`, same origin and `defer`, 8.9 KB gzip on every page. It wakes the nav icon after 5 s of visible time, lands within a pixel of it, and does nothing under reduced motion.
   - **Asset copies:** `lab/build-brand.mjs` copies the assets into `apps/site/public/brand/`. `lab/brand` stays the source of truth.
 - **CSP fix found on the site:** the strict CSP blocked the component's shadow-DOM `<style>`, which left Mina at 0 px wide. The component now styles itself through a constructed stylesheet (`adoptedStyleSheets`, which is CSSOM and allowed) and sets inline values through `element.style`. The CSP is unchanged. A build test guards this.
+
+## P-020: the m sits in a circle next to the wordmark (Erdi, 2026-10-21)
+
+- **Problem:** in the P-019 lockup the bare m matched the wordmark's own "m", so the nav read as "m. myna", an extra letter rather than a symbol.
+- **Options compared** (`lab/myna-container-options.html`, at the real nav and footer sizes): no container, **A. full circle**, B. full squircle (same as the favicon), C. outline ring (too thin at 25 px). Erdi chose **A**.
+- **Badge:** navy circle with the white m and cyan dot (white circle with a navy m on dark grounds). The m is 60% of the circle. New `logo-badge.svg`, `logo-badge-white.svg` and `logo-badge-512.png`; the lockups now use the badge. Favicon and app icon stay the rounded tile, because platforms apply their own mask.
+- **Lockup:** the circle is as tall as the wordmark's whole ink (24.85 px mobile, 27.61 px desktop) and 30% of its height away from it, in the navbar and the footer.
+- **Mina:** the circle is her home (`data-myna-home`). After 5 s of visible time, the m grows out of the circle while the circle pops away and the ink turns navy. Then the dot leaps to the beak. After 10 s without a poke or hover, she goes back in. Frame 0 is the small white m inside the circle. Reduced motion: nothing moves. Plain marks without a home keep the P-019 behaviour.
+- **Size:** the site copy of `myna-buddy.js` is generated without comments (8.4 KB gzip). `lab/brand/myna-buddy.js` stays the documented source.

@@ -8,7 +8,8 @@ import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
 // Embedded so the sheet is one self-contained file.
-const png = (f) => `data:image/png;base64,${readFileSync(join(here, "..", "apps", "site", "public", f)).toString("base64")}`;
+const png = (f) =>
+  `data:image/png;base64,${readFileSync(join(here, "..", "apps", "site", "public", f)).toString("base64")}`;
 const LOGO = { "logo.png": png("logo.png"), "logo-white.png": png("logo-white.png") };
 const NAVY = "#032b84",
   CYAN = "#24dde2",
@@ -19,7 +20,8 @@ const CX = BOX.x + BOX.w / 2,
   CY = BOX.y + BOX.h / 2;
 const mark = (ink, sw = 8.5) =>
   `<path d="${M}" fill="none" stroke="${ink}" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round"/><circle cx="54.5" cy="45.5" r="5.5" fill="${CYAN}"/>`;
-const inside = (ink, scale) => `<g transform="translate(32 32) scale(${scale}) translate(${-CX} ${-CY})">${mark(ink)}</g>`;
+const inside = (ink, scale) =>
+  `<g transform="translate(32 32) scale(${scale}) translate(${-CX} ${-CY})">${mark(ink)}</g>`;
 
 // Each option draws a 64-unit square container. `dark` is the footer (navy ground): a navy container
 // would vanish there, so it flips to white with a navy m.
@@ -27,7 +29,7 @@ const options = [
   {
     id: "now",
     name: "Sekarang (tanpa wadah)",
-    note: "Yang live hari ini. Lengkungnya sama dengan huruf m di wordmark, jadi terbaca seperti huruf tambahan: \"m. myna\".",
+    note: 'Yang live hari ini. Lengkungnya sama dengan huruf m di wordmark, jadi terbaca seperti huruf tambahan: "m. myna".',
     plain: true,
   },
   {
@@ -66,14 +68,14 @@ const lockup = (o, h, dark) => {
   if (o.plain) {
     // The shipped nav: mark height = the wordmark's "m" (rows 34-118), gap of two stem widths.
     const mh = 84 * k;
-    return `<span class="lock"><svg viewBox="${BOX.x} ${BOX.y} ${BOX.w} ${BOX.h}" style="height:${mh.toFixed(2)}px;margin-top:${inkTop.toFixed(2)}px">${mark(dark ? WHITE : NAVY)}</svg>${word}</span>`;
+    return `<span class="lock"><svg aria-hidden="true" viewBox="${BOX.x} ${BOX.y} ${BOX.w} ${BOX.h}" style="height:${mh.toFixed(2)}px;margin-top:${inkTop.toFixed(2)}px">${mark(dark ? WHITE : NAVY)}</svg>${word}</span>`;
   }
-  return `<span class="lock"><svg viewBox="0 0 64 64" style="height:${inkH.toFixed(2)}px;margin-top:${inkTop.toFixed(2)}px">${o.draw(dark)}</svg>${word}</span>`;
+  return `<span class="lock"><svg aria-hidden="true" viewBox="0 0 64 64" style="height:${inkH.toFixed(2)}px;margin-top:${inkTop.toFixed(2)}px">${o.draw(dark)}</svg>${word}</span>`;
 };
 const icon = (o, px, dark) =>
   o.plain
-    ? `<svg viewBox="0 0 64 64" width="${px}" height="${px}"><rect width="64" height="64" rx="14.4" fill="${NAVY}"/>${inside(WHITE, 0.62)}</svg>`
-    : `<svg viewBox="0 0 64 64" width="${px}" height="${px}">${o.draw(dark)}</svg>`;
+    ? `<svg aria-hidden="true" viewBox="0 0 64 64" width="${px}" height="${px}"><rect width="64" height="64" rx="14.4" fill="${NAVY}"/>${inside(WHITE, 0.62)}</svg>`
+    : `<svg aria-hidden="true" viewBox="0 0 64 64" width="${px}" height="${px}">${o.draw(dark)}</svg>`;
 
 const navBar = (o, h) =>
   `<div class="nav"><div class="pill">${lockup(o, h, false)}<span class="links"><i></i><i></i><i></i><b>Hubungi kami</b></span></div></div>`;
