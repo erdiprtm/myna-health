@@ -755,7 +755,7 @@ Numbered P-xxx so they never collide with template decisions pulled by `/sync-te
   - **Asset copies:** `lab/build-brand.mjs` copies the assets into `apps/site/public/brand/`. `lab/brand` stays the source of truth.
 - **CSP fix found on the site:** the strict CSP blocked the component's shadow-DOM `<style>`, which left Mina at 0 px wide. The component now styles itself through a constructed stylesheet (`adoptedStyleSheets`, which is CSSOM and allowed) and sets inline values through `element.style`. The CSP is unchanged. A build test guards this.
 
-## P-020: the m sits in a circle next to the wordmark (Erdi, 2026-10-21)
+## P-020: the m sits in a circle next to the wordmark (Erdi, 2026-10-21; approved for mynahealth.id)
 
 - **Problem:** in the P-019 lockup the bare m matched the wordmark's own "m", so the nav read as "m. myna", an extra letter rather than a symbol.
 - **Options compared** (`lab/myna-container-options.html`, at the real nav and footer sizes): no container, **A. full circle**, B. full squircle (same as the favicon), C. outline ring (too thin at 25 px). Erdi chose **A**.
