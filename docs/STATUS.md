@@ -8,6 +8,7 @@ Progress log, newest entry on top.
 
 - "myna HEALTH" is now a vector (traced), and "myna FIT" is built from its letters. Erdi chose option C for Myna Fit: an electric circle with a navy wordmark.
 - Myna Fit's files are in `lab/brand/myna-fit/`, and the brief for the Myna Fit repo is `lab/brand/prompt-myna-fit.md`. Lab only; the site is unchanged.
+- PR #18 approved by Erdi on 2026-10-22; merged through CI.
 
 ## 2026-10-21: Cloudflare Web Analytics allowed (branch `feat/cloudflare-web-analytics`, P-021)
 

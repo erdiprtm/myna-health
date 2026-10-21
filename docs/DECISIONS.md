@@ -770,7 +770,7 @@ Numbered P-xxx so they never collide with template decisions pulled by `/sync-te
 - **How:** the Cloudflare edge injects the beacon into each page, and the strict CSP blocked it. `script-src` now allows `'self'` plus `https://static.cloudflareinsights.com` only (`security.csp.scriptDirective.resources` in `apps/site/astro.config.mjs`). With automatic injection the beacon reports to `/cdn-cgi/rum` on our own origin, already covered by `connect-src 'self'` (Cloudflare Web Analytics FAQ).
 - **Still strict:** no `'unsafe-inline'`, no other script hosts. `build.test.ts` asserts that list.
 
-## P-022: vector wordmarks, and the new Myna Fit logo (option C) (Erdi, 2026-10-22)
+## P-022: vector wordmarks, and the new Myna Fit logo (option C) (Erdi, 2026-10-22; approved)
 
 - **Why:** Erdi found the old Myna Fit logo (blue `#1D3AF4` and yellow "myna fit") weak and asked for the Myna Health wordmark as a vector, with HEALTH swapped for FIT.
 - **Vector wordmark:**
