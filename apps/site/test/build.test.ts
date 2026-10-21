@@ -305,6 +305,14 @@ describe("built site", () => {
     for (const t of ["Visi", "Misi kami", "Janji kami untuk Anda", "Produk kami"]) expect(copy).toContain(t);
   });
 
+  // The CSP has no 'unsafe-inline' for styles, so a style="" attribute is blocked in the browser
+  // (console errors, and lost animation delays). Use classes instead.
+  it("no built page carries an inline style attribute", () => {
+    const pages = allText().filter((f) => f.path.endsWith(".html"));
+    expect(pages.length).toBeGreaterThan(0);
+    for (const { path, text } of pages) expect(text, path).not.toMatch(/\sstyle=/);
+  });
+
   it("Myna Food asks for launch news by email, with a preset subject", () => {
     expect(page("index.html")).toContain('href="mailto:halo@mynahealth.id?subject=Kabari%20saya%3A%20Myna%20Food"');
   });

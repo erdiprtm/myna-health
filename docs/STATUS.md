@@ -4,6 +4,11 @@ Progress log, newest entry on top.
 
 ---
 
+## 2026-10-21: home without inline styles (branch `fix/csp-inline-style`)
+
+- The drifting capsules and the Promises stagger set `--d` / `--i` through `style="…"`, which the CSP blocks (about 25 console errors on load, delays lost). They are now Tailwind arbitrary-property classes (`[--d:-2s]`, `[--i:3]`); the CSP is unchanged.
+- New build test: no built page has a `style=` attribute.
+
 ## 2026-10-21: Myna icon and live mascot in the lab (branch `feat/myna-icon`, P-019)
 
 - Icon "lengkung m" chosen; deliverables in `lab/brand/`. Mascot variant "Paruh" built as `<myna-buddy>` with a sheet at `lab/myna-mascot.html` and QA in `lab/brand/qa/`.
