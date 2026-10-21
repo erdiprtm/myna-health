@@ -29,6 +29,10 @@ export default defineConfig({
         "font-src 'self'",
         "form-action 'self'",
       ],
+      // Cloudflare Web Analytics (P-021): the edge injects its beacon from this host; it reports
+      // to /cdn-cgi/rum on our own origin (connect-src 'self'). `resources` replaces the default,
+      // so 'self' is listed again.
+      scriptDirective: { resources: ["'self'", "https://static.cloudflareinsights.com"] },
     },
   },
   // No pricing on the brand site (showcase only). The template smoke test still checks /harga/.

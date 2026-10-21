@@ -763,3 +763,9 @@ Numbered P-xxx so they never collide with template decisions pulled by `/sync-te
 - **Lockup:** the circle is as tall as the wordmark's whole ink (24.85 px mobile, 27.61 px desktop) and 30% of its height away from it, in the navbar and the footer.
 - **Mina:** the circle is her home (`data-myna-home`). After 5 s of visible time, the m grows out of the circle while the circle pops away and the ink turns navy. Then the dot leaps to the beak. After 10 s without a poke or hover, she goes back in. Frame 0 is the small white m inside the circle. Reduced motion: nothing moves. Plain marks without a home keep the P-019 behaviour.
 - **Size:** the site copy of `myna-buddy.js` is generated without comments (8.4 KB gzip). `lab/brand/myna-buddy.js` stays the documented source.
+
+## P-021: Cloudflare Web Analytics on mynahealth.id (Erdi, 2026-10-21)
+
+- **Why:** the site is a landing page, so page views, referrers, countries and Core Web Vitals are enough. Cloudflare Web Analytics gives exactly that, without cookies and without per-person tracking. OpenPanel stays wired in code but off (`openpanelClientId: null`).
+- **How:** the Cloudflare edge injects the beacon into each page, and the strict CSP blocked it. `script-src` now allows `'self'` plus `https://static.cloudflareinsights.com` only (`security.csp.scriptDirective.resources` in `apps/site/astro.config.mjs`). With automatic injection the beacon reports to `/cdn-cgi/rum` on our own origin, already covered by `connect-src 'self'` (Cloudflare Web Analytics FAQ).
+- **Still strict:** no `'unsafe-inline'`, no other script hosts. `build.test.ts` asserts that list.
