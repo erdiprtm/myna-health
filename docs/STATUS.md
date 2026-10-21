@@ -4,6 +4,11 @@ Progress log, newest entry on top.
 
 ---
 
+## 2026-10-21: home without inline styles (branch `fix/csp-inline-style`)
+
+- The drifting capsules and the Promises stagger set `--d` / `--i` through `style="…"`, which the CSP blocks (about 25 console errors on load, delays lost). They are now Tailwind arbitrary-property classes (`[--d:-2s]`, `[--i:3]`); the CSP is unchanged.
+- New build test: no built page has a `style=` attribute.
+
 ## 2026-10-21: the m in a circle (branch `feat/icon-container`, P-020)
 
 - The nav and footer icon now sit in a full circle, so the lockup reads as a symbol next to the name. The options sheet is `lab/myna-container-options.html`.

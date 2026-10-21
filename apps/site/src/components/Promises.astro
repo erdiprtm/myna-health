@@ -30,6 +30,9 @@ const days = [
 ] as const;
 const card = "rv-card flex flex-col gap-6 bg-white/[0.07]";
 const stage = "relative isolate flex h-[230px] flex-col justify-center overflow-hidden rounded-[14px] p-5 md:h-[250px] md:p-6";
+// Stagger index per item as a class, not style="--i:…": the CSP blocks inline style attributes.
+// Written out in full so Tailwind finds every class (covers the 7 days, the longest list).
+const stagger = ["[--i:0]", "[--i:1]", "[--i:2]", "[--i:3]", "[--i:4]", "[--i:5]", "[--i:6]"];
 // Brand capsules drifting behind each illustration (guideline 2026 supergraphic: cyan, sky, electric).
 const deco = "m-deco pointer-events-none absolute -z-10 rounded-full";
 ---
@@ -43,7 +46,7 @@ const deco = "m-deco pointer-events-none absolute -z-10 rounded-full";
     </div>
     <div class:list={[stage, "bg-soft"]} aria-hidden="true">
       <span class:list={[deco, "-bottom-10 -left-6 h-32 w-14 rotate-[28deg] bg-cyan"]} />
-      <span class:list={[deco, "-top-6 right-10 h-16 w-16 bg-sky"]} style="--d:-2s" />
+      <span class:list={[deco, "-top-6 right-10 h-16 w-16 bg-sky [--d:-2s]"]} />
       <div class="m1 relative grid gap-2">
         {
           [
@@ -73,7 +76,7 @@ const deco = "m-deco pointer-events-none absolute -z-10 rounded-full";
     </div>
     <div class:list={[stage, "bg-white/[0.06]"]} aria-hidden="true">
       <span class:list={[deco, "-right-8 -bottom-12 h-36 w-16 rotate-[-24deg] bg-sky/70"]} />
-      <span class:list={[deco, "top-4 -left-5 h-10 w-10 bg-cyan/80"]} style="--d:-3s" />
+      <span class:list={[deco, "top-4 -left-5 h-10 w-10 bg-cyan/80 [--d:-3s]"]} />
       <div class="grid gap-4 text-[13px]">
         <div class="grid grid-cols-[1fr_auto] items-center gap-x-3 gap-y-2">
           <span class="text-white/85">Pemanasan</span>
@@ -109,7 +112,7 @@ const deco = "m-deco pointer-events-none absolute -z-10 rounded-full";
       <div class="mt-3 flex flex-wrap gap-1.5">
         {
           plate.map(([name, kcal], i) => (
-            <span class:list={["m3-chip rounded-full px-2.5 py-1 text-[11px] font-medium text-navy", ["bg-cyan", "bg-white", "bg-sky"][i % 3]]} style={`--i:${i}`}>
+            <span class:list={["m3-chip rounded-full px-2.5 py-1 text-[11px] font-medium text-navy", ["bg-cyan", "bg-white", "bg-sky"][i % 3], stagger[i]]}>
               {name} <b class="font-semibold">{kcal} kkal</b>
             </span>
           ))
@@ -131,14 +134,14 @@ const deco = "m-deco pointer-events-none absolute -z-10 rounded-full";
     </div>
     <div class:list={[stage, "bg-white/[0.06]"]} aria-hidden="true">
       <span class:list={[deco, "-top-10 -right-4 h-28 w-12 rotate-[-30deg] bg-cyan/80"]} />
-      <span class:list={[deco, "-bottom-6 left-6 h-12 w-12 bg-sky/80"]} style="--d:-2.5s" />
+      <span class:list={[deco, "-bottom-6 left-6 h-12 w-12 bg-sky/80 [--d:-2.5s]"]} />
       <div class="grid grid-cols-7 gap-1.5">
         {
           days.map(([d, done], i) => (
             <div class="flex flex-col items-center gap-2">
               <span class="text-[11px] text-white/60">{d}</span>
               {done ? (
-                <span class:list={["m4-day flex aspect-square w-full max-w-[34px] items-center justify-center rounded-full", ["bg-electric text-white", "bg-cyan text-navy", "bg-sky text-navy"][i % 3]]} style={`--i:${i}`}>
+                <span class:list={["m4-day flex aspect-square w-full max-w-[34px] items-center justify-center rounded-full", ["bg-electric text-white", "bg-cyan text-navy", "bg-sky text-navy"][i % 3], stagger[i]]}>
                   <Icon name="check" class="h-3.5 w-3.5" />
                 </span>
               ) : (
@@ -170,7 +173,7 @@ const deco = "m-deco pointer-events-none absolute -z-10 rounded-full";
           ].map(([k, v], i) => (
             <div class="flex items-center justify-between gap-3 border-b border-white/10 pb-3 last:border-0 last:pb-0">
               <span class="text-white/80">{k}</span>
-              <span class:list={["m5-chip rounded-full px-2.5 py-0.5 text-[11px] font-semibold text-navy", ["bg-sky", "bg-cyan", "bg-white"][i]]} style={`--i:${i}`}>{v}</span>
+              <span class:list={["m5-chip rounded-full px-2.5 py-0.5 text-[11px] font-semibold text-navy", ["bg-sky", "bg-cyan", "bg-white"][i], stagger[i]]}>{v}</span>
             </div>
           ))
         }
