@@ -8,19 +8,21 @@ The icon does not replace the wordmark. It sits next to the wordmark, or stands 
 
 | File | Use |
 |---|---|
-| `logo-mark.svg` / `logo-mark-white.svg` | The bare mark on light / dark grounds |
+| `logo-badge.svg` / `logo-badge-white.svg` (+ `logo-badge-512.png`) | The mark in a full circle (P-020): navy circle, white m on light grounds; white circle, navy m on dark. Next to the wordmark, always use the badge |
+| `logo-mark.svg` / `logo-mark-white.svg` | The bare mark, for places where it stands alone or sits inside a container that is already drawn |
 | `logo-mark-512.png` | Raster mark for tools that need PNG |
 | `favicon.svg`, `favicon-32.png`, `favicon-16.png` | Browser tab (rounded navy tile, white mark) |
 | `app-icon.svg`, `app-icon-rounded-512.png` | Rounded tile for decks, docs and web |
 | `app-icon-square.svg`, `app-icon-180.png`, `app-icon-512.png` | Full-bleed square for platforms that apply their own mask: `apple-touch-icon` (180), PWA manifest and stores (512) |
-| `lockup-horizontal.svg` / `-white.svg` (+ `-1200.png`) | Icon + the existing wordmark PNG, side by side |
+| `lockup-horizontal.svg` / `-white.svg` (+ `-1200.png`) | Badge + the existing wordmark PNG, side by side |
 
 ## Construction
 
 - **Grid:** 64 units. Two arches of radius 9, stems ending at y = 50, stroke 8.5 with round caps and joins. The dot is r 5.5 at (54.5, 45.5).
 - **Weight:** stroke ÷ arch height = 8.5 ÷ 37.5 = 0.227. That matches the wordmark's own "m": 19 px stems on an 84 px x-height = 0.226. So the icon and the wordmark read as one family.
 - **Tile:** the mark is centred on its ink bounds at 62% of a navy tile. The tile radius is 22.5% (14.4 of 64).
-- **Lockup:** the mark's arches match the wordmark's "m" exactly (rows 34–118 of `logo.png`). The gap between them is two stem widths.
+- **Badge:** the mark is centred on its ink bounds at 60% of a full circle.
+- **Lockup:** the badge is as tall as the wordmark's whole ink (rows 34–169 of `logo.png`), and the gap is 30% of the badge. Without the circle, the bare m next to "myna" read as an extra letter ("m. myna"); the circle makes it a symbol next to a name (Erdi, 2026-10-21, P-020).
 
 ## Colours
 

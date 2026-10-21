@@ -23,7 +23,10 @@
 
    Awaken: <script src="myna-buddy.js" data-awaken=".logo-mark" data-after="5" defer></script>
    After N seconds of visible time, each matching still icon (an <img> or <svg> of logo-mark.svg,
-   viewBox "4.75 16.75 55.25 37.5") turns into the buddy in place. Skipped with ?render=1 or ?reel=1. */
+   viewBox "4.75 16.75 55.25 37.5") turns into the buddy in place. Skipped with ?render=1 or ?reel=1.
+   When the icon sits in a badge marked data-myna-home (a navy circle with the white m, as in the
+   mynahealth.id navbar; set --myna-ink/--myna-face on it to the m's colours), Mina grows out of the
+   badge, the badge pops away, and after 10 s without a poke Mina goes back in. */
 (function () {
   "use strict";
   if (window.customElements && customElements.get("myna-buddy")) return;
@@ -55,7 +58,7 @@
     ":host{display:inline-block;position:relative;flex:none;width:var(--myna-size,44px);height:var(--myna-size,44px);vertical-align:middle;-webkit-tap-highlight-color:transparent}",
     ":host(:not([nopoke])){cursor:pointer}",
     "svg{width:100%;height:100%;overflow:visible;display:block}",
-    ".m{stroke:var(--myna-ink,#032b84)}",
+    ".m{stroke:var(--myna-ink,#032b84);transition:stroke .3s}", // eased when a home badge flips the ink
     "*{transform-box:fill-box}",
     // idle life
     ".bob{animation:bob 3.2s ease-in-out infinite}",
@@ -612,6 +615,9 @@
   customElements.define("myna-buddy", MynaBuddy);
 
   // Awaken: after N seconds of visible time, a still icon turns into the buddy, landing exactly on it.
+  // Inside a [data-myna-home] badge (the circle around the m on mynahealth.id), the m grows out of the
+  // badge instead, the badge pops away, and after IDLE_MS without a poke Mina goes back in.
+  var IDLE_MS = 10000;
   function awaken(mark, after) {
     if (!mark || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     var seen = 0,
@@ -622,6 +628,8 @@
       last = now;
       if (seen < after * 1000) return;
       clearInterval(tick);
+      var home = mark.closest("[data-myna-home]");
+      if (home) return leave(home, mark);
       var host = mark.parentNode;
       if (getComputedStyle(host).position === "static") host.style.position = "relative";
       var b = document.createElement("myna-buddy");
@@ -650,6 +658,95 @@
       mark.style.visibility = "hidden";
       addEventListener("resize", place);
     }, 250);
+  }
+
+  // The m leaves its badge: Mina starts exactly on the small m inside (same ink), grows until its m is as
+  // wide as the badge while the badge shrinks away and the ink turns navy, then the dot leaps to the beak.
+  function leave(home, mark) {
+    var host = home.parentNode;
+    if (getComputedStyle(host).position === "static") host.style.position = "relative";
+    var ink = getComputedStyle(home).getPropertyValue("--myna-ink").trim() || "#fff",
+      face = getComputedStyle(home).getPropertyValue("--myna-face").trim() || "#032b84";
+    var b = document.createElement("myna-buddy");
+    b.setAttribute("aria-hidden", "true");
+    b.setAttribute("intro", "manual");
+    b.style.position = "absolute";
+    b.style.zIndex = "1";
+    b.style.setProperty("--myna-ink", ink);
+    b.style.setProperty("--myna-face", face);
+    var k = 1;
+    function place() {
+      var c = home.getBoundingClientRect(),
+        h = host.getBoundingClientRect(),
+        D = c.width;
+      var V = vbFor((D * VB.w) / 55.25),
+        size = (D * V.w) / 55.25;
+      if (vbFor(size) !== V) {
+        V = vbFor(size);
+        size = (D * V.w) / 55.25;
+      }
+      var u = size / V.w; // px per unit
+      var ox = (4.75 + 55.25 / 2 - V.x) * u,
+        oy = (16.75 + 37.5 / 2 - V.y) * u; // the mark's centre inside the buddy
+      b.setAttribute("size", size.toFixed(2));
+      b.style.left = (c.left - h.left + D / 2 - ox).toFixed(2) + "px";
+      b.style.top = (c.top - h.top + c.height / 2 - oy).toFixed(2) + "px";
+      b.style.transformOrigin = ox.toFixed(2) + "px " + oy.toFixed(2) + "px";
+      k = mark.getBoundingClientRect().width / D;
+    }
+    place();
+    b.style.transform = "scale(" + k.toFixed(4) + ")";
+    host.insertBefore(b, home.nextSibling);
+    mark.style.visibility = "hidden";
+    addEventListener("resize", place);
+    void b.getBoundingClientRect(); // first painted frame = the small m inside the badge
+    var grow = [{ transform: "scale(" + k + ")" }, { transform: "scale(1)" }];
+    var pop = [
+      { transform: "scale(1)", opacity: 1 },
+      { transform: "scale(0)", opacity: 0 },
+    ];
+    requestAnimationFrame(function () {
+      b.style.setProperty("--myna-ink", "#032b84");
+      b.style.setProperty("--myna-face", "#fff");
+      b.style.transform = "";
+      b.animate(grow, { duration: 460, easing: "cubic-bezier(.3,1.5,.5,1)" });
+      home.animate(pop, { duration: 300, easing: "cubic-bezier(.5,0,.75,0)", fill: "forwards" });
+      setTimeout(function () {
+        b.transform();
+      }, 240);
+    });
+    var idle;
+    function rest() {
+      clearTimeout(idle);
+      idle = setTimeout(back, IDLE_MS);
+    }
+    function back() {
+      if (b.matches(":hover")) return rest();
+      removeEventListener("resize", place);
+      b.style.setProperty("--myna-ink", ink);
+      mark.style.visibility = "";
+      home.animate(pop.slice().reverse(), {
+        duration: 380,
+        delay: 120,
+        easing: "cubic-bezier(.3,1.5,.5,1)",
+        fill: "forwards",
+      });
+      var a = b.animate(
+        [
+          { transform: "scale(1)", opacity: 1 },
+          { transform: "scale(" + k + ")", opacity: 0 },
+        ],
+        { duration: 360, easing: "cubic-bezier(.5,0,.75,0)", fill: "forwards" },
+      );
+      a.onfinish = function () {
+        b.remove();
+        home.getAnimations().forEach(function (x) {
+          x.cancel();
+        });
+      };
+    }
+    b.addEventListener("myna:transformed", rest);
+    b.addEventListener("myna:poke", rest);
   }
   var me = document.currentScript;
   var recording = /[?&](render|reel)=1\b/.test(location.search);

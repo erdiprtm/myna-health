@@ -207,8 +207,11 @@ describe("built site", () => {
     for (const path of [...PAGES, "404.html"]) {
       const html = page(path);
       expect(html, path).toContain('<link rel="apple-touch-icon" href="/brand/app-icon-180.png">');
-      expect(html, path).toMatch(/<img src="\/brand\/logo-mark\.svg" alt="" [^>]*class="nav-mark /);
-      expect(html, path).toContain('src="/brand/logo-mark-white.svg"');
+      // P-020: the nav m sits in a navy circle (Mina's home), the footer m in a white one.
+      expect(html, path).toMatch(
+        /<span data-myna-home class="nav-home [^"]*rounded-full bg-navy[^"]*">\s*<img src="\/brand\/logo-mark-white\.svg" alt="" [^>]*class="nav-mark /,
+      );
+      expect(html, path).toMatch(/rounded-full bg-white">\s*<img src="\/brand\/logo-mark\.svg"/);
       expect(html, path).toContain('<script src="/brand/myna-buddy.js" data-awaken=".nav-mark" data-after="5" defer>');
     }
     const js = readFileSync(new URL("brand/myna-buddy.js", dist));
@@ -217,6 +220,8 @@ describe("built site", () => {
     expect(src).toContain("prefers-reduced-motion");
     expect(src).toContain('customElements.define("myna-buddy"');
     expect(src).toContain('"Mina, "');
+    expect(src).toContain("[data-myna-home]"); // grows out of the circle and goes back in
+    expect(page("brand/logo-badge.svg")).toContain(M);
     // The site CSP has no 'unsafe-inline' for styles: the component must style itself through a
     // constructed stylesheet and CSSOM, never a <style> it depends on or a style attribute.
     expect(src).toContain("adoptedStyleSheets");

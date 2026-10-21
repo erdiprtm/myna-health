@@ -91,11 +91,14 @@ const footerGroups = [
     <!-- Floating pill navbar (P-016, Heva Health and Bevel): white pill over the page, never full-bleed. -->
     <header class="sticky top-0 z-50 px-3 pt-3 md:px-6 md:pt-4">
       <nav class="relative mx-auto flex h-14 max-w-[1200px] items-center justify-between rounded-full border border-navy/10 bg-white pr-2 pl-5 shadow-[0_1px_2px_rgb(3_43_132/0.05),0_8px_24px_rgb(3_43_132/0.08)] md:h-16 md:pr-2.5 md:pl-7" aria-label="Utama">
-        <!-- Lockup (P-019): the icon's arches match the wordmark's "m" (rows 34 to 118 of the 197 px tall
-             PNG), with a gap of two stem widths. After 5 s of visible time the icon wakes up as Mina. -->
+        <!-- Lockup (P-019, P-020): the icon sits in a navy circle as tall as the wordmark's ink (rows 34 to
+             169 of the 197 px tall PNG), 30% of the circle away from it. After 5 s of visible time the m
+             grows out of the circle as Mina, and goes back in when left alone. -->
         <a href="/" class="flex items-start" aria-label={`${product.name}, ke beranda`}>
-          <img src="/brand/logo-mark.svg" alt="" width="55" height="38" class="nav-mark mt-[6.21px] h-[15.35px] w-auto md:mt-[6.9px] md:h-[17.06px]" />
-          <img src="/logo.png" alt={product.name} width="480" height="197" class="ml-[1.1px] h-9 w-auto md:ml-[1.22px] md:h-10" />
+          <span data-myna-home class="nav-home mt-[6.21px] flex size-[24.85px] flex-none items-center justify-center rounded-full bg-navy [--myna-face:#032b84] [--myna-ink:#fff] md:mt-[6.9px] md:size-[27.61px]">
+            <img src="/brand/logo-mark-white.svg" alt="" width="55" height="38" class="nav-mark h-[8.74px] w-auto md:h-[9.71px]" />
+          </span>
+          <img src="/logo.png" alt={product.name} width="480" height="197" class="ml-[1.61px] h-9 w-auto md:ml-[1.78px] md:h-10" />
         </a>
         <div class="hidden items-center gap-8 md:flex">
           {
@@ -133,8 +136,10 @@ const footerGroups = [
       <div class="container-myna grid gap-12 py-14 md:grid-cols-12 md:py-16">
         <div class="md:col-span-5">
           <span class="flex items-start">
-            <img src="/brand/logo-mark-white.svg" alt="" width="55" height="38" class="mt-[6.21px] h-[15.35px] w-auto" />
-            <img src="/logo.png" alt={product.name} width="480" height="197" loading="lazy" class="ml-[1.1px] h-9 w-auto brightness-0 invert" />
+            <span class="mt-[6.21px] flex size-[24.85px] flex-none items-center justify-center rounded-full bg-white">
+              <img src="/brand/logo-mark.svg" alt="" width="55" height="38" class="h-[8.74px] w-auto" />
+            </span>
+            <img src="/logo.png" alt={product.name} width="480" height="197" loading="lazy" class="ml-[1.61px] h-9 w-auto brightness-0 invert" />
           </span>
           <address class="mt-6 text-sm leading-relaxed text-white/75 not-italic" data-testid="company">
             <span class="font-medium text-white">{company.name}</span> · NIB {nib}<br />
