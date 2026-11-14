@@ -796,3 +796,17 @@ Numbered P-xxx so they never collide with template decisions pulled by `/sync-te
   - It replaces the old logo everywhere, and replaces the chat avatar with Mina: moving on web, still on native.
   - mynahealth.id still uses the PNG wordmark. Moving the site to the navy vector is a separate change.
 
+## P-023: the Jalak Bali badge is the Myna Health logo (Erdi, 2026-11-14)
+
+- **Decision (Erdi, relayed by Agent Fit):** the new logo is the Jalak Bali character (white bird, blue eye mask, crest) in a toska `#20A39E` circle, next to the existing "myna HEALTH" wordmark. It replaces concept D, "lengkung m" (P-019, P-020), as the Myna Health icon. The wordmark stays.
+- **Source:** `~/myna-run/research/characters/myna-health/logo/final-toska/`, copied as-is into `lab/brand/jalak-bali/`. Nothing redrawn.
+- **On mynahealth.id:**
+  - navbar: `brand/lockup.svg` (navy wordmark), 28 px tall on mobile, 32 px from `md`;
+  - footer (navy): `brand/lockup-white.svg`, 32 px tall;
+  - `favicon.svg` and a new `favicon.ico` (16/32/48), `brand/apple-touch-icon-180.png`, and a new `site.webmanifest` with the 192 and 512 icons.
+  - OG images had no icon (navy card with the name and title), so they are unchanged.
+- **Mina is off the site.** She woke up out of the m's circle in the navbar (P-019, P-020). Without that circle she has no home, so `myna-buddy.js` is no longer loaded (minus 8.4 KB gzip per page). She stays in `lab/brand/` and can return later with a new design.
+- **Archive, not delete:** the m files stay in `lab/brand/`; `lab/build-brand.mjs` still builds them but no longer writes into `apps/site/public`. `lab/brand/README.md` now leads with the Jalak Bali rules.
+- **One metadata edit:** the badge inside each lockup is a nested `<svg>`; it got `aria-hidden="true"` (the outer SVG already has the title), which the linter requires. The drawing is untouched.
+- **Weight:** each lockup SVG is about 18 KB gzip (the bird is a traced path). Both are cached after the first page.
+
