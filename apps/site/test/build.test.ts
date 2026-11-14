@@ -202,38 +202,27 @@ describe("built site", () => {
     expect(css).not.toMatch(/(^|[},])\s*\.m[1-5]-[\w-]+[^{]*\{[^}]*animation:\s*m[1-5]-/);
   });
 
-  // P-019 (Erdi, 2026-10-21): the "lengkung m" icon and Mina, the live mascot.
-  it("every page carries the new icon (favicon, apple-touch-icon, nav and footer) and Mina wakes the nav icon", async () => {
-    const { gzipSync } = await import("node:zlib");
-    const M = "M9 50V30A9 9 0 0 1 27 30V50M27 30A9 9 0 0 1 45 30V50";
-    expect(page("favicon.svg")).toContain(M);
-    expect(page("brand/logo-mark.svg")).toContain(M);
-    expect(page("brand/logo-mark-white.svg")).toContain(M);
-    expect(readFileSync(new URL("brand/app-icon-180.png", dist)).subarray(1, 4).toString()).toBe("PNG");
+  // P-023 (Erdi, 2026-11-14): the Jalak Bali badge (toska #20A39E) replaces the "lengkung m" icon.
+  it("every page carries the Jalak Bali logo (favicon, apple-touch-icon, manifest, nav and footer)", () => {
+    const TOSKA = 'fill="#20A39E"';
+    expect(page("favicon.svg")).toContain(TOSKA);
+    expect(page("brand/lockup.svg")).toContain(TOSKA);
+    expect(page("brand/lockup.svg")).toContain('fill="#032b84"'); // navy wordmark on light grounds
+    expect(page("brand/lockup-white.svg")).toContain('fill="#ffffff"'); // white wordmark on the navy footer
+    expect(readFileSync(new URL("favicon.ico", dist)).subarray(0, 4)).toEqual(Buffer.from([0, 0, 1, 0]));
+    for (const f of ["brand/apple-touch-icon-180.png", "brand/icon-192.png", "brand/icon-512.png"])
+      expect(readFileSync(new URL(f, dist)).subarray(1, 4).toString(), f).toBe("PNG");
+    const manifest = JSON.parse(page("site.webmanifest"));
+    expect(manifest.icons.map((i: { src: string }) => i.src)).toEqual(["/brand/icon-192.png", "/brand/icon-512.png"]);
     for (const path of [...PAGES, "404.html"]) {
       const html = page(path);
-      expect(html, path).toContain('<link rel="apple-touch-icon" href="/brand/app-icon-180.png">');
-      // P-020: the nav m sits in a navy circle (Mina's home), the footer m in a white one.
-      expect(html, path).toMatch(
-        /<span data-myna-home class="nav-home [^"]*rounded-full bg-navy[^"]*">\s*<img src="\/brand\/logo-mark-white\.svg" alt="" [^>]*class="nav-mark /,
-      );
-      expect(html, path).toMatch(/rounded-full bg-white">\s*<img src="\/brand\/logo-mark\.svg"/);
-      expect(html, path).toContain('<script src="/brand/myna-buddy.js" data-awaken=".nav-mark" data-after="5" defer>');
+      expect(html, path).toContain('<link rel="apple-touch-icon" href="/brand/apple-touch-icon-180.png">');
+      expect(html, path).toContain('<link rel="manifest" href="/site.webmanifest">');
+      expect(html, path).toMatch(/<img src="\/brand\/lockup\.svg" alt="Myna Health"/);
+      expect(html, path).toMatch(/<img src="\/brand\/lockup-white\.svg" alt="Myna Health"/);
+      // The old m icon and Mina (who lived in it) are gone from the site.
+      expect(html, path).not.toMatch(/logo-mark|logo-badge|myna-buddy|data-myna-home/);
     }
-    const js = readFileSync(new URL("brand/myna-buddy.js", dist));
-    expect(gzipSync(js).length).toBeLessThan(10 * 1024);
-    const src = js.toString();
-    expect(src).toContain("prefers-reduced-motion");
-    expect(src).toContain('customElements.define("myna-buddy"');
-    expect(src).toContain('"Mina, "');
-    expect(src).toContain("[data-myna-home]"); // grows out of the circle and goes back in
-    expect(page("brand/logo-badge.svg")).toContain(M);
-    // The site CSP has no 'unsafe-inline' for styles: the component must style itself through a
-    // constructed stylesheet and CSSOM, never a <style> it depends on or a style attribute.
-    expect(src).toContain("adoptedStyleSheets");
-    expect(src).not.toMatch(/\bstyle:\s*"/);
-    // Bubbles stay kind: no body, weight or medical words, no guilt.
-    expect(src).not.toMatch(/berat|gemuk|kurus|diet|sakit|dokter|obat|gagal total|malas/i);
   });
 
   // Erdi, 2026-10-12: the NIB is public, and marketing copy never mentions the city.

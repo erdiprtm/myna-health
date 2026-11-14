@@ -4,6 +4,12 @@ Progress log, newest entry on top.
 
 ---
 
+## 2026-11-14: Jalak Bali logo on mynahealth.id (branch `feat/logo-jalak-bali`, P-023)
+
+- Navbar and footer now use the Jalak Bali lockup (navy wordmark in the navbar, white in the footer). Favicon (SVG + ICO), apple-touch-icon and a new web manifest use the toska badge.
+- The "lengkung m" icon is archived in `lab/brand/`; Mina is no longer loaded on the site.
+- Waiting for Erdi's approval of the preview before merge.
+
 ## 2026-10-22: vector wordmarks and the Myna Fit logo (branch `feat/myna-fit-wordmark`, P-022)
 
 - "myna HEALTH" is now a vector (traced), and "myna FIT" is built from its letters. Erdi chose option C for Myna Fit: an electric circle with a navy wordmark.
